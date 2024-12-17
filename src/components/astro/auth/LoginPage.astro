@@ -1,6 +1,5 @@
 ---
 import { SignIn } from "@/components/react/auth/auth-buttons";
-import { Button } from "@/components/ui/button";
 import {
     Card,
     CardContent,
@@ -10,13 +9,20 @@ import {
     CardTitle,
 } from "@/components/ui/card";
 import RequireAuth from "./RequireAuth.astro";
+import bergboteLogoText from "@/assets/bergbote.png";
+import { Image } from "astro:assets";
 ---
 
 <div class="flex flex-row min-h-screen justify-center items-center">
-    <Card>
+    <Card className="w-1/2">
         <CardHeader>
-            <CardTitle>Der Bergbote</CardTitle>
-            <CardDescription />
+            <CardTitle>
+                <Image
+                    src={bergboteLogoText}
+                    class="w-full"
+                    alt="Der Bergbote"
+                />
+            </CardTitle>
         </CardHeader>
         <CardContent />
         <CardFooter className="flex flex-col w-full justify-between">

@@ -1,0 +1,19 @@
+---
+import LoginPage from "./auth/LoginPage.astro";
+import RequireAuth from "./auth/RequireAuth.astro";
+import Icon from "./Icon.astro";
+---
+
+<RequireAuth>
+    <div class="flex flex-col h-full">
+        <div class="flex-auto">
+            <slot />
+        </div>
+        <div class="w-full bg-secondary h-[10%]">
+            <Icon i="test" />
+        </div>
+    </div>
+    <Fragment slot="fallback">
+        <LoginPage />
+    </Fragment>
+</RequireAuth>
