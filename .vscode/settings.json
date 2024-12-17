@@ -1,0 +1,16 @@
+{
+    "prettier.tabWidth": 4,
+    "editor.tabSize": 4,
+    "sqltools.connections": [
+        {
+            "previewLimit": 50,
+            "server": "localhost",
+            "port": 5432,
+            "driver": "PostgreSQL",
+            "name": "bergbote-dev",
+            "database": "bergbote",
+            "username": "postgres",
+            "password": "postgres"
+        }
+    ]
+}

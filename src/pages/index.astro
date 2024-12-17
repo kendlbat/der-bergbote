@@ -1,0 +1,15 @@
+---
+import LoginPage from "@/components/astro/auth/LoginPage.astro";
+import RequireAuth from "@/components/astro/auth/RequireAuth.astro";
+import UserAvatar from "@/components/astro/auth/UserAvatar.astro";
+import Layout from "@/layouts/Layout.astro";
+---
+
+<Layout title="Test">
+    <RequireAuth>
+        <UserAvatar />
+        <Fragment slot="fallback">
+            <LoginPage />
+        </Fragment>
+    </RequireAuth>
+</Layout>

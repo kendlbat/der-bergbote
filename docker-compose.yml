@@ -1,0 +1,18 @@
+services:
+    postgres:
+        image: postgres:latest
+        ports:
+            - "5432:5432"
+        environment:
+            POSTGRES_USER: postgres
+            POSTGRES_PASSWORD: postgres
+            POSTGRES_DB: bergbote
+        volumes:
+            - ./.data:/var/lib/postgresql/data
+    astro:
+        build: .
+        ports:
+            - "4321:4321"
+        environment:
+            DATABASE_URL: postgres://postgres:postgres@postgres:5432/bergbote"
+        env_file: .env

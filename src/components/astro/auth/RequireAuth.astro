@@ -1,0 +1,7 @@
+---
+import { getSession } from "auth-astro/server";
+
+const session = await getSession(Astro.request);
+---
+
+{session ? <slot /> : <slot name="fallback" />}

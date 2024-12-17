@@ -1,0 +1,31 @@
+---
+import { SignIn } from "@/components/react/auth/auth-buttons";
+import { Button } from "@/components/ui/button";
+import {
+    Card,
+    CardContent,
+    CardDescription,
+    CardFooter,
+    CardHeader,
+    CardTitle,
+} from "@/components/ui/card";
+import RequireAuth from "./RequireAuth.astro";
+---
+
+<div class="flex flex-row min-h-screen justify-center items-center">
+    <Card>
+        <CardHeader>
+            <CardTitle>Der Bergbote</CardTitle>
+            <CardDescription />
+        </CardHeader>
+        <CardContent />
+        <CardFooter className="flex flex-col w-full justify-between">
+            <RequireAuth>
+                <Fragment slot="fallback">
+                    <SignIn client:load />
+                </Fragment>
+                Login erfolgreich!
+            </RequireAuth>
+        </CardFooter>
+    </Card>
+</div>

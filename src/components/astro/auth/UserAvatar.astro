@@ -1,0 +1,8 @@
+---
+import { ClientUserAvatar } from "@/components/react/auth/user-card";
+import { getSession } from "auth-astro/server";
+
+const session = await getSession(Astro.request);
+---
+
+<ClientUserAvatar session={session} client:visible />
