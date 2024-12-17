@@ -18,8 +18,6 @@ export const POST: APIRoute = async ({ request }) => {
         }
     ];
 
-    console.log(input);
-
     await db.insert(articlesTable).values(...input);
     return new Response("OK");
 };

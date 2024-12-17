@@ -25,13 +25,13 @@ RUN npm ci
 COPY index.js .
 
 # Setup cron job
-RUN echo "0 * * * * node /usr/src/app/index.js >> /var/log/cron.log 2>&1" > /etc/cron.d/mycron
+RUN echo "node /usr/src/app/index.js >> /var/log/cron.log" > /etc/cron.hourly/mycron
 
 # Give execution rights on the cron job
-RUN chmod 0644 /etc/cron.d/mycron
+RUN chmod 0644 /etc/cron.hourly/mycron
 
 # Apply cron job
-RUN crontab /etc/cron.d/mycron
+RUN crontab /etc/cron.hourly/mycron
 
 # Create the log file to be able to run tail
 RUN touch /var/log/cron.log
