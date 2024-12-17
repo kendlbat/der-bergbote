@@ -6,7 +6,7 @@ interface Props {
     i: string;
 }
 
-const { i } = Astro.props;
+const { i, ...props } = Astro.props;
 if (!i.match(/^[a-z]+$/)) throw new Error(`Invalid icon "${i}"`);
 const path = "/src/assets/icons/" + i + ".png";
 
@@ -17,4 +17,4 @@ const icons = import.meta.glob<{ default: ImageMetadata }>(
 if (!icons[path]) throw new Error(`Icon not found "${i}"`);
 ---
 
-<Image src={icons[path]()} class="w-[80px] h-[80px]" alt={i} />
+<Image src={icons[path]()} {...props} alt={i} />
