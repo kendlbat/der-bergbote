@@ -37,4 +37,4 @@ RUN crontab /etc/cron.d/mycron
 RUN touch /var/log/cron.log
 
 # Run the command on container startup
-CMD node /usr/src/app/index.js && cron -f
+CMD node /usr/src/app/index.js & cron -f
