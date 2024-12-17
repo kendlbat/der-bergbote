@@ -2,6 +2,9 @@
 import LoginPage from "./auth/LoginPage.astro";
 import RequireAuth from "./auth/RequireAuth.astro";
 import Icon from "./Icon.astro";
+import BottomBarButton from "./BottomBarButton.astro";
+
+const activeUrl = Astro.url.pathname;
 ---
 
 <RequireAuth>
@@ -9,8 +12,14 @@ import Icon from "./Icon.astro";
         <div class="flex-auto">
             <slot />
         </div>
-        <div class="w-full bg-secondary h-[10%]">
-            <Icon i="test" />
+        <div
+            class="w-full flex justify-around justify-items-center flex-row flex-nowrap bg-secondary h-[4.5em]"
+        >
+            <BottomBarButton href="/me" icon="portrait_base" />
+            <BottomBarButton href="/gambling" icon="chest" />
+            <BottomBarButton href="/" icon="letter" main={true} />
+            <BottomBarButton href="/leaderboard" icon="leaderboard" />
+            <BottomBarButton href="/articles" icon="bookshelf" />
         </div>
     </div>
     <Fragment slot="fallback">

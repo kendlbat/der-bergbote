@@ -4,10 +4,11 @@ import { Image } from "astro:assets";
 
 interface Props {
     i: string;
+    class?: string;
 }
 
-const { i, ...props } = Astro.props;
-if (!i.match(/^[a-z]+$/)) throw new Error(`Invalid icon "${i}"`);
+const { i, class: className = "" } = Astro.props;
+if (!i.match(/^[a-z\-_0-9]+$/)) throw new Error(`Invalid icon "${i}"`);
 const path = "/src/assets/icons/" + i + ".png";
 
 const icons = import.meta.glob<{ default: ImageMetadata }>(
@@ -17,4 +18,12 @@ const icons = import.meta.glob<{ default: ImageMetadata }>(
 if (!icons[path]) throw new Error(`Icon not found "${i}"`);
 ---
 
-<Image src={icons[path]()} {...props} alt={i} />
+<div class={className}>
+    <Image
+        src={icons[path]()}
+        class="w-full h-full object-contain"
+        alt={i}
+        width="640"
+        height="640"
+    />
+</div>

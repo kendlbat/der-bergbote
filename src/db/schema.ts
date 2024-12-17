@@ -1,5 +1,4 @@
 import { pgTable, varchar, text, integer, serial } from "drizzle-orm/pg-core";
-import { userInfo } from "os";
 
 export const articlesTable = pgTable("articles", {
     origin: varchar({
@@ -14,10 +13,15 @@ export const rarities = pgTable("rarities", {
 });
 
 export const items = pgTable("items", {
+    id: serial("id").primaryKey(),
     sprite: varchar({
         length: 255,
     }),
     rarity: integer("rarity_id").references(() => rarities.id),
 });
 
-export const inventory = pgTable("inventory", {});
+export const inventory = pgTable("inventory", {
+    item: integer("item_id").references(() => items.id),
+    count: integer(),
+    user: varchar({ length: 255 }).primaryKey(),
+});

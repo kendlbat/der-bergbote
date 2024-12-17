@@ -1,0 +1,22 @@
+---
+import Icon from "./Icon.astro";
+
+interface Props {
+    href: string;
+    icon: string;
+    main?: boolean;
+}
+
+const { href, icon, main = false } = Astro.props;
+
+const activeUrl = Astro.url.pathname;
+---
+
+<a
+    href={href}
+    class={"p-1 px-3 flex justify-around rounded" +
+        (activeUrl == href ? " bg-[#ffffff1e]" : "") +
+        (main ? " basis-[64em]" : "")}
+>
+    <Icon i={icon} class="h-full" />
+</a>
