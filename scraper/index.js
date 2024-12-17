@@ -83,7 +83,15 @@ async function fetchNews(link) {
         reports.push({ source: sourceImg, title, articleLink, createdAt });
     }
 
-    newsJson.push(reports);
+    const title = await page.$eval(
+        "title",
+        (el) => el.innerText.split(" - ")[1]
+    );
+
+    newsJson.push({
+        reports,
+        topic: title == "Übersicht" ? reports[0].title : title,
+    });
     await page.close();
 }
 

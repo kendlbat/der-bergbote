@@ -20,6 +20,7 @@ Provide a `.env` file with the following content:
 
 ```bash
 AUTH_SECRET=<RANDOM_STRING>
+ARTICLES_SERVICE_TOKEN=<RANDOM_STRING>
 ENTRA_CLIENT_ID=<CLIENT_ID>
 ENTRA_CLIENT_SECRET=<CLIENT_SECRET>
 ENTRA_ISSUER=https://login.microsoftonline.com/<TENANT_ID>/v2.0

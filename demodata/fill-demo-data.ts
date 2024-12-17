@@ -1,27 +1,9 @@
 import { db } from "@/db";
 import { articlesTable, topicsTable } from "@/db/schema";
-import type { APIRoute } from "astro";
-import { ARTICLES_SERVICE_TOKEN } from "astro:env/server";
+import fs from "fs/promises";
 
-export const POST: APIRoute = async ({ request }) => {
-    const token = request.headers.get("Authorization");
-    if (token !== "Bearer " + ARTICLES_SERVICE_TOKEN) {
-        return new Response("Unauthorized", { status: 401 });
-    }
-
-    const input = (await request.json()) as [
-        {
-            topic: string;
-            reports: [
-                {
-                    source: string;
-                    title: string;
-                    articleLink: string;
-                    createdAt: string;
-                }
-            ];
-        }
-    ];
+async function fillNewsData() {
+    const input = JSON.parse(await fs.readFile("./news.json", "utf8"));
 
     const topicIds = await db
         .insert(topicsTable)
@@ -41,5 +23,19 @@ export const POST: APIRoute = async ({ request }) => {
             )
             .flat()
     );
-    return new Response("OK");
-};
+}
+
+async function fillDemoData() {
+    // Drop database
+    await db.delete(articlesTable);
+    await db.delete(topicsTable);
+    await Promise.all([fillNewsData()]);
+}
+
+fillDemoData()
+    .then(() => {
+        console.log("Demo data filled");
+    })
+    .catch((error) => {
+        console.error("Error filling demo data", error);
+    });

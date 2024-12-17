@@ -6,13 +6,18 @@ import {
     serial,
     date,
     uuid,
-    check,
     unique,
 } from "drizzle-orm/pg-core";
+
+export const topicsTable = pgTable("topics", {
+    id: serial("id").primaryKey(),
+    name: varchar({ length: 255 }),
+});
 
 export const articlesTable = pgTable(
     "articles",
     {
+        topic: integer("topic_id").references(() => topicsTable.id),
         source: text(),
         title: varchar({ length: 512 }),
         articleLink: varchar({ length: 1024 }),
