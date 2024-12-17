@@ -1,18 +1,27 @@
 import puppeteer from "puppeteer";
-import fs from "fs";
+
+console.log(new Date().toISOString() + " Running import");
 
 const consentButtonSelector = 'button[aria-label="Alle akzeptieren"]';
 const moreButtonSelector = 'a[aria-label="Mehr zum Thema"]';
 
 const browser = await puppeteer.launch({
-    headless: false,
+    headless: true,
+    args: ["--no-sandbox"],
 });
 const page = await browser.newPage();
 const newsJson = [];
 
-await page.goto(
-    "https://news.google.com/topics/CAAqIAgKIhpDQkFTRFFvSEwyMHZNR2czZUJJQ1pHVW9BQVAB?hl=de&gl=AT&ceid=AT%3Ade"
-);
+while (true) {
+    try {
+        await page.goto(
+            "https://news.google.com/topics/CAAqIAgKIhpDQkFTRFFvSEwyMHZNR2czZUJJQ1pHVW9BQVAB?hl=de&gl=AT&ceid=AT%3Ade"
+        );
+        break;
+    } catch (e) {
+        console.warn(e.message);
+    }
+}
 
 await page.setViewport({ width: 1080, height: 1024 });
 
@@ -38,7 +47,14 @@ async function fetchNews(link) {
     const articleSelector = "article";
     const reports = [];
     const page = await browser.newPage();
-    await page.goto(link);
+    while (true) {
+        try {
+            await page.goto(link);
+            break;
+        } catch (e) {
+            console.warn(e.message);
+        }
+    }
 
     await page.waitForSelector(articleSelector);
 
@@ -46,7 +62,15 @@ async function fetchNews(link) {
 
     for (let article of articles) {
         const source = await article.$eval("div > img", (el) => el.src);
-        const imageBuffer = await (await fetch(source)).arrayBuffer();
+        let imageBuffer;
+        while (true) {
+            try {
+                imageBuffer = await (await fetch(source)).arrayBuffer();
+                break;
+            } catch (e) {
+                console.warn(e.message);
+            }
+        }
         const sourceImg = btoa(
             String.fromCharCode(...new Uint8Array(imageBuffer))
         );
@@ -66,7 +90,7 @@ async function fetchNews(link) {
 await Promise.all(newsAwaiter);
 
 const outUrl = process.env.ENDPOINT;
-const auth = process.env.AUTHORIZATION;
+const auth = process.env.ARTICLES_SERVICE_TOKEN;
 // fs.writeFileSync("./news.json", JSON.stringify(newsJson));
 
 await browser.close();
@@ -75,7 +99,9 @@ await fetch(outUrl, {
     method: "POST",
     headers: {
         "Content-Type": "application/json",
-        Authorization: auth,
+        Authorization: "Bearer " + auth,
     },
     body: JSON.stringify(newsJson),
 });
+
+console.log(new Date().toISOString() + " Finished import");

@@ -1,5 +1,5 @@
 // @ts-check
-import { defineConfig } from "astro/config";
+import { defineConfig, envField } from "astro/config";
 import react from "@astrojs/react";
 import tailwind from "@astrojs/tailwind";
 import node from "@astrojs/node";
@@ -20,6 +20,14 @@ export default defineConfig({
         }),
         auth(),
     ],
+    env: {
+        schema: {
+            ARTICLES_SERVICE_TOKEN: envField.string({
+                context: "server",
+                access: "secret",
+            }),
+        },
+    },
 
     adapter: node({
         mode: "standalone",
