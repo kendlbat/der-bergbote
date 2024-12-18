@@ -5,12 +5,13 @@ import { db } from "@/db";
 import { balance } from "@/db/schema";
 import Layout from "@/layouts/Layout.astro";
 import { getSession } from "auth-astro/server";
-import { sql } from "drizzle-orm";
+import { count } from "console";
+import { sql, desc } from "drizzle-orm";
 
 const topBalances = await db
     .select()
     .from(balance)
-    .orderBy(balance.amount)
+    .orderBy(desc(balance.amount))
     .limit(10);
 
 const session = await getSession(Astro.request);
@@ -28,38 +29,61 @@ const myBalance = (
     amount: 0,
 };
 
-const amInTop = topBalances.find((bal) => bal.user == user);
+const myPos = await db
+    .select({
+        position: sql`COUNT(*) + 1`,
+    })
+    .from(balance)
+    .where(sql`${balance.amount} > ${myBalance.amount}`);
 ---
 
 <Layout title="Bergbote - Leaderboard">
     <AppSkeleton>
         <div class="flex flex-col p-4">
             {
-                topBalances.map(({ name, amount, user }) => (
-                    <div class="flex gap-8 align-baseline">
-                        <span class="h-min self-center w-96 text-[2em]">
-                            {name}
-                        </span>
-                        <BergBalance
-                            class="h-min self-center"
-                            amount={amount}
-                        />
-                    </div>
+                topBalances.map(({ name, amount, user }, idx) => (
+                    <span>
+                        <div
+                            class={
+                                "grid grid-cols-6 gap-8 align-baseline mx-5 px-5" +
+                                (user == myBalance.user ? " bg-secondary" : "")
+                            }
+                        >
+                            <span class="self-center h-min text-[1.8em]">
+                                {topBalances.findIndex(
+                                    (b) => b.amount == amount
+                                ) +
+                                    1 +
+                                    "."}
+                            </span>
+                            <span class="h-min self-center text-[1.8em] col-span-3">
+                                {name}
+                            </span>
+                            <span class="col-span-1" />
+                            <span class="flex flex-row-reverse text-[0.75em]">
+                                <BergBalance
+                                    class="h-min self-center"
+                                    amount={amount}
+                                />
+                            </span>
+                        </div>
+                        <span class="border-t mx-5 block" />
+                    </span>
                 ))
             }
-            {
-                !amInTop && (
-                    <div class="flex justify-center gap-8 align-baseline">
-                        <span class="h-min self-center text-[2em]">
-                            {myBalance.name}
-                        </span>
-                        <BergBalance
-                            class="h-min self-center"
-                            amount={myBalance.amount}
-                        />
-                    </div>
-                )
-            }
+
+            <div class="flex justify-center gap-8 align-baseline">
+                <span class="h-min self-center text-[2em]">
+                    {myPos[0].position + "."}
+                </span>
+                <span class="h-min self-center text-[2em]">
+                    {myBalance.name}
+                </span>
+                <BergBalance
+                    class="h-min self-center"
+                    amount={myBalance.amount}
+                />
+            </div>
         </div>
     </AppSkeleton>
 </Layout>
