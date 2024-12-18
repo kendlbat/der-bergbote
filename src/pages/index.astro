@@ -20,10 +20,6 @@ const topics = await db.select().from(topicsTable);
             alt="Bergbote"
             class="w-full object-contain"
         />
-        {
-            topics.map((t) => {
-                <TopicArticles topic={t} />;
-            })
-        }
+        {topics.map((t) => <TopicArticles topic={t} />)}
     </AppSkeleton></Layout
 >
