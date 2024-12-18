@@ -3,21 +3,19 @@ import { db } from "@/db";
 import { articlesTable, topicsTable } from "@/db/schema";
 import { sql } from "drizzle-orm";
 import ArticleCard from "./ArticleCard.astro";
+
+type Topic = typeof topicsTable.$inferSelect;
+
 interface Props {
-    topicId: string;
+    topic: Topic;
 }
 
-const { topicId } = Astro.props;
-
-const [topic] = await db
-    .select()
-    .from(topicsTable)
-    .where(sql`${topicsTable.id} = ${topicId}`);
+const { topic } = Astro.props;
 
 const articles = await db
     .select()
     .from(articlesTable)
-    .where(sql`${articlesTable.topic} = ${topicId}`);
+    .where(sql`${articlesTable.topic} = ${topic.id}`);
 ---
 
 <div>

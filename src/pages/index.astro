@@ -6,6 +6,11 @@ import { Image } from "astro:assets";
 import bergboteNoLogo from "@/assets/bergbote_nologo.png";
 import ArticleCard from "@/components/astro/articles/ArticleCard.astro";
 import TopicArticles from "@/components/astro/articles/TopicArticles.astro";
+import { db } from "@/db";
+import { topicsTable } from "@/db/schema";
+import { sql } from "drizzle-orm";
+
+const topics = await db.select().from(topicsTable);
 ---
 
 <Layout title="Bergbote - Home">
@@ -15,6 +20,10 @@ import TopicArticles from "@/components/astro/articles/TopicArticles.astro";
             alt="Bergbote"
             class="w-full object-contain"
         />
-        <TopicArticles topicId="0eca8678-c65d-4852-9c48-0ef1085eba0d" />
+        {
+            topics.map((t) => {
+                <TopicArticles topic={t} />;
+            })
+        }
     </AppSkeleton></Layout
 >
