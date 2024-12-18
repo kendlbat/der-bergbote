@@ -35,6 +35,12 @@ npm run dev-init
 
 ### Database Development
 
+To start the database:
+
+```bash
+docker compose up postgres -d
+```
+
 To push changes to the schema:
 
 ```bash
