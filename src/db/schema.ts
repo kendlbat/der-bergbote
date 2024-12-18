@@ -7,21 +7,22 @@ import {
     date,
     uuid,
     unique,
+    timestamp,
 } from "drizzle-orm/pg-core";
 
 export const topicsTable = pgTable("topics", {
-    id: serial("id").primaryKey(),
+    id: uuid().defaultRandom().primaryKey(),
     name: varchar({ length: 255 }),
 });
 
 export const articlesTable = pgTable(
     "articles",
     {
-        topic: integer("topic_id").references(() => topicsTable.id),
+        topic: uuid("topic_id").references(() => topicsTable.id),
         source: text(),
         title: varchar({ length: 512 }),
         articleLink: varchar({ length: 1024 }),
-        createdAt: date(),
+        createdAt: timestamp(),
         id: uuid().defaultRandom().primaryKey(),
     },
     (t) => [

@@ -4,6 +4,8 @@ import Layout from "@/layouts/Layout.astro";
 import { Image } from "astro:assets";
 
 import bergboteNoLogo from "@/assets/bergbote_nologo.png";
+import ArticleCard from "@/components/astro/articles/ArticleCard.astro";
+import TopicArticles from "@/components/astro/articles/TopicArticles.astro";
 ---
 
 <Layout title="Bergbote - Home">
@@ -12,6 +14,7 @@ import bergboteNoLogo from "@/assets/bergbote_nologo.png";
             src={bergboteNoLogo}
             alt="Bergbote"
             class="w-full object-contain"
-        /></AppSkeleton
-    >
-</Layout>
+        />
+        <TopicArticles topicId="08d9ef91-27b9-42eb-afb7-479a37d2b93e" />
+    </AppSkeleton></Layout
+>

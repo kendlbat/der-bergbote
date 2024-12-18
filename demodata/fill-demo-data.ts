@@ -35,7 +35,9 @@ async function fillDemoData() {
 fillDemoData()
     .then(() => {
         console.log("Demo data filled");
+        process.exit(0);
     })
     .catch((error) => {
         console.error("Error filling demo data", error);
+        process.exit(1);
     });
