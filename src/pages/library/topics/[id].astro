@@ -1,0 +1,30 @@
+---
+import AppSkeleton from "@/components/astro/AppSkeleton.astro";
+import ArticleCard from "@/components/astro/articles/ArticleCard.astro";
+import { db } from "@/db";
+import { articlesTable, topicsTable } from "@/db/schema";
+import { sql } from "drizzle-orm";
+import Layout from "@/layouts/Layout.astro";
+
+const { id } = Astro.params;
+
+const [topic] = await db
+    .select()
+    .from(topicsTable)
+    .where(sql`${topicsTable.id} = ${id}`);
+
+const articles = await db
+    .select()
+    .from(articlesTable)
+    .where(sql`${articlesTable.topic} = ${topic.id}`);
+---
+
+<Layout title={topic.name || "Bergbote - Topic not found"}>
+    <AppSkeleton>
+        <div
+            class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-3"
+        >
+            {articles.map((a) => <ArticleCard article={a} />)}
+        </div>
+    </AppSkeleton>
+</Layout>

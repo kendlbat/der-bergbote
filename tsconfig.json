@@ -9,10 +9,6 @@
         "paths": {
             "@/*": ["./src/*"]
         },
-        "types": [
-            "vite/client",
-            "vite-plugin-vue-layouts/client",
-            "vite-plugin-pwa/client"
-        ]
+        "types": ["vite/client", "vite-plugin-pwa/client"]
     }
 }

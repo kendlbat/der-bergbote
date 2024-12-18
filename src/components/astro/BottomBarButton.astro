@@ -15,7 +15,7 @@ const activeUrl = Astro.url.pathname;
 <a
     href={href}
     class={"p-1 px-3 flex justify-around rounded" +
-        (activeUrl == href ? " bg-[#ffffff1e]" : "") +
+        (activeUrl.startsWith(href) ? " bg-[#ffffff1e]" : "") +
         (main ? " basis-[25%]" : " basis-[18%]")}
 >
     <Icon i={icon} class="h-full" />
