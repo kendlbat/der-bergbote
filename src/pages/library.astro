@@ -3,8 +3,6 @@ import AppSkeleton from "@/components/astro/AppSkeleton.astro";
 import Layout from "@/layouts/Layout.astro";
 import { db } from "@/db";
 import { topicsTable } from "@/db/schema";
-import TopicArticles from "@/components/astro/articles/TopicArticles.astro";
-import ArticleCard from "@/components/astro/articles/ArticleCard.astro";
 
 const topics = await db.select().from(topicsTable);
 ---
@@ -18,8 +16,13 @@ const topics = await db.select().from(topicsTable);
                 topics.map((t) => (
                     <a
                         href={`/library/topics/${t.id}`}
-                        class="border rounded-lg p-3"
+                        class="border rounded-lg p-3 h-full"
                     >
+                        {t.topicImage && (
+                            <img
+                                src={"data:image/png;base64," + t.topicImage}
+                            />
+                        )}
                         {t.name}
                     </a>
                 ))

@@ -19,14 +19,14 @@ const { article } = Astro.props;
 ---
 
 <a href={article.articleLink} target="_blank">
-    <Card className="w-96">
+    <Card className="border rounded-lg p-3 h-full">
         <CardHeader>
             <CardTitle>{article.title}</CardTitle>
             <CardDescription>
                 <img
                     src={"data:image/png;base64," + article.source}
                     alt="Provider Image"
-                    class="h-[1.2em] object-contain"
+                    class="h-[1.2em] object-contain bg-white p-1 rounded-full"
                 />
                 {
                     article.createdAt?.toLocaleString("de-AT", {

@@ -7,7 +7,12 @@ async function fillNewsData() {
 
     const topicIds = await db
         .insert(topicsTable)
-        .values(input.map(({ topic }) => ({ name: topic })))
+        .values(
+            input.map(({ topic, topicImage }) => ({
+                name: topic,
+                topicImage,
+            }))
+        )
         .returning({ id: topicsTable.id });
 
     await db.insert(articlesTable).values(
