@@ -11,12 +11,13 @@ import {
     boolean,
     primaryKey,
     real,
+    json,
 } from "drizzle-orm/pg-core";
 
 export const topicsTable = pgTable("topics", {
     id: uuid().defaultRandom().primaryKey(),
     name: varchar({ length: 255 }),
-    topicImage: text()
+    topicImage: text(),
 });
 
 export const articlesTable = pgTable(
@@ -36,17 +37,11 @@ export const articlesTable = pgTable(
     ]
 );
 
-export const rarities = pgTable("rarities", {
-    id: serial("id").primaryKey(),
-    color: varchar({ length: 12 }),
-});
-
 export const items = pgTable("items", {
     id: serial("id").primaryKey(),
-    sprite: varchar({
-        length: 255,
-    }),
-    rarity: integer("rarity_id").references(() => rarities.id),
+    type: varchar({ length: 255 }),
+    data: json(),
+    rarity: varchar({ length: 255 }),
 });
 
 export const inventory = pgTable("inventory", {
