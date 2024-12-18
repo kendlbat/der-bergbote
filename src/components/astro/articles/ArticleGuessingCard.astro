@@ -3,9 +3,7 @@ import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/componen
 import { db } from "@/db";
 import { topicsTable, type articlesTable } from "@/db/schema";
 import { eq } from "drizzle-orm";
-import check from "@/assets/svgs/check.svg";
-import close from "@/assets/svgs/close.svg";
-import { Image } from "astro:assets";
+import { Question }from "@/components/react/questions/question";
 
 type Article = typeof articlesTable.$inferSelect;
 
@@ -53,26 +51,7 @@ const questions: Question[] = [
             <p class="mt-2">Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut 
                 labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo 
                 dolores et ea rebum.</p>
-            <h3 class="text-2xl mt-2">Fragen:</h3>
-            <div class="flex justify-center">
-                <div class="bg-green-600 w-10">
-                    <Image 
-                        src={check} 
-                        alt="True"
-                        class="m-auto"
-                        />
-                </div>
-                <div class="bg-white px-2 text-black w-[calc(100%-5rem)] text-center">
-                    {questions[0].question}
-                </div>
-                <div class="bg-red-600 w-10">
-                    <Image 
-                        src={close} 
-                        alt="False"
-                        class="m-auto"
-                        />
-                </div>
-            </div>
+            <Question questions={questions} client:visible/>
         </CardContent>
         <CardFooter/>
     </Card>
