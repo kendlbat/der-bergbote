@@ -10,5 +10,10 @@ const { class: className = "inline-block" } = Astro.props;
 ---
 
 <div class={className}>
-    <Image src={coin} alt="Coin" class="w-full h-full aspect-square" />
+    <Image
+        src={coin}
+        alt="Coin"
+        format="gif"
+        class="w-full h-full aspect-square"
+    />
 </div>
