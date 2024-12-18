@@ -2,8 +2,14 @@
 import AppSkeleton from "@/components/astro/AppSkeleton.astro";
 import Layout from "@/layouts/Layout.astro";
 import { Image } from "astro:assets";
+import { articlesTable } from "@/db/schema";
+import { db } from "@/db";
 
 import bergboteNoLogo from "@/assets/bergbote_nologo.png";
+import ArticleGuessingCard from "@/components/astro/articles/ArticleGuessingCard.astro";
+
+const articles = await db.select().from(articlesTable);
+const article = articles[Math.floor(Math.random() * articles.length)];
 ---
 
 <Layout title="Bergbote - Home">
@@ -13,5 +19,6 @@ import bergboteNoLogo from "@/assets/bergbote_nologo.png";
             alt="Bergbote"
             class="w-full object-contain"
         />
-    </AppSkeleton></Layout
->
+        <ArticleGuessingCard article={article}/>
+    </AppSkeleton>
+</Layout>
