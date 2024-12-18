@@ -14,7 +14,7 @@ export const GET: APIRoute = async ({ request, params }) => {
 
     const et = etag(articles);
 
-    if (request.headers.get("If-Match") === et)
+    if (request.headers.get("If-None-Match") === et)
         return new Response(null, {
             headers: {
                 etag: et,
