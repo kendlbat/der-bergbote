@@ -4,6 +4,7 @@ console.log(new Date().toISOString() + " Running import");
 
 const consentButtonSelector = 'button[aria-label="Alle akzeptieren"]';
 const moreButtonSelector = 'a[aria-label="Mehr zum Thema"]';
+const topicContainerSelector = 'c-wiz:has(> div > article)'
 
 const browser = await puppeteer.launch({
     headless: true,
@@ -32,18 +33,36 @@ await page.waitForNavigation();
 
 await page.waitForSelector(moreButtonSelector);
 
-const buttons = await page.$$(moreButtonSelector);
+const topicContainers = await page.$$(topicContainerSelector);
 
 let newsAwaiter = [];
 
-for (let button of buttons) {
+for (let topicContainer of topicContainers) {
+    let image;
+    try {   
+        const titleImage = await topicContainer.$eval("figure > img", el => el?.src);
+        while (titleImage && true) {
+            try {
+                const imageBuffer = await (await fetch(titleImage)).arrayBuffer();
+                image = btoa(
+                    String.fromCharCode(...new Uint8Array(imageBuffer))
+                );
+                break;
+            } catch (e) {
+                console.warn(e.message);
+            }
+        }
+    } catch (e) {
+        console.warn(e.message);
+    }
+    const button = await topicContainer.$(moreButtonSelector);
     const href = await button.getProperty("href");
     const link = await href.jsonValue();
 
-    newsAwaiter.push(fetchNews(link));
+    newsAwaiter.push(fetchNews(link, image));
 }
 
-async function fetchNews(link) {
+async function fetchNews(link, topicImage) {
     const articleSelector = "article";
     const reports = [];
     const page = await browser.newPage();
@@ -91,15 +110,16 @@ async function fetchNews(link) {
     newsJson.push({
         reports,
         topic: title == "Übersicht" ? reports[0].title : title,
+        topicImage
     });
     await page.close();
 }
 
 await Promise.all(newsAwaiter);
 
-const outUrl = process.env.ENDPOINT;
+const outUrl = process.env.ENDPOINT || "http://localhost:4321/api/microservices/articles";
 const auth = process.env.ARTICLES_SERVICE_TOKEN;
-// fs.writeFileSync("./news.json", JSON.stringify(newsJson));
+//fs.writeFileSync("./news.json", JSON.stringify(newsJson));
 
 await browser.close();
 

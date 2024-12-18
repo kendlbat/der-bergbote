@@ -16,6 +16,7 @@ import {
 export const topicsTable = pgTable("topics", {
     id: uuid().defaultRandom().primaryKey(),
     name: varchar({ length: 255 }),
+    topicImage: text()
 });
 
 export const articlesTable = pgTable(
