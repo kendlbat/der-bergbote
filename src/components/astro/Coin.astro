@@ -1,0 +1,14 @@
+---
+import { Image } from "astro:assets";
+import coin from "@/assets/coin.gif";
+
+interface Props {
+    class: string;
+}
+
+const { class: className = "inline-block" } = Astro.props;
+---
+
+<div class={className}>
+    <Image src={coin} alt="Coin" class="w-full h-full aspect-square" />
+</div>
