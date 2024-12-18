@@ -1,0 +1,22 @@
+[
+    {
+        "user": "tobias.kendlbacher@edu.htl-villach.at",
+        "name": "KENDLBACHER Tobias, 5BHIF",
+        "amount": 1000
+    },
+    {
+        "user": "noah.arsic@edu.htl-villach.at",
+        "name": "ARSIĆ Noah, 5BHIF",
+        "amount": 1000
+    },
+    {
+        "user": "matthias.tripolt@edu.htl-villach.at",
+        "name": "TRIPOLT Matthias, 5BHIF",
+        "amount": 1000
+    },
+    {
+        "user": "alexander.schweda@edu.htl-villach.at",
+        "name": "SCHWEDA Alexander, 5BHIF",
+        "amount": 1000
+    }
+]

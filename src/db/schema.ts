@@ -39,7 +39,8 @@ export const articlesTable = pgTable(
 
 export const balance = pgTable("balance", {
     user: varchar({ length: 255 }).primaryKey(),
-    amount: integer(),
+    name: varchar({ length: 255 }),
+    amount: integer().notNull().default(0),
 });
 
 export const inventory = pgTable("inventory", {

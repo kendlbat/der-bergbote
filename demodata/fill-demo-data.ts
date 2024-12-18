@@ -1,5 +1,5 @@
 import { db } from "@/db";
-import { articlesTable, inventory, topicsTable } from "@/db/schema";
+import { articlesTable, balance, inventory, topicsTable } from "@/db/schema";
 import fs from "fs/promises";
 
 type TopicInsert = typeof topicsTable.$inferInsert;
@@ -39,14 +39,18 @@ async function fillNewsData() {
     );
 }
 
-async function fillInventoryData() {}
+async function fillInventoryData() {
+    const bals = JSON.parse(await fs.readFile("./balance.json", "utf-8"));
+    await db.insert(balance).values(bals);
+}
 
 async function fillDemoData() {
     // Drop database
     await db.delete(articlesTable);
     await db.delete(topicsTable);
+    await db.delete(balance);
     await db.delete(inventory);
-    await Promise.all([fillNewsData()]);
+    await Promise.all([fillNewsData(), fillInventoryData()]);
 }
 
 fillDemoData()

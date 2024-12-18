@@ -1,8 +1,65 @@
 ---
 import AppSkeleton from "@/components/astro/AppSkeleton.astro";
+import BergBalance from "@/components/astro/BergBalance.astro";
+import { db } from "@/db";
+import { balance } from "@/db/schema";
 import Layout from "@/layouts/Layout.astro";
+import { getSession } from "auth-astro/server";
+import { sql } from "drizzle-orm";
+
+const topBalances = await db
+    .select()
+    .from(balance)
+    .orderBy(balance.amount)
+    .limit(10);
+
+const session = await getSession(Astro.request);
+const user = session!!.user!!.email;
+
+const myBalance = (
+    await db
+        .select()
+        .from(balance)
+        .where(sql`${balance.user} = ${user}`)
+        .limit(1)
+)[0] || {
+    name: session!!.user!!.name,
+    user: session!!.user!!.email,
+    amount: 0,
+};
+
+const amInTop = topBalances.find((bal) => bal.user == user);
 ---
 
 <Layout title="Bergbote - Leaderboard">
-    <AppSkeleton />
+    <AppSkeleton>
+        <div class="flex flex-col p-4">
+            {
+                topBalances.map(({ name, amount, user }) => (
+                    <div class="flex gap-8 align-baseline">
+                        <span class="h-min self-center w-96 text-[2em]">
+                            {name}
+                        </span>
+                        <BergBalance
+                            class="h-min self-center"
+                            amount={amount}
+                        />
+                    </div>
+                ))
+            }
+            {
+                !amInTop && (
+                    <div class="flex justify-center gap-8 align-baseline">
+                        <span class="h-min self-center text-[2em]">
+                            {myBalance.name}
+                        </span>
+                        <BergBalance
+                            class="h-min self-center"
+                            amount={myBalance.amount}
+                        />
+                    </div>
+                )
+            }
+        </div>
+    </AppSkeleton>
 </Layout>

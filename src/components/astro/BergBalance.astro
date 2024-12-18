@@ -9,10 +9,11 @@ const session = await getSession(Astro.request);
 const user = session!!.user!!.email!!;
 
 interface Props {
-    amount?: number;
+    amount?: number | null;
+    class?: string;
 }
 
-const { amount: initialAmount } = Astro.props;
+const { amount: initialAmount, class: className = "" } = Astro.props;
 
 let bal: { amount: number | null }[];
 
@@ -32,9 +33,11 @@ const amount = Math.floor(bal[0]?.amount || 0)
     .replace(/\B(?=(\d{3})+(?!\d))/g, ".");
 ---
 
-<span class="flex flex-row justify-center text-[2em] h-[2em] align-middle">
-    <span class="h-full mr-1 text-[1.5em] pixelify -mt-[0.23em]">
-        {amount}
-    </span>
-    <Coin class="h-[75%] inline-block" /></span
->
+<span class={className}>
+    <span class="flex flex-row justify-center text-[2em] h-min align-middle">
+        <span class="h-min self-center mr-[0.1em] text-[1.5em]">
+            {amount}
+        </span>
+        <Coin class="inline-block h-[1.2em] self-center" /></span
+    >
+</span>
