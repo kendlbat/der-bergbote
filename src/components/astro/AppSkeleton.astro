@@ -9,7 +9,7 @@ const activeUrl = Astro.url.pathname;
 
 <RequireAuth>
     <div class="flex flex-col h-full">
-        <div class="flex-auto">
+        <div class="flex-auto overflow-auto">
             <slot />
         </div>
         <div
