@@ -37,17 +37,15 @@ export const articlesTable = pgTable(
     ]
 );
 
-export const items = pgTable("items", {
-    id: serial("id").primaryKey(),
-    type: varchar({ length: 255 }),
-    data: json(),
-    rarity: varchar({ length: 255 }),
+export const balance = pgTable("balance", {
+    user: varchar({ length: 255 }).primaryKey(),
+    amount: integer(),
 });
 
 export const inventory = pgTable("inventory", {
-    item: integer("item_id").references(() => items.id),
-    count: integer(),
-    user: varchar({ length: 255 }).primaryKey(),
+    item: json(),
+    user: varchar({ length: 255 }),
+    id: uuid().defaultRandom().primaryKey(),
 });
 
 export const userArticles = pgTable(

@@ -1,8 +1,11 @@
 ---
 import AppSkeleton from "@/components/astro/AppSkeleton.astro";
+import { SignOut } from "@/components/react/auth/auth-buttons";
 import Layout from "@/layouts/Layout.astro";
 ---
 
 <Layout title="Bergbote - My Profile">
-    <AppSkeleton />
+    <AppSkeleton>
+        <SignOut client:visible />
+    </AppSkeleton>
 </Layout>

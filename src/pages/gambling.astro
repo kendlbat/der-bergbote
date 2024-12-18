@@ -1,17 +1,17 @@
 ---
 import AppSkeleton from "@/components/astro/AppSkeleton.astro";
+import BergBalance from "@/components/astro/BergBalance.astro";
 import Coin from "@/components/astro/Coin.astro";
 import Layout from "@/layouts/Layout.astro";
+import { getSession } from "auth-astro/server";
+
+const session = await getSession(Astro.request);
+
+const user = session!!.user!!.email!!;
 ---
 
 <Layout title="Bergbote - Gambling">
     <AppSkeleton>
-        <Coin />
-        <Coin />
-        <Coin />
-        <Coin />
-        <Coin />
-        <Coin />
-        <Coin />
+        <BergBalance amount={3000000} />
     </AppSkeleton>
 </Layout>
