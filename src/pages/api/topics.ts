@@ -7,7 +7,7 @@ export const GET: APIRoute = async ({ request }) => {
     const topics = JSON.stringify(await db.select().from(topicsTable));
     const et = etag(topics);
 
-    if (request.headers.get("If-Match") === et)
+    if (request.headers.get("If-None-Match") === et)
         return new Response(null, {
             headers: {
                 etag: et,
@@ -18,6 +18,7 @@ export const GET: APIRoute = async ({ request }) => {
     return new Response(topics, {
         headers: {
             etag: et,
+            "content-type": "application/json",
         },
     });
 };
