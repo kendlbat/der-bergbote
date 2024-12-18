@@ -7,7 +7,7 @@
         "build": "dotenv -- astro build",
         "preview": "dotenv -- astro preview",
         "astro": "astro",
-        "dev-init": "corepack enable pnpm && pnpm install && docker compose up -d --wait postgres && drizzle-kit push",
+        "dev-init": "corepack enable npm && npm install && docker compose up -d --wait postgres && drizzle-kit push",
         "fill-demo-data": "cd demodata && dotenv -- tsx fill-demo-data.js"
     },
     "dependencies": {
