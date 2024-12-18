@@ -1,0 +1,29 @@
+---
+import AppSkeleton from "@/components/astro/AppSkeleton.astro";
+import Layout from "@/layouts/Layout.astro";
+import { db } from "@/db";
+import { topicsTable } from "@/db/schema";
+import TopicArticles from "@/components/astro/articles/TopicArticles.astro";
+import ArticleCard from "@/components/astro/articles/ArticleCard.astro";
+
+const topics = await db.select().from(topicsTable);
+---
+
+<Layout title="Bergbote - Articles">
+    <AppSkeleton>
+        <div
+            class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-3"
+        >
+            {
+                topics.map((t) => (
+                    <a
+                        href={`/library/topics/${t.id}`}
+                        class="border rounded-lg p-3"
+                    >
+                        {t.name}
+                    </a>
+                ))
+            }
+        </div>
+    </AppSkeleton>
+</Layout>

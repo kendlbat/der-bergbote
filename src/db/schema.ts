@@ -8,11 +8,15 @@ import {
     uuid,
     unique,
     timestamp,
+    boolean,
+    primaryKey,
+    real,
 } from "drizzle-orm/pg-core";
 
 export const topicsTable = pgTable("topics", {
     id: uuid().defaultRandom().primaryKey(),
     name: varchar({ length: 255 }),
+    topicImage: text()
 });
 
 export const articlesTable = pgTable(
@@ -50,3 +54,20 @@ export const inventory = pgTable("inventory", {
     count: integer(),
     user: varchar({ length: 255 }).primaryKey(),
 });
+
+export const userArticles = pgTable(
+    "userArticles",
+    {
+        user: varchar({ length: 255 }),
+        article: uuid("article_id").references(() => articlesTable.id),
+        rating: real(),
+    },
+    (a) => [
+        {
+            pk: primaryKey({ columns: [a.article, a.user] }),
+        },
+    ]
+);
+
+export type Topic = typeof topicsTable.$inferSelect;
+export type Article = typeof articlesTable.$inferSelect;
