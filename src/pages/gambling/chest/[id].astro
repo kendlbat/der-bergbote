@@ -5,7 +5,7 @@ import ChestImage from "@/components/astro/ChestImage.astro";
 import Layout from "@/layouts/Layout.astro";
 import { balance, inventory } from "@/db/schema";
 import { db } from "@/db";
-import { sql } from "drizzle-orm";
+import { and, eq, sql } from "drizzle-orm";
 import { getSession } from "auth-astro/server";
 import ChestPullItemImage from "@/components/astro/ChestPullItemImage.astro";
 
@@ -37,8 +37,10 @@ if (!chest)
         status: 404,
     });
 
+let hasAlready: boolean = false;
+
 if (isPost) {
-    const bal = (
+    let bal = (
         await db
             .select()
             .from(balance)
@@ -58,11 +60,28 @@ if (isPost) {
         .set({ amount: bal - chest.cost })
         .where(sql`${balance.user} = ${user}`);
 
-    try {
+    bal = (
+        await db
+            .select()
+            .from(balance)
+            .where(sql`${balance.user} = ${user}`)
+    )[0]!!.amount;
+
+    hasAlready =
+        (
+            await db
+                .select()
+                .from(inventory)
+                .where(and(eq(inventory.user, user), eq(inventory.item, item)))
+        ).length > 0;
+
+    if (hasAlready) {
+        await db
+            .update(balance)
+            .set({ amount: bal + chest.cost })
+            .where(sql`${balance.user} = ${user}`);
+    } else {
         await db.insert(inventory).values({ user, item });
-    } catch (e) {
-        // Give user money instead
-        // TODO
     }
 }
 ---
@@ -70,8 +89,8 @@ if (isPost) {
 <Layout title={`Bergbote - ${chest.name}`}>
     {
         isPost ?
-            <a href="/gambling" data-astro-reload>
-                <ChestPullItemImage itemName={item} />
+            <a href={`/gambling?c=${id}`} data-astro-reload>
+                <ChestPullItemImage itemName={item} hasAlready={hasAlready} />
             </a>
         :   <form method="post">
                 <button

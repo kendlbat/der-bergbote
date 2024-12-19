@@ -3,12 +3,14 @@ import { Image } from "astro:assets";
 import { items } from "@/gambling/items";
 import { EquippableType, Rarity } from "@/gambling/enums";
 import BergBalance from "./BergBalance.astro";
+import fallbackSprite from "@/assets/items/empty.png";
 
 interface Props {
     itemName: string;
+    hasAlready: boolean;
 }
 
-const { itemName } = Astro.props;
+const { itemName, hasAlready } = Astro.props;
 
 const item = items[itemName];
 
@@ -70,8 +72,8 @@ if (source) {
 }
 
 const image = images![`${source}/${item.resourceName}.png`];
-
-const itemImage = (await image()).default;
+console.log(item.resourceName);
+const itemImage = image ? (await image()).default : fallbackSprite;
 ---
 
 <div class=`absolute w-full h-full left-0 top-0 ${color}` id="gambling-item-bg">
@@ -95,13 +97,22 @@ const itemImage = (await image()).default;
                     class="rounded-lg bg-background p-2 text-[1.4em] leading-6"
                 >
                     <h2 class="text-[1.5em]">{item.name}</h2>
-                    <span class="inline-block">
-                        <BergBalance
-                            amount={item.value}
-                            class="text-[0.75em]"
-                        />
-                    </span>
                     <p>{item.description}</p>
+                    {
+                        hasAlready && (
+                            <div>
+                                Da du dieses Item bereits besitzt, hast du
+                                stattdessen{" "}
+                                <span class="text-[0.4em] mr-1">
+                                    <BergBalance
+                                        amount={item.value}
+                                        class="inline-block w-min"
+                                    />{" "}
+                                </span>
+                                bekommen.
+                            </div>
+                        )
+                    }
                 </div>
             </div>
         </span>
