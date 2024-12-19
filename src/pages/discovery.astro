@@ -8,8 +8,9 @@ import { db } from "@/db";
 import bergboteNoLogo from "@/assets/bergbote_nologo.png";
 import ArticleGuessingCard from "@/components/astro/articles/ArticleGuessingCard.astro";
 import { getSession } from "auth-astro/server";
+import { sql } from "drizzle-orm";
 
-const articles = await db.select().from(articlesTable);
+const articles = await db.select().from(articlesTable).where(sql`${articlesTable.article}<>''`);
 const article = articles[Math.floor(Math.random() * articles.length)];
 
 const session = await getSession(Astro.request);

@@ -38,6 +38,7 @@ async function fillNewsData() {
                     source: report.source,
                     title: report.title,
                     articleLink: report.articleLink,
+                    article: report.article ?? "",
                     createdAt: new Date(report.createdAt || new Date()),
                 }))
             )
