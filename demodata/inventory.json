@@ -1,0 +1,27 @@
+[
+    {
+        "user": "tobias.kendlbacher@edu.htl-villach.at",
+        "item": "e1"
+    },
+    {
+        "user": "tobias.kendlbacher@edu.htl-villach.at",
+        "item": "e2"
+    },
+    {
+        "user": "tobias.kendlbacher@edu.htl-villach.at",
+        "item": "e3"
+    },
+    
+    {
+        "user": "matthias.tripolt@edu.htl-villach.at",
+        "item": "e1"
+    },
+    {
+        "user": "matthias.tripolt@edu.htl-villach.at",
+        "item": "e2"
+    },
+    {
+        "user": "matthias.tripolt@edu.htl-villach.at",
+        "item": "e3"
+    }
+]

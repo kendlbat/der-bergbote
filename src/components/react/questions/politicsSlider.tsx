@@ -2,9 +2,15 @@ import { Button } from "@/components/ui/button";
 import { Slider } from "@/components/ui/slider"
 import React from "react";
 
-export const PoliticsSlider: React.FC = () => {
+export const PoliticsSlider: React.FC<{ 
+    onValChange: (number: number) => void,
+    guess: number, 
+    actual: number | null,
+    handleClick: () => void 
+}> = ({ onValChange, guess, actual, handleClick }) => {
     const sections = ["Links", "Mitte-Links", "Mitte", "Mitte-Rechts", "Rechts"];
     const [section, setSection] = React.useState(2);
+
     return (
         <div className="flex flex-col items-center space-y-4">
             <div className="w-full max-w-xl relative">
@@ -22,14 +28,17 @@ export const PoliticsSlider: React.FC = () => {
                     ))}
                 </div>
                 <Slider
-                    defaultValue={[50]}
+                    defaultValue={actual ? [guess, actual] : [guess]}
                     max={100}
-                    onValueChange={(val) => setSection(Math.max(Math.ceil(val[0] / 20) - 1, 0))}
+                    onValueChange={(val) => {
+                        onValChange(val[0]);
+                        setSection(Math.max(Math.ceil(val[0] / 20) - 1, 0));
+                    }}
                     step={1}
                 />
                 <div className="flex w-full justify-between mt-3">
                     <p className="text-3xl">{sections[section]}</p>
-                    <Button>Bewerten</Button>
+                    <Button onClick={handleClick}>Bewerten</Button>
                 </div>
             </div>
         </div>
