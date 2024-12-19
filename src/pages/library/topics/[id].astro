@@ -25,7 +25,9 @@ const articles = await db
 
 <Layout title={"Bergbote - " + topic.name || "Bergbote - Topic not found"}>
     <AppSkeleton>
-        <h2 class="text-2xl p-3 leading-6">Thema: {topic.name}</h2>
+        <h2 class="text-2xl p-3 leading-6">
+            Thema: {topic.name}
+        </h2>
         <div>
             {articles.map((a) => <ArticleCard article={a} />)}
         </div>
