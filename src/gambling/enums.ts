@@ -1,9 +1,9 @@
 export enum Rarity {
-    COMMON = "Ramsch",
-    UNCOMMON = "Ungewöhnlich",
-    RARE = "Selten",
-    EPIC = "Episch",
-    LEGENDARY = "Legendär",
+    COMMON = "Ramschware",
+    UNCOMMON = "Touristen-Grade",
+    RARE = "Wanderer-Grade",
+    EPIC = "Bergsteiger-Grade",
+    LEGENDARY = "Gipfelware",
 }
 
 export enum EquippableType {
