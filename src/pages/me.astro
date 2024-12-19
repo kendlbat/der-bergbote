@@ -41,7 +41,6 @@ const userItems = await Promise.all(
                 `/src/assets/items/${items[i.item!!].type.toString()}/${items[i.item!!].resourceName}_item.png`
             ];
 
-        console.log(images);
         return {
             ...i,
             image: await getImage({
