@@ -7,7 +7,12 @@ interface Question {
     isTrue: boolean
 }
 
-export const Question: React.FC<{questions: Question[], user: string}> = ({ questions, user }) => {
+export const Question: React.FC<{
+    questions: Question[], 
+    user: string, 
+    actual: number,
+    source: string,
+}> = ({ questions, user, actual, source }) => {
     const [idx, setIdx] = React.useState(0);
     const [wrongAnswer, setWrongAnswer] = React.useState(false);
     const [position, setPosition] = React.useState(0);
@@ -15,7 +20,6 @@ export const Question: React.FC<{questions: Question[], user: string}> = ({ ques
     const [val, setVal] = React.useState(50);
     const [sliderKey, setSliderKey] = React.useState(0);
     const [coins, setCoins] = React.useState(0);
-    const actual = 30;
 
     const touchStartX = React.useRef<number | null>(null);
 
@@ -140,13 +144,16 @@ export const Question: React.FC<{questions: Question[], user: string}> = ({ ques
             />
             {
                 coins != 0 &&
-                <p>
-                    <span>Du hast {coins}</span>
-                    <Coin
-                        className="inline-block h-[1.2em] self-center aspect-square -mt-[1px]"
-                    />
-                    <span>erhalten</span>
-                </p>
+                <>
+                    <img src={"data:image/png;base64," + source} alt="source" className="object-contain bg-white p-1 rounded"/>
+                    <p>
+                        <span>Du hast {coins}</span>
+                        <Coin
+                            className="inline-block h-[1.2em] self-center aspect-square -mt-[1px]"
+                        />
+                        <span>erhalten</span>
+                    </p>
+                </>
             }
         </React.Fragment>
     )

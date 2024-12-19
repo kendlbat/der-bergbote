@@ -28,6 +28,7 @@ export const articlesTable = pgTable(
         title: varchar({ length: 512 }),
         articleLink: varchar({ length: 1024 }),
         article: text(),
+        alignment: integer(),
         createdAt: timestamp(),
         id: uuid().defaultRandom().primaryKey(),
     },
