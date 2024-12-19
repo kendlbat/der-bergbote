@@ -9,7 +9,7 @@ interface Props {
     height?: number;
 }
 
-const { i, class: className = "", width = 640, height = 640 } = Astro.props;
+const { i, class: className = "", width = 160, height = 160 } = Astro.props;
 if (!i.match(/^[a-z\-_0-9]+$/)) throw new Error(`Invalid item "${i}"`);
 const path = "/src/assets/items/" + i + ".png";
 
@@ -23,7 +23,7 @@ if (!icons[path]) throw new Error(`Item resource not found "${i}"`);
 <div class={className}>
     <Image
         src={icons[path]()}
-        class="w-full h-full object-contain"
+        class=""
         alt={i}
         width={width}
         height={height}
