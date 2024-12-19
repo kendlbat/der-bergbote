@@ -2,6 +2,7 @@
 import { Image } from "astro:assets";
 import { items } from "@/gambling/items";
 import { EquippableType, Rarity } from "@/gambling/enums";
+import BergBalance from "./BergBalance.astro";
 
 interface Props {
     itemName: string;
@@ -94,6 +95,12 @@ const itemImage = (await image()).default;
                     class="rounded-lg bg-background p-2 text-[1.4em] leading-6"
                 >
                     <h2 class="text-[1.5em]">{item.name}</h2>
+                    <span class="inline-block">
+                        <BergBalance
+                            amount={item.value}
+                            class="text-[0.75em]"
+                        />
+                    </span>
                     <p>{item.description}</p>
                 </div>
             </div>

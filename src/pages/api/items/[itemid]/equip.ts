@@ -3,6 +3,7 @@ import { equipped } from "@/db/schema";
 import { items } from "@/gambling/items";
 import type { APIRoute } from "astro";
 import { getSession } from "auth-astro/server";
+import { and, eq } from "drizzle-orm";
 
 export const POST: APIRoute = async ({ params, request }) => {
     const { itemid } = params;
@@ -16,18 +17,14 @@ export const POST: APIRoute = async ({ params, request }) => {
     if (!item) return new Response("Not Found", { status: 404 });
 
     await db
-        .insert(equipped)
-        .values({
-            user,
-            item: itemid,
-            slot: item.type,
-        })
-        .onConflictDoUpdate({
-            target: [equipped.user, equipped.slot],
-            set: {
-                item: itemid,
-            },
-        });
+        .delete(equipped)
+        .where(and(eq(equipped.user, user), eq(equipped.slot, item.type)));
+
+    await db.insert(equipped).values({
+        user,
+        item: itemid,
+        slot: item.type,
+    });
 
     return new Response("OK", { status: 200 });
 };
