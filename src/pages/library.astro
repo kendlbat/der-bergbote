@@ -15,6 +15,7 @@ const topics = await db.select().from(topicsTable);
             {
                 topics.map((t) => (
                     <a
+                        data-astro-prefetch
                         href={`/library/topics/${t.id}`}
                         class="border rounded-lg p-3 h-full"
                     >

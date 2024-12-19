@@ -14,6 +14,7 @@ const activeUrl = Astro.url.pathname;
 
 <a
     href={href}
+    data-astro-prefetch
     class={"p-1 px-3 flex justify-around rounded" +
         (activeUrl.startsWith(href) ? " bg-[#ffffff1e]" : "") +
         (main ? " basis-[25%]" : " basis-[18%]")}
