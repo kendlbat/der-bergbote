@@ -2,7 +2,7 @@ import { InventoryHover } from "./InventoryHover";
 import { useState } from "react";
 import { InventoryItem } from "./InventoryItem";
 const slotTypes = [
-    "skincolor",
+    "skin",
     "face",
     "eyes",
     "hair",
