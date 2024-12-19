@@ -11,7 +11,20 @@ export const Question: React.FC<{questions: Question[]}> = ({ questions }) => {
     const [wrongAnswer, setWrongAnswer] = React.useState(false);
     const [position, setPosition] = React.useState(0);
     const [rotation, setRotation] = React.useState(0);
+    const [val, setVal] = React.useState(50);
+    const [sliderKey, setSliderKey] = React.useState(0);
+    const actual = 30;
+
     const touchStartX = React.useRef<number | null>(null);
+
+    function handleGuess() {
+        const diff = Math.abs(val - actual)
+        let multiplier;
+        if (diff <= 20) multiplier = 3;
+        else if (diff <= 40) multiplier = 2;
+        else multiplier = 1;
+        setSliderKey(1);
+    }
 
     function handleQuestionAnswered(answer: boolean) {
         if (questions[idx].isTrue != answer) setWrongAnswer(true);
@@ -106,7 +119,13 @@ export const Question: React.FC<{questions: Question[]}> = ({ questions }) => {
     return (
         <React.Fragment>
             <h2 className="text-2xl mt-2">Politische Orientierung</h2>
-            <PoliticsSlider/>
+            <PoliticsSlider 
+                key={sliderKey} 
+                onValChange={(val) => setVal(val)}
+                guess={val}
+                actual={sliderKey ? actual : null}
+                handleClick={() => handleGuess()}
+            />
         </React.Fragment>
     )
 }

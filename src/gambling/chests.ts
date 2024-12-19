@@ -59,11 +59,17 @@ export const chests: Record<number, Chest> = {
     },
     4: {
         name: 'Im Angesicht der Tatsachen',
-        description:'',
+        description:'Let\'s face it, you should stop looking like the slenderman.',
         resourceName:'face_chest',
         cost:300,
         lootTable:{
-            
+            'f1':0.01,
+            'f2':0.04,
+            'f3':0.05,
+            'f4':0.1,
+            'f5':0.2,
+            'f6':0.1,
+            'f7':0.1
         },
         fallbackDrop:'f5'
     }
