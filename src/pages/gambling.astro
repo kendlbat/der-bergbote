@@ -48,103 +48,112 @@ const chest = chests[chestSelection];
                     id="chest-curr"
                     class="inline-block col-span-6 sm:col-span-4 bg-background z-[1] -mt-3"
                 >
-                    <div class="border rounded-lg p-4">
-                        <div class="h-[9em] aspect-square">
+                    <div
+                        class="border rounded-lg p-4 flex flex-row-reverse justify-between gap-3"
+                    >
+                        <div class="h-[9em] aspect-square float-right">
                             <ChestImage i={chest.resourceName} />
                         </div>
-                        <h2 class="text-[2em] leading-6">
-                            {chest.name}
-                        </h2>
-                        <span
-                            class="self-center text-[0.7em] -mt-1 inline-block"
-                        >
-                            <BergBalance amount={chest.cost} />
-                        </span>
-                        <p>{chest.description}</p>
-                        <div class="leading-5">
-                            <h3>Kann folgendes enthalten:</h3>
-                            {
-                                Object.entries(chest.lootTable)
-                                    .sort((a, b) => a[1] - b[1])
-                                    .map(([item, chance]) => (
-                                        <div>
-                                            <span>
-                                                {items[item].name}{" "}
-                                                {items[item].Rarity}
-                                            </span>
-                                            <span>
-                                                {Math.round(chance * 100) + "%"}
-                                            </span>
-                                        </div>
-                                    ))
-                            }
+                        <div>
+                            <h2 class="text-[2em] leading-6">
+                                {chest.name}
+                            </h2>
+                            <span
+                                class="self-center text-[0.7em] -mt-1 inline-block"
+                            >
+                                <BergBalance amount={chest.cost} />
+                            </span>
+                            <p class="leading-5 mb-2">{chest.description}</p>
+                            <div class="leading-5">
+                                <h3>Kann folgendes enthalten:</h3>
+                                {
+                                    Object.entries(chest.lootTable)
+                                        .sort((a, b) => a[1] - b[1])
+                                        .map(([item, chance]) => (
+                                            <div class="pl-3">
+                                                <span>
+                                                    {items[item].name}
+                                                    {" - "}
+                                                    {items[item].Rarity}
+                                                    {" - "}
+                                                </span>
+                                                <span>
+                                                    {Math.round(chance * 100) +
+                                                        "%"}
+                                                </span>
+                                            </div>
+                                        ))
+                                }
+                            </div>
                         </div>
                     </div>
+                    <a
+                        href={`/gambling?c=${next}`}
+                        class="hidden text-center sm:flex"
+                        id="chest-next"
+                        data-astro-prefetch="load"
+                    >
+                        <span class="m-auto text-[3em]">&gt;</span>
+                    </a>
                 </a>
-                <a
-                    href={`/gambling?c=${next}`}
-                    class="hidden text-center sm:flex"
-                    id="chest-next"
-                    data-astro-prefetch="load"
+                <p
+                    class="absolute bottom-0 left-1/2 -translate-x-1/2 sm:hidden text-nowrap pb-1"
                 >
-                    <span class="m-auto text-[3em]">&gt;</span>
-                </a>
+                    Wischen, um andere Truhen auszuwählen
+                </p>
             </div>
-            <p
-                class="absolute bottom-0 left-1/2 -translate-x-1/2 sm:hidden text-nowrap pb-1"
-            >
-                Wischen, um andere Truhen auszuwählen
-            </p>
         </div>
-    </AppSkeleton>
-</Layout>
 
-<script
-    is:inline
-    define:vars={{
-        c: chestSelection,
-        next,
-        prev,
-    }}
+        <script
+            is:inline
+            define:vars={{
+                c: chestSelection,
+                next,
+                prev,
+            }}
+        >
+            let touchstartX = 0;
+            let touchendX = 0;
+
+            function whichDirection() {
+                if (touchendX < touchstartX)
+                    document.querySelector("#chest-next").click();
+                if (touchendX > touchstartX)
+                    document.querySelector("#chest-prev").click();
+            }
+
+            const listener = () => {
+                document
+                    .querySelector("#swipe-detector")
+                    .addEventListener("touchstart", (evt) => {
+                        touchstartX = evt.changedTouches[0].screenX;
+                    });
+
+                document
+                    .querySelector("#swipe-detector")
+                    .addEventListener("touchmove", (evt) => {
+                        const delta =
+                            evt.changedTouches[0].screenX - touchstartX;
+                        document.querySelector("#chest-curr").style.marginLeft =
+                            `${delta}px`;
+                        document.querySelector(
+                            "#chest-curr"
+                        ).style.marginRight = `${delta * -1}px`;
+                        document.querySelector("#chest-curr").style.rotate =
+                            `${delta / 20000}turn`;
+                    });
+
+                document
+                    .querySelector("#swipe-detector")
+                    .addEventListener("touchend", (evt) => {
+                        touchendX = evt.changedTouches[0].screenX;
+                        whichDirection();
+                    });
+
+                document.removeEventListener("astro:page-load", listener);
+            };
+
+            document.addEventListener("astro:page-load", listener);
+        </script>
+    </AppSkeleton></Layout
 >
-    let touchstartX = 0;
-    let touchendX = 0;
-
-    function whichDirection() {
-        if (touchendX < touchstartX)
-            document.querySelector("#chest-next").click();
-        if (touchendX > touchstartX)
-            document.querySelector("#chest-prev").click();
-    }
-
-    const listener = () => {
-        document
-            .querySelector("#swipe-detector")
-            .addEventListener("touchstart", (evt) => {
-                touchstartX = evt.changedTouches[0].screenX;
-            });
-
-        document
-            .querySelector("#swipe-detector")
-            .addEventListener("touchmove", (evt) => {
-                const delta = evt.changedTouches[0].screenX - touchstartX;
-                document.querySelector("#chest-curr").style.marginLeft =
-                    `${delta}px`;
-                document.querySelector("#chest-curr").style.marginRight =
-                    `${delta * -1}px`;
-                document.querySelector("#chest-curr").style.rotate =
-                    `${delta / 20000}turn`;
-            });
-
-        document
-            .querySelector("#swipe-detector")
-            .addEventListener("touchend", (evt) => {
-                touchendX = evt.changedTouches[0].screenX;
-                whichDirection();
-            });
-
-        document.removeEventListener("astro:page-load", listener);
-    };
-
-    document.addEventListener("astro:page-load", listener);
-</script>

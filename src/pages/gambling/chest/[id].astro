@@ -5,7 +5,7 @@ import ChestImage from "@/components/astro/ChestImage.astro";
 import Layout from "@/layouts/Layout.astro";
 import { balance, inventory } from "@/db/schema";
 import { db } from "@/db";
-import { sql } from "drizzle-orm";
+import { and, eq, sql } from "drizzle-orm";
 import { getSession } from "auth-astro/server";
 import ChestPullItemImage from "@/components/astro/ChestPullItemImage.astro";
 
@@ -38,7 +38,7 @@ if (!chest)
     });
 
 if (isPost) {
-    const bal = (
+    let bal = (
         await db
             .select()
             .from(balance)
@@ -58,11 +58,26 @@ if (isPost) {
         .set({ amount: bal - chest.cost })
         .where(sql`${balance.user} = ${user}`);
 
-    try {
+    bal = (
+        await db
+            .select()
+            .from(balance)
+            .where(sql`${balance.user} = ${user}`)
+    )[0]!!.amount;
+
+    const hasAlready = await db
+        .select()
+        .from(inventory)
+        .where(and(eq(inventory.user, user), eq(inventory.item, item)));
+
+    if (hasAlready.length > 0) {
+        // Update balance
+        await db
+            .update(balance)
+            .set({ amount: bal + chest.cost })
+            .where(sql`${balance.user} = ${user}`);
+    } else {
         await db.insert(inventory).values({ user, item });
-    } catch (e) {
-        // Give user money instead
-        // TODO
     }
 }
 ---
