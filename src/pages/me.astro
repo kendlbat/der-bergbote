@@ -1,13 +1,44 @@
 ---
 import AppSkeleton from "@/components/astro/AppSkeleton.astro";
-import InventoryUI from "@/components/astro/inventory/InventoryUI.astro";
+import { InventoryUI } from "@/components/astro/inventory/InventoryUI";
 import { SignOut } from "@/components/react/auth/auth-buttons";
+import { db } from "@/db";
+import { inventory } from "@/db/schema";
 import Layout from "@/layouts/Layout.astro";
+import { getImage } from "astro:assets";
+import { getSession } from "auth-astro/server";
+import { sql } from "drizzle-orm";
+import { items } from "@/gambling/items";
+
+const session = await getSession(Astro.request);
+const user = session!!.user!!.email!!;
+const images = import.meta.glob<{ default: ImageMetadata }>(
+    "/src/assets/items/*.{gif,png}"
+);
+const userItems = await Promise.all(
+    (
+        await db
+            .select()
+            .from(inventory)
+            .where(sql`${user} = ${inventory.user}`)
+    ).map(async (i) => ({
+        ...i,
+        image: (
+            await getImage({
+                src: (
+                    await images[
+                        `/src/assets/items/${items[i.item!!].resourceName}.png`
+                    ]()
+                ).default,
+            })
+        ).src,
+    }))
+);
 ---
 
 <Layout title="Bergbote - My Profile">
     <AppSkeleton>
-        <InventoryUI/>
+        <InventoryUI client:load items={items} />
 
         <SignOut client:visible />
     </AppSkeleton>

@@ -1,0 +1,22 @@
+---
+import { chests } from "@/gambling/chests";
+import { openChest } from "@/gambling/chestFuns";
+
+const { idStr } = Astro.params;
+
+if (!idStr?.match(/^[0-9]+$/))
+    return new Response(null, {
+        status: 404,
+    });
+
+const id = parseInt(idStr || "");
+
+const chest = chests[id];
+
+if (!chest)
+    return new Response(null, {
+        status: 404,
+    });
+---
+
+{JSON.stringify(chest)}
