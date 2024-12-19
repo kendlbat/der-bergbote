@@ -29,6 +29,41 @@ class="rounded m-1 h-20 aspect-square"
 export const InventoryUI = (props) => {
     const [hoveredItem, setHoveredItem] = useState(-1);
     const [hoveredEquipped, setHoveredEquipped] = useState(-1);
+    const [contextUpdate, setContextUpdate] = useState({t: true});
+
+    async function unequipItem(itemID) {
+
+        if (!itemID)
+            return;
+
+        const response = await fetch(`/api/items/${itemID}/unequip`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            });
+
+        if (!response.ok) {
+            throw new Error(`Failed to equip item: ${response.statusText}`);
+        }
+
+        setContextUpdate({...contextUpdate});
+    }
+
+    async function equipItem(itemID) {
+        const response = await fetch(`/api/items/${itemID}/equip`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            });
+
+        if (!response.ok) {
+            throw new Error(`Failed to equip item: ${response.statusText}`);
+        }
+
+        setContextUpdate({...contextUpdate});
+    }
 
     return (
         <div>
@@ -68,6 +103,9 @@ export const InventoryUI = (props) => {
                                         className="border rounded-lg h-min w-min aspect-square"
                                         onMouseEnter={() => setHoveredItem(idx)}
                                         onMouseLeave={() => setHoveredItem(-1)}
+                                        onClick={() => {
+                                            equipItem(elmn.item);
+                                        }}
                                     >
                                         <InventoryItem
                                             className="h-[3em] w-[3em]"
@@ -103,6 +141,13 @@ export const InventoryUI = (props) => {
                             className="border rounded-lg aspect-square relative"
                             onMouseEnter={() => setHoveredEquipped(idx)}
                             onMouseLeave={() => setHoveredEquipped(-1)}
+                            onClick={() => {
+                                unequipItem(
+                                    props.items.find(
+                                        (it) => it.item == equippedInSlot?.item
+                                    )?.item
+                                );
+                            }}
                         >
                             <InventoryItem
                                 imageIcon={
@@ -110,6 +155,7 @@ export const InventoryUI = (props) => {
                                         (it) => it.item == equippedInSlot?.item
                                     )?.image
                                 }
+                                
                                 typeIcon={props.typeImages[slotIdx + ".png"]}
                             ></InventoryItem>
                         </div>
