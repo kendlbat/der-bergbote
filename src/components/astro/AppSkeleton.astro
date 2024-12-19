@@ -3,8 +3,62 @@ import LoginPage from "./auth/LoginPage.astro";
 import RequireAuth from "./auth/RequireAuth.astro";
 import Icon from "./Icon.astro";
 import BottomBarButton from "./BottomBarButton.astro";
-
+import { equipped } from "@/db/schema";
+import { db } from "@/db";
+import { getSession } from "auth-astro/server";
+import { sql } from "drizzle-orm";
+import { items } from "@/gambling/items";
+import { getImage, imageConfig } from "astro:assets";
+import {UserRenderer} from "@/components/react/user/userRenderer"
 const activeUrl = Astro.url.pathname;
+
+const session = await getSession(Astro.request);
+const user = session?.user?.email!!;
+
+const images = import.meta.glob<{ default: ImageMetadata }>(
+    "/src/assets/items/**.png"
+);
+
+
+if (!user)
+    return new Response(null, {
+        headers: {
+            location: "/",
+        },
+        status: 302,
+    });
+
+const userItems = await Promise.all(
+    (
+        await db
+            .select()
+            .from(equipped)
+            .where(sql`${user} = ${equipped.user}`)
+    ).map(async (i) => {
+        const img =
+            images[
+                `/src/assets/items/${items[i.item!!].type.toString()}/${items[i.item!!].resourceName}.png`
+            ] || 
+            images[
+                `/src/assets/items/empty.png`
+            ]
+
+        return {
+            ...i,
+            image: await getImage({
+                src: (await img()).default,
+            }),
+        };
+    })
+);
+
+const userBaseImage = import.meta.glob<{ default: ImageMetadata }>(
+    "/src/assets/icons/portrait_base.png"
+);
+
+const loadedImage = userBaseImage["/src/assets/icons/portrait_base.png"];
+
+const modifiedBaseImage = await getImage({src: (await loadedImage()).default})
 ---
 
 <RequireAuth>
@@ -15,7 +69,7 @@ const activeUrl = Astro.url.pathname;
         <div
             class="w-full flex justify-around justify-items-center flex-row flex-nowrap bg-secondary h-[4.5em] min-h-[4.5em]"
         >
-            <BottomBarButton href="/me" icon="portrait_base" />
+            <UserRenderer href="/me" loc={activeUrl} icon="portrait_base" equippedItems={userItems} baseIcon={modifiedBaseImage} />
             <BottomBarButton href="/gambling" icon="chest" />
             <BottomBarButton href="/home" icon="letter" main={true} />
             <BottomBarButton href="/leaderboard" icon="leaderboard" />

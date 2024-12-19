@@ -193,7 +193,7 @@ export const items: Items = {
     f4: {
         name: "Verwirrtes Gesicht",
         description: "",
-        resourceName: "clueles_face",
+        resourceName: "clueless_face",
         Rarity: Rarity.RARE,
         type: EquippableType.FACE,
         value: 1500,

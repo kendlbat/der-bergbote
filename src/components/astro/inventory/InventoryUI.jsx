@@ -1,6 +1,7 @@
 import { InventoryHover } from "./InventoryHover";
 import { useState } from "react";
 import { InventoryItem } from "./InventoryItem";
+import { items } from "@/gambling/items";
 const slotTypes = [
     "skin",
     "face",
@@ -29,7 +30,8 @@ class="rounded m-1 h-20 aspect-square"
 export const InventoryUI = (props) => {
     const [hoveredItem, setHoveredItem] = useState(-1);
     const [hoveredEquipped, setHoveredEquipped] = useState(-1);
-    const [contextUpdate, setContextUpdate] = useState({t: true});
+    const [itemsContext, setItemsContext] = useState(props.items ? props.items : []);
+    const [equippedContext, setEquippedContext] = useState(props.equipped ? props.equipped : []);
 
     async function unequipItem(itemID) {
 
@@ -46,8 +48,10 @@ export const InventoryUI = (props) => {
         if (!response.ok) {
             throw new Error(`Failed to equip item: ${response.statusText}`);
         }
-
-        setContextUpdate({...contextUpdate});
+        let newContext = [...equippedContext];
+        newContext = newContext.filter((e => e.item != itemID));
+        
+        setEquippedContext(newContext);
     }
 
     async function equipItem(itemID) {
@@ -61,20 +65,28 @@ export const InventoryUI = (props) => {
         if (!response.ok) {
             throw new Error(`Failed to equip item: ${response.statusText}`);
         }
+        let newContext = [...equippedContext];
+        let foundItem = itemsContext.find((e) => e?.item == itemID);
 
-        setContextUpdate({...contextUpdate});
+        let constructedObject = {
+            item: foundItem.item,
+            slot: items[foundItem.item].type,
+            user: foundItem.user,
+        };
+
+        newContext.push(constructedObject);
+        setEquippedContext(newContext);
     }
-
     return (
         <div>
             <h1 className="flex flex-row justify-center text-[2em] h-min align-middle">
                 Inventory
             </h1>
             <div className="flex flex-wrap gap-3">
-                {props.items
+                {itemsContext
                     .filter(
                         (it) =>
-                            !props.equipped.find((eq) => eq.item === it.item)
+                            !equippedContext.find((eq) => eq.item === it.item)
                     )
                     .map((elmn, idx) => {
                         return (
@@ -123,9 +135,13 @@ export const InventoryUI = (props) => {
             </h1>
             <div className="flex flex-wrap gap-3">
                 {slotTypes.map((slotIdx, idx) => {
-                    const equippedInSlot = props.equipped.find(
-                        (e) => e.slot == slotIdx
+                    const equippedInSlot = equippedContext.find(
+                        (e) => {
+                            return e.slot == slotIdx
+                        }
                     );
+
+                
                     return (
                         <div
                             key={slotIdx}
@@ -143,7 +159,7 @@ export const InventoryUI = (props) => {
                             onMouseLeave={() => setHoveredEquipped(-1)}
                             onClick={() => {
                                 unequipItem(
-                                    props.items.find(
+                                    itemsContext.find(
                                         (it) => it.item == equippedInSlot?.item
                                     )?.item
                                 );
@@ -151,7 +167,7 @@ export const InventoryUI = (props) => {
                         >
                             <InventoryItem
                                 imageIcon={
-                                    props.items.find(
+                                    itemsContext.find(
                                         (it) => it.item == equippedInSlot?.item
                                     )?.image
                                 }
