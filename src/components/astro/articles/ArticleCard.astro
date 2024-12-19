@@ -1,12 +1,4 @@
 ---
-import {
-    Card,
-    CardContent,
-    CardDescription,
-    CardFooter,
-    CardHeader,
-    CardTitle,
-} from "@/components/ui/card";
 import { articlesTable } from "@/db/schema";
 import redBook from "@/assets/books/red.png";
 import { Image } from "astro:assets";
@@ -36,10 +28,10 @@ const { article } = Astro.props;
         <img
             src={"data:image/png;base64," + article.source}
             alt="Provider Image"
-            class="h-[1em] object-contain bg-white p-1 rounded"
+            class="h-[0.8em] sm:h-[1em] object-contain bg-white p-1 rounded"
         />
-        <h3 class="pixelify">{article.title}</h3>
-        <p class="pixelify text-[0.7em] text-[#bbb]">
+        <h3 class="leading-5 text-[0.8em] sm:text-[1em]">{article.title}</h3>
+        <p class="leading-3 text-[0.7em] text-[#bbb]">
             {
                 article.createdAt?.toLocaleString("de-AT", {
                     dateStyle: "full",
