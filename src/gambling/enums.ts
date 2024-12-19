@@ -3,5 +3,5 @@ export enum rarity{
 }
 
 export enum equippableType{
-    SHIRT , PANTS , HAIR , SKIN , FACE, SHOES
+    SHIRT , PANTS , HAIR , SKIN , FACE, EYES, SHOES
 }
