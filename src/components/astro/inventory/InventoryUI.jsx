@@ -45,6 +45,7 @@ export const InventoryUI = (props) => {
                     .map((elmn, idx) => {
                         return (
                             <InventoryHover
+                                key={elmn.item}
                                 coin={() => {
                                     /*return (<BergBalance
                                 amount={elmn.value}
@@ -96,6 +97,7 @@ export const InventoryUI = (props) => {
                     );
                     return (
                         <div
+                            key={slotIdx}
                             style={{
                                 border: "3px solid gray",
                                 marginTop:
