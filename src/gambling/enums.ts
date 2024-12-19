@@ -1,8 +1,8 @@
 export enum Rarity {
     COMMON = "Ramschware",
-    UNCOMMON = "Touristen-Grade",
-    RARE = "Wanderer-Grade",
-    EPIC = "Bergsteiger-Grade",
+    UNCOMMON = "Touristenkrempel",
+    RARE = "Wanderbar",
+    EPIC = "Bergsteiger-Zertifiziert",
     LEGENDARY = "Gipfelware",
 }
 
