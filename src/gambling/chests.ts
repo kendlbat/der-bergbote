@@ -1,13 +1,16 @@
-interface Chests {
-    [chest_id: number]: Object;
+interface Chest {
+    name: string;
+    resourceName: string;
+    cost: number;
+    lootTable: Record<string, number>
 }
 
-export const chests: Chests = {
+export const chests: Record<number, Chest> = {
     1: {
-        'name':'Monokel Truhe',
-        'resourceName':'monocle_chest',
-        'cost': 500,
-        'lootTable':{
+        name:'Monokel Truhe',
+        resourceName:'monocle_chest',
+        cost: 500,
+        lootTable:{
             'e1':0.01,
             'e2':0.01,
             'e3':0.05,
