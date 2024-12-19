@@ -5,6 +5,8 @@ interface Items {
         resourceName: string;
         type: EquippableType;
         Rarity: Rarity;
+        name: string;
+        description: string;
     } & Record<string, any>;
 }
 

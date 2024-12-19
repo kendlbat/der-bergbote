@@ -8,7 +8,7 @@ interface Chest {
 }
 
 export const chests: Record<number, Chest> = {
-    1: {
+    0: {
         name: "Monokel Truhe",
         description: "Macht mich ein Monokel mich zu einem Zyklopen?",
         resourceName: "monocle_chest",
@@ -24,7 +24,7 @@ export const chests: Record<number, Chest> = {
         },
         fallbackDrop: "e7",
     },
-    2: {
+    1: {
         name: "Tuxedo-Box",
         description:
             "Berta Grumhart von Outfittery stellt für Ihren kommenden Ball im Schloss Schönbrunn die perfekte Garderobe zusammen.",
@@ -41,7 +41,7 @@ export const chests: Record<number, Chest> = {
         },
         fallbackDrop: "e7",
     },
-    3: {
+    2: {
         name: "Hautkiste",
         description: "Die Herkunft der Ware sollte nicht hinterfragt werden.",
         resourceName: "skin_chest",
@@ -58,7 +58,7 @@ export const chests: Record<number, Chest> = {
         },
         fallbackDrop: "s3",
     },
-    4: {
+    3: {
         name: "Im Angesicht der Tatsachen",
         description:
             "Let's face it, you should stop looking like the slenderman.",
