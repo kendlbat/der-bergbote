@@ -12,6 +12,8 @@ interface Props {
     title: string;
 }
 
+import favicon from "@/assets/favicon.png";
+
 const { title } = Astro.props;
 ---
 
@@ -42,7 +44,7 @@ const { title } = Astro.props;
             )
         }
         {pwaAssetsHead.links.map((link: any) => <link {...link} />)}
-        <link rel="icon" href="/icons/favicon.svg" />
+        <link rel="icon" href={favicon.src} />
         <title>{title}</title>
     </head>
 
