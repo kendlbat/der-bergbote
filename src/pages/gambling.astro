@@ -4,6 +4,7 @@ import BergBalance from "@/components/astro/BergBalance.astro";
 import ChestImage from "@/components/astro/ChestImage.astro";
 import Coin from "@/components/astro/Coin.astro";
 import { chests } from "@/gambling/chests";
+import { items } from "@/gambling/items";
 import Layout from "@/layouts/Layout.astro";
 import { getSession } from "auth-astro/server";
 
@@ -17,31 +18,104 @@ if (!user)
         },
         status: 302,
     });
+
+const chestSelection = parseInt(Astro.url.searchParams.get("c") || "0");
+const prev =
+    chestSelection == 0 ? Object.keys(chests).length - 1 : chestSelection - 1;
+const next =
+    chestSelection == Object.keys(chests).length - 1 ? 0 : chestSelection + 1;
+
+const id = chestSelection;
+const chest = chests[chestSelection];
 ---
 
 <Layout title="Bergbote - Gambling">
     <AppSkeleton>
-        <BergBalance />
-        <div
-            class="p-2 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 w-full h-full max-w-full gap-2"
-        >
-            {
-                Object.entries(chests).map(([id, chest]) => (
-                    <a href={`/gambling/chest/${id}`}>
-                        <div class="border rounded-lg p-4">
-                            <div class="h-[9em] aspect-square">
-                                <ChestImage i={id} />
-                            </div>
-                            <h2 class="text-[2em] leading-6">{chest.name}</h2>
-                            <span class="self-center text-[0.7em] -mt-1 inline-block">
-                                <BergBalance amount={chest.cost} />
-                            </span>
-                            <p>{chest.description}</p>
-                            {/*JSON.stringify(chest.lootTable)*/}
+        <div class="overflow-hidden relative h-full" id="swipe-detector">
+            <BergBalance />
+            <div
+                class="p-2 absolute left-1/2 h-max -translate-x-1/2 grid grid-cols-4 sm:grid-cols-6 gap-2 w-full"
+            >
+                <a
+                    href={`/gambling?c=${prev}`}
+                    class="hidden text-center sm:flex"
+                    ><span class="m-auto text-[3em]">&lt;</span></a
+                >
+                <a
+                    href={`/gambling/chest/${id}`}
+                    class="inline-block h-full col-span-6 sm:col-span-4"
+                >
+                    <div class="border rounded-lg p-4">
+                        <div class="h-[9em] aspect-square">
+                            <ChestImage i={chest.resourceName} />
                         </div>
-                    </a>
-                ))
-            }
+                        <h2 class="text-[2em] leading-6">
+                            {chest.name}
+                        </h2>
+                        <span
+                            class="self-center text-[0.7em] -mt-1 inline-block"
+                        >
+                            <BergBalance amount={chest.cost} />
+                        </span>
+                        <p>{chest.description}</p>
+                        <div>
+                            <h3>Kann folgendes enthalten:</h3>
+                            {
+                                Object.entries(chest.lootTable)
+                                    .sort((a, b) => a[1] - b[1])
+                                    .map(([item, chance]) => (
+                                        <div>
+                                            <span>{items[item].name}</span>
+                                            <span>
+                                                {Math.round(chance * 100) + "%"}
+                                            </span>
+                                        </div>
+                                    ))
+                            }
+                        </div>
+                    </div>
+                </a>
+                <a
+                    href={`/gambling?c=${next}`}
+                    class="hidden text-center sm:flex"
+                >
+                    <span class="m-auto text-[3em]">&gt;</span>
+                </a>
+            </div>
         </div>
     </AppSkeleton>
 </Layout>
+
+<script
+    is:inline
+    define:vars={{
+        c: chestSelection,
+        next,
+        prev,
+    }}
+>
+    let touchstartX = 0;
+    let touchendX = 0;
+
+    function whichDirection() {
+        if (touchendX < touchstartX)
+            window.location.href = "/gambling?c=" + next;
+        if (touchendX > touchstartX)
+            window.location.href = "/gambling?c=" + prev;
+    }
+
+    document.addEventListener("astro:page-load", () => {
+        document
+            .querySelector("#swipe-detector")
+            .addEventListener("touchstart", (evt) => {
+                touchstartX = evt.changedTouches[0].screenX;
+            });
+
+        document
+            .querySelector("#swipe-detector")
+            .addEventListener("touchend", (evt) => {
+                touchendX = evt.changedTouches[0].screenX;
+                whichDirection();
+            });
+    });
+</script>
