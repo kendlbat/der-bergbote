@@ -39,6 +39,7 @@ async function fillNewsData() {
                     title: report.title,
                     articleLink: report.articleLink,
                     article: report.article ?? "",
+                    alignment: report.alignment,
                     createdAt: new Date(report.createdAt || new Date()),
                 }))
             )
