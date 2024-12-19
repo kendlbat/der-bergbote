@@ -102,7 +102,7 @@ const itemImage = (await image()).default;
             opacity: 1;
         }
         100% {
-            transform: scale(1) rotate(3turn);
+            transform: scale(1) rotate(10turn);
             opacity: 0;
         }
     }
@@ -154,12 +154,14 @@ const itemImage = (await image()).default;
     }
 
     #item-reveal > * {
-        animation: item-reveal 8s cubic-bezier(0.895, 0.03, 0.685, 0.22);
+        /*cubic-bezier(0.895, 0.03, 0.685, 0.22)*/
+        animation: item-reveal 8s ease-in-out;
         opacity: 0;
+        filter: brightness(0);
     }
 
     #show-after-reveal > * {
-        animation: show-after-reveal 8s cubic-bezier(0.895, 0.03, 0.685, 0.22);
+        animation: show-after-reveal 8s ease-in-out;
         opacity: 1;
     }
 
