@@ -8,10 +8,15 @@ interface Question {
 
 export const Question: React.FC<{questions: Question[]}> = ({ questions }) => {
     const [idx, setIdx] = React.useState(0);
+    const [wrongAnswer, setWrongAnswer] = React.useState(false);
     const [position, setPosition] = React.useState(0);
     const [rotation, setRotation] = React.useState(0);
-    const [swipeDirection, setSwipeDirection] = React.useState<string | null>(null);
     const touchStartX = React.useRef<number | null>(null);
+
+    function handleQuestionAnswered(answer: boolean) {
+        if (questions[idx].isTrue != answer) setWrongAnswer(true);
+        else setIdx(idx + 1);
+    }
 
     const handleTouchStart = (e: React.TouchEvent<HTMLDivElement>) => {
         touchStartX.current = e.touches[0].clientX;
@@ -25,16 +30,11 @@ export const Question: React.FC<{questions: Question[]}> = ({ questions }) => {
 
         setPosition(deltaX);
         setRotation(deltaX / 50);
-
-        if (deltaX > 50) {
-            setSwipeDirection("right");
-        } else if (deltaX < -50) {
-            setSwipeDirection("left");
-        }
     };
 
     const handleTouchEnd = () => {
-        if (Math.abs(position) > 50) setIdx(idx + 1);
+        
+        if (Math.abs(position) > 50) handleQuestionAnswered(position < 0);
         touchStartX.current = null; // Reset the starting point
         setPosition(0);
         setRotation(0);
@@ -55,6 +55,13 @@ export const Question: React.FC<{questions: Question[]}> = ({ questions }) => {
         return 1 - Math.min(Math.abs(position) / 100, 1)
     }
 
+    if (wrongAnswer) return (
+        <React.Fragment>
+            <h3 className="text-2xl">Falsch</h3>
+            <p>Diese Frage hast du leider falsch beantwortet. Für diese Nachricht erhälst du keine Münzen</p>
+        </React.Fragment>
+    )
+
     if (idx <= 2) return (
         <React.Fragment>
             <h3 className="text-2xl mt-2">Fragen:</h3>
@@ -70,7 +77,7 @@ export const Question: React.FC<{questions: Question[]}> = ({ questions }) => {
             >
                 <div 
                     className="bg-green-600 w-10 content-center rounded-l-lg" 
-                    onClick={() => setIdx(idx + 1)}
+                    onClick={() => handleQuestionAnswered(true)}
                     style={{opacity: fadeAway(1)}}
                 >
                     <svg className="w-6 h-6 text-white m-auto" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
@@ -85,7 +92,7 @@ export const Question: React.FC<{questions: Question[]}> = ({ questions }) => {
                 </div>
                 <div 
                     className="bg-red-600 w-10 content-center rounded-r-lg" 
-                    onClick={() => setIdx(idx + 1)}
+                    onClick={() => handleQuestionAnswered(false)}
                     style={{opacity: fadeAway(2)}}
                 >
                     <svg className="w-6 h-6 text-white m-auto" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
