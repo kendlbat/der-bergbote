@@ -82,12 +82,14 @@ const itemImage = (await image()).default;
         />
     </span>
     <div id="show-after-reveal" class="w-full h-full fixed left-0 top-0">
-        <div class="absolute w-1/2 aspect-square z-[1]"></div>
-        <Image
-            src={itemImage}
-            class="w-full h-full object-contain m-auto z-[2]"
-            alt="Item"
-        />
+        <span>
+            <div class="absolute w-1/2 aspect-square z-[1]"></div>
+            <Image
+                src={itemImage}
+                class="w-full h-full object-contain m-auto z-[2]"
+                alt="Item"
+            />
+        </span>
     </div>
 </div>
 
@@ -160,7 +162,7 @@ const itemImage = (await image()).default;
         filter: brightness(0);
     }
 
-    #show-after-reveal > * {
+    #show-after-reveal > span {
         animation: show-after-reveal 8s ease-in-out;
         opacity: 1;
     }
@@ -201,3 +203,26 @@ const itemImage = (await image()).default;
         );
     }
 </style>
+
+<script is:inline>
+    const listener = (ev) => {
+        ev.preventDefault();
+        ev.stopPropagation();
+
+        globalThis.stopAllSounds();
+
+        document
+            .querySelector("#gambling-item-bg")
+            .removeEventListener("click", listener);
+        // Skip animation
+        document.querySelector("#item-reveal > *").style.animation = "none";
+        document.querySelector("#item-reveal > *").style.opacity = 0;
+        document.querySelector("#show-after-reveal > span").style.animation =
+            "none";
+        document.querySelector("#show-after-reveal > span").style.opacity =
+            "1 !important";
+    };
+    document
+        .querySelector("#gambling-item-bg")
+        .addEventListener("click", listener);
+</script>
