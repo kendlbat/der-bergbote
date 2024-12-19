@@ -143,43 +143,37 @@ export const items: Items = {
         resourceName: "roblox_man_face",
         rarity: rarity.LEGENDARY,
         type: equippableType.FACE,
-    },
-    f2: {
+    },f2: {
         name: "Schlangenmann",
         description: "",
         resourceName: "snake_guy_face",
         rarity: rarity.EPIC,
         type: equippableType.FACE,
-    },
-    f3: {
+    },f3: {
         name: "Warum is ans seiner Augen größer als des andre?",
         description: "",
         resourceName: "big_eye_smal_eye_face",
         rarity: rarity.EPIC,
         type: equippableType.FACE,
-    },
-    f4: {
+    },f4: {
         name: "Verwirrtes Gesicht",
         description: "",
         resourceName: "clueles_face",
         rarity: rarity.RARE,
         type: equippableType.FACE,
-    },
-    f5: {
+    },f5: {
         name: "Testgesicht",
         description: "",
         resourceName: "dummy_face",
         rarity: rarity.UNCOMMON,
         type: equippableType.FACE,
-    },
-    f6: {
+    },f6: {
         name: "Verängstigtes Gesicht",
         description: "",
         resourceName: "scared_face",
         rarity: rarity.UNCOMMON,
         type: equippableType.FACE,
-    },
-    f7: {
+    },f7: {
         name: "Müde ",
         description: "",
         resourceName: "sleepy_face",
