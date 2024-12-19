@@ -44,7 +44,7 @@ export const chests: Record<number, Chest> = {
         name:'Hautkiste',
         description:'Die Herkunft der Ware sollte nicht hinterfragt werden.',
         resourceName:'skin_chest',
-        cost: 300,
+        cost: 200,
         lootTable:{
             's1':0.15,
             's2':0.15,
@@ -57,4 +57,14 @@ export const chests: Record<number, Chest> = {
         },
         fallbackDrop:'s3'
     },
+    4: {
+        name: 'Im Angesicht der Tatsachen',
+        description:'',
+        resourceName:'face_chest',
+        cost:300,
+        lootTable:{
+            
+        },
+        fallbackDrop:'f5'
+    }
 };
