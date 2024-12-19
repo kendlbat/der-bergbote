@@ -1,13 +1,13 @@
 ---
 import AppSkeleton from "@/components/astro/AppSkeleton.astro";
-import InventoryUI from "@/components/astro/inventory/InventoryUI.astro";
+import { InventoryUI } from "@/components/astro/inventory/InventoryUI";
 import { SignOut } from "@/components/react/auth/auth-buttons";
 import Layout from "@/layouts/Layout.astro";
 ---
 
 <Layout title="Bergbote - My Profile">
     <AppSkeleton>
-        <InventoryUI/>
+        <InventoryUI client:visible />
 
         <SignOut client:visible />
     </AppSkeleton>
