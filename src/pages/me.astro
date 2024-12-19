@@ -3,17 +3,31 @@ import AppSkeleton from "@/components/astro/AppSkeleton.astro";
 import { InventoryUI } from "@/components/astro/inventory/InventoryUI";
 import { SignOut } from "@/components/react/auth/auth-buttons";
 import { db } from "@/db";
-import { inventory } from "@/db/schema";
+import { inventory, equipped } from "@/db/schema";
 import Layout from "@/layouts/Layout.astro";
 import { getImage } from "astro:assets";
 import { getSession } from "auth-astro/server";
 import { sql } from "drizzle-orm";
 import { items } from "@/gambling/items";
+import type { GetImageResult } from "astro";
 
 const session = await getSession(Astro.request);
 const user = session!!.user!!.email!!;
 const images = import.meta.glob<{ default: ImageMetadata }>(
-    "/src/assets/items/*.{gif,png}"
+    "/src/assets/items/*.png"
+);
+const types = import.meta.glob<{ default: ImageMetadata }>(
+    "/src/assets/itemTypes/*.png"
+);
+const typeImages: Record<string, GetImageResult> = Object.fromEntries(
+    await Promise.all(
+        Object.entries(types).map(async ([k, v]) => [
+            k.replace("/src/assets/itemTypes/", ""),
+            await getImage({
+                src: (await v()).default,
+            }),
+        ])
+    )
 );
 const userItems = await Promise.all(
     (
@@ -27,18 +41,24 @@ const userItems = await Promise.all(
             await getImage({
                 src: (
                     await images[
-                        `/src/assets/items/${items[i.item!!].resourceName}.png`
+                        `/src/assets/items/${items[i.item!!].type}/${items[i.item!!].resourceName}.png`
                     ]()
                 ).default,
             })
         ).src,
+        typeImage: typeImages[`${items[i.item!!].type}.png`],
     }))
 );
+
+const userEquipped = await db
+    .select()
+    .from(equipped)
+    .where(sql`${equipped.user} = ${user}`);
 ---
 
 <Layout title="Bergbote - My Profile">
     <AppSkeleton>
-        <InventoryUI client:load items={items} />
+        <InventoryUI client:load items={userItems} typeImages={typeImages} />
 
         <SignOut client:visible />
     </AppSkeleton>

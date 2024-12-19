@@ -1,6 +1,6 @@
 import { InventoryHover } from "./InventoryHover";
-import InventoryItem from "./InventoryItem.astro";
 import { useState } from "react";
+import { InventoryItem } from "./InventoryItem";
 
 const slotTypes = [
     "skincolor",
@@ -68,7 +68,7 @@ export const InventoryUI = (props) => {
                                     onMouseEnter={() => setHoveredItem(idx)}
                                     onMouseLeave={() => setHoveredItem(-1)}
                                 >
-                                    Test
+                                    <InventoryItem />
                                 </div>
                             </span>
                         </InventoryHover>
@@ -91,11 +91,20 @@ export const InventoryUI = (props) => {
                                         ? "#aaaaaa22"
                                         : "#aaaaaa00",
                             }}
-                            className="border rounded-lg p-3 h-min w-min aspect-square"
+                            className="border rounded-lg p-3 h-[5em] w-[5em] aspect-square relative"
                             onMouseEnter={() => setHoveredEquipped(idx)}
                             onMouseLeave={() => setHoveredEquipped(-1)}
                         >
-                            Test
+                            <img
+                                src={props.typeImages[slotIdx + ".png"].src}
+                                alt={slotIdx}
+                                className="w-full h-full p-1"
+                                style={{
+                                    position: "absolute",
+                                    top: "0",
+                                    left: "0",
+                                }}
+                            />
                         </div>
                     );
                 })}

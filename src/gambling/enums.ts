@@ -1,7 +1,17 @@
-export enum rarity{
-    COMMON, UNCOMMON, RARE, EPIC, LEGENDARY
+export enum Rarity {
+    COMMON,
+    UNCOMMON,
+    RARE,
+    EPIC,
+    LEGENDARY,
 }
 
-export enum equippableType{
-    SHIRT , PANTS , HAIR , SKIN , FACE, EYES, SHOES
+export enum EquippableType {
+    SHIRT = "shirt",
+    PANTS = "pants",
+    HAIR = "hair",
+    SKIN = "skin",
+    FACE = "face",
+    EYES = "eyes",
+    SHOES = "shoes",
 }
