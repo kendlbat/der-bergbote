@@ -14,7 +14,7 @@ import type { GetImageResult } from "astro";
 const session = await getSession(Astro.request);
 const user = session!!.user!!.email!!;
 const images = import.meta.glob<{ default: ImageMetadata }>(
-    "/src/assets/items/*.png"
+    "/src/assets/items/**.png"
 );
 const types = import.meta.glob<{ default: ImageMetadata }>(
     "/src/assets/itemTypes/*.png"
@@ -35,19 +35,21 @@ const userItems = await Promise.all(
             .select()
             .from(inventory)
             .where(sql`${user} = ${inventory.user}`)
-    ).map(async (i) => ({
-        ...i,
-        image: (
-            await getImage({
-                src: (
-                    await images[
-                        `/src/assets/items/${items[i.item!!].type}/${items[i.item!!].resourceName}.png`
-                    ]()
-                ).default,
-            })
-        ).src,
-        typeImage: typeImages[`${items[i.item!!].type}.png`],
-    }))
+    ).map(async (i) => {
+        const img =
+            images[
+                `/src/assets/items/${items[i.item!!].type.toString()}/${items[i.item!!].resourceName}_item.png`
+            ];
+
+        console.log(images);
+        return {
+            ...i,
+            image: await getImage({
+                src: (await img()).default,
+            }),
+            typeIcon: typeImages[`${items[i.item!!].type}.png`],
+        };
+    })
 );
 
 const userEquipped = await db
@@ -58,7 +60,12 @@ const userEquipped = await db
 
 <Layout title="Bergbote - My Profile">
     <AppSkeleton>
-        <InventoryUI client:load items={userItems} typeImages={typeImages} />
+        <InventoryUI
+            client:load
+            items={userItems}
+            typeImages={typeImages}
+            equipped={userEquipped}
+        />
 
         <SignOut client:visible />
     </AppSkeleton>

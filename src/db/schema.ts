@@ -48,14 +48,19 @@ export const inventory = pgTable("inventory", {
     user: varchar({ length: 255 }),
     id: uuid().defaultRandom().primaryKey(),
 });
-export const equipped = pgTable("equipped", {
-    item: varchar({ length: 255 }),
-    user: varchar({ length: 255 }),
-}, (t) => [
+export const equipped = pgTable(
+    "equipped",
     {
-        pk: primaryKey({ columns: [t.item, t.user] })
-    }
-]);
+        item: varchar({ length: 255 }),
+        slot: varchar({ length: 20 }),
+        user: varchar({ length: 255 }),
+    },
+    (t) => [
+        {
+            pk: primaryKey({ columns: [t.slot, t.user] }),
+        },
+    ]
+);
 
 export const userArticles = pgTable(
     "userArticles",

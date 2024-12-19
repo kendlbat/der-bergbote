@@ -3,17 +3,22 @@ import type React from "react";
 
 export const InventoryItem: React.FC<{
     className: string;
-    imageIcon: GetImageResult;
+    imageIcon?: GetImageResult;
     typeIcon: GetImageResult;
 }> = ({ className, imageIcon, typeIcon }) => {
     return (
         <div className={className}>
-            <img src={imageIcon.src} className="w-full h-full" alt={"Icon"} />
+            {imageIcon && (
+                <img
+                    src={imageIcon.src}
+                    className="w-full h-full"
+                    alt={"Icon"}
+                />
+            )}
             <img
                 src={typeIcon.src}
-                className="w-full h-full"
+                className="w-full h-full z-[1] m-1"
                 alt={"Type"}
-                style={{ position: "relative", top: "-90%", left: "15%" }}
             />
         </div>
     );

@@ -37,49 +37,63 @@ export const InventoryUI = (props) => {
                 Inventory
             </h1>
             <div className="flex flex-wrap gap-3">
-                {props.items.map((elmn, idx) => {
-                    return (
-                        <InventoryHover
-                            coin={() => {
-                                /*return (<BergBalance
+                {props.items
+                    .filter(
+                        (it) =>
+                            !props.equipped.find((eq) => eq.item === it.item)
+                    )
+                    .map((elmn, idx) => {
+                        return (
+                            <InventoryHover
+                                coin={() => {
+                                    /*return (<BergBalance
                                 amount={elmn.value}
                                 className="text-[0.5em]"
                             />);*/
-                                return <div>{elmn.value}</div>;
-                            }}
-                            item={elmn}
-                        >
-                            <span>
-                                <div
-                                    style={{
-                                        rotate:
-                                            hoveredItem == idx
-                                                ? "-5deg"
-                                                : "0deg",
-                                        border: "3px solid gray",
-                                        marginTop:
-                                            hoveredItem == idx ? "-4px" : "0px",
-                                        backgroundColor:
-                                            hoveredItem == idx
-                                                ? "#aaaaaa22"
-                                                : "#aaaaaa00",
-                                    }}
-                                    className="border rounded-lg p-3 h-min w-min aspect-square"
-                                    onMouseEnter={() => setHoveredItem(idx)}
-                                    onMouseLeave={() => setHoveredItem(-1)}
-                                >
-                                    <InventoryItem />
-                                </div>
-                            </span>
-                        </InventoryHover>
-                    );
-                })}
+                                    return <div>{elmn.value}</div>;
+                                }}
+                                item={elmn}
+                            >
+                                <span>
+                                    <div
+                                        style={{
+                                            rotate:
+                                                hoveredItem == idx
+                                                    ? "-5deg"
+                                                    : "0deg",
+                                            border: "3px solid gray",
+                                            marginTop:
+                                                hoveredItem == idx
+                                                    ? "-4px"
+                                                    : "0px",
+                                            backgroundColor:
+                                                hoveredItem == idx
+                                                    ? "#aaaaaa22"
+                                                    : "#aaaaaa00",
+                                        }}
+                                        className="border rounded-lg p-3 h-min w-min aspect-square"
+                                        onMouseEnter={() => setHoveredItem(idx)}
+                                        onMouseLeave={() => setHoveredItem(-1)}
+                                    >
+                                        <InventoryItem
+                                            className="h-[3em] w-[3em]"
+                                            imageIcon={elmn.image}
+                                            typeIcon={elmn.typeIcon}
+                                        />
+                                    </div>
+                                </span>
+                            </InventoryHover>
+                        );
+                    })}
             </div>
             <h1 class="flex flex-row justify-center text-[2em] h-min align-middle">
                 Equipped Items
             </h1>
             <div className="flex flex-wrap gap-3">
                 {slotTypes.map((slotIdx, idx) => {
+                    const equippedInSlot = props.equipped.find(
+                        (e) => e.slot == slotIdx
+                    );
                     return (
                         <div
                             style={{
@@ -95,16 +109,14 @@ export const InventoryUI = (props) => {
                             onMouseEnter={() => setHoveredEquipped(idx)}
                             onMouseLeave={() => setHoveredEquipped(-1)}
                         >
-                            <img
-                                src={props.typeImages[slotIdx + ".png"].src}
-                                alt={slotIdx}
-                                className="w-full h-full p-1"
-                                style={{
-                                    position: "absolute",
-                                    top: "0",
-                                    left: "0",
-                                }}
-                            />
+                            <InventoryItem
+                                imageIcon={
+                                    props.items.find(
+                                        (it) => it.item == equippedInSlot?.item
+                                    )?.image
+                                }
+                                typeIcon={props.typeImages[slotIdx + ".png"]}
+                            ></InventoryItem>
                         </div>
                     );
                 })}
