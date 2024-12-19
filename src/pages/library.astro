@@ -15,17 +15,27 @@ const topics = await db
 <Layout title="Bergbote - Articles">
     <AppSkeleton>
         <div
-            class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-3"
+            class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-3 p-2"
         >
             {
                 topics.map((t) => (
                     <a
                         data-astro-prefetch
                         href={`/library/topics/${t.id}`}
-                        class="border rounded-lg p-3 h-full"
+                        class="border rounded-lg h-full flex flex-col"
                     >
-                        <img src={"/api/topics/" + t.id + "/image"} alt="" />
-                        {t.name}
+                        <div class="flex-grow">
+                            <img
+                                src={"/api/topics/" + t.id + "/image"}
+                                class="rounded-t-lg w-full h-full"
+                                alt=""
+                            />
+                        </div>
+                        <p class="p-3 pt-2 leading-4 text-lg sm:h-16">
+                            {(t.name?.length || 0) > 70 ?
+                                t.name?.slice(0, 70) + "..."
+                            :   t.name}
+                        </p>
                     </a>
                 ))
             }

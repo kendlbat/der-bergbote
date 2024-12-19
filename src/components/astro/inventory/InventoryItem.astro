@@ -1,0 +1,50 @@
+---
+import type { ImageMetadata } from "astro";
+import { Image } from "astro:assets";
+
+interface Props {
+    i: string;
+    typeIco: string;
+    class?: string;
+    width?: number;
+    height?: number;
+}
+
+const { i, typeIco, class: className = "", width = 160, height = 160 } = Astro.props;
+if (!i.match(/^[a-z\-_0-9]+$/)) throw new Error(`Invalid item "${i}"`);
+const path = "/src/assets/items/" + i + ".png";
+
+if (!typeIco.match(/^[a-z\-_0-9]+$/)) throw new Error(`Invalid Type "${typeIco}"`);
+const pathType = "/src/assets/itemTypes/" + typeIco + ".png";
+
+
+const icons = import.meta.glob<{ default: ImageMetadata }>(
+    "/src/assets/items/*.{gif,png}"
+);
+
+const typeIcons = import.meta.glob<{ default: ImageMetadata }>(
+    "/src/assets/itemTypes/*.{gif,png}"
+);
+
+if (!icons[path]) throw new Error(`Item resource not found "${i}"`);
+if (!typeIcons[pathType]) throw new Error(`Item resource not found "${typeIco}"`);
+
+---
+
+<div class={className}>
+    <Image
+        src={icons[path]()}
+        class="w-full h-full"
+        alt={i}
+        width={width}
+        height={height}
+    />
+    <Image
+        src={typeIcons[pathType]()}
+        class="w-full h-full"
+        alt={pathType}
+        style={{position:"relative", top:"-90%", left:"15%"}}
+        width={width}
+        height={height}
+    />
+</div>
