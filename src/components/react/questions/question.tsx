@@ -1,4 +1,6 @@
+import { Slider } from "@/components/ui/slider";
 import React from "react";
+import { PoliticsSlider } from "./PoliticsSlider";
 
 interface Question {
     question: String,
@@ -33,34 +35,72 @@ export const Question: React.FC<{questions: Question[]}> = ({ questions }) => {
     };
 
     const handleTouchEnd = () => {
-        if (Math.abs(position) > 50) setIdx(idx < 2 ? idx + 1 : idx);
+        if (Math.abs(position) > 50) setIdx(idx + 1);
         touchStartX.current = null; // Reset the starting point
         setPosition(0);
         setRotation(0);
     };
 
-    return (
+    const calculateBackgroundColor = () => {
+        if (position < 0) {
+            return `rgba(22, 163, 74, ${Math.min(Math.abs(position) / 100, 1)})`;
+        } else if (position > 0) {
+            return `rgba(220, 38, 38, ${Math.min(Math.abs(position) / 100, 1)})`;
+        }
+        return "transparent";
+    };
+
+    const fadeAway = (col: number = 0) => {
+        if (col == 1 && position < 0) return 1;
+        if (col == 2 && position > 0) return 1;
+        return 1 - Math.min(Math.abs(position) / 100, 1)
+    }
+
+    if (idx <= 2) return (
         <React.Fragment>
             <h3 className="text-2xl mt-2">Fragen:</h3>
-            <div className="flex justify-center" style={{transform: `translateX(${position}px) rotate(${rotation}deg)`, transition: "transform 0.3s ease"}}
+            <div className="flex justify-center rounded-lg" 
+                style={{
+                    transform: `translateX(${position}px) rotate(${rotation}deg)`,
+                    backgroundColor: calculateBackgroundColor(),
+                    transition: position === 0 ? "background-color 0.3s ease, transform 0.3s ease" : "none",
+                }}
                 onTouchStart={handleTouchStart}
                 onTouchMove={handleTouchMove}
                 onTouchEnd={handleTouchEnd}
             >
-                <div className="bg-green-600 w-10" onClick={() => setIdx(idx < 2 ? idx + 1 : idx)}>
+                <div 
+                    className="bg-green-600 w-10 content-center rounded-l-lg" 
+                    onClick={() => setIdx(idx + 1)}
+                    style={{opacity: fadeAway(1)}}
+                >
                     <svg className="w-6 h-6 text-white m-auto" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
                         <path stroke="white" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 11.917 9.724 16.5 19 7.5"/>
                     </svg>
                 </div>
-                <div className="bg-white px-2 text-black w-[calc(100%-5rem)] text-center">
+                <div 
+                    className="bg-white px-2 text-black w-[calc(100%-5rem)] text-center"
+                    style = {{ opacity: fadeAway()}}
+                >
                     {questions[idx].question}
                 </div>
-                <div className="bg-red-600 w-10" onClick={() => setIdx(idx < 2 ? idx + 1 : idx)}>
+                <div 
+                    className="bg-red-600 w-10 content-center rounded-r-lg" 
+                    onClick={() => setIdx(idx + 1)}
+                    style={{opacity: fadeAway(2)}}
+                >
                     <svg className="w-6 h-6 text-white m-auto" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
                         <path stroke="white" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18 17.94 6M18 18 6.06 6"/>
                     </svg>
                 </div>
             </div>
+        </React.Fragment>
+    )
+
+    return (
+        <React.Fragment>
+            <h2 className="text-2xl mt-2">Politische Orientierung</h2>
+            <PoliticsSlider/>
         </React.Fragment>
     )
 }
