@@ -63,6 +63,10 @@ export const chests: Record<number, Chest> = {
         resourceName:'face_chest',
         cost:300,
         lootTable:{
+            'f1':0.01,
+            'f2':0.04,
+            'f3':0.05,
+            ''
             
         },
         fallbackDrop:'f5'

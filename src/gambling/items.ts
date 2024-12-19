@@ -71,48 +71,56 @@ export const items: Items = {
     's1':{
         name:'Dunkel',
         description:'',
+        resourceName:'dark',
         hex:'#8d5524',
         rarity: rarity.UNCOMMON,
         type: equippableType.SKIN
     },'s2':{
         name:'Braun',
         description:'',
+        resourceName:'brown',
         hex:'#c68642',
         rarity: rarity.UNCOMMON,
         type: equippableType.SKIN
     },'s3':{
         name:'Gebräunt',
         description:'',
+        resourceName:'browned',
         hex:'#e0ac69',
         rarity: rarity.UNCOMMON,
         type: equippableType.SKIN
     },'s4':{
         name:'Weiss',
         description:'',
+        resourceName:'white',
         hex:'#f1c27d',
         rarity: rarity.UNCOMMON,
         type: equippableType.SKIN
     },'s5':{
         name:'Blass',
         description:'',
+        resourceName:'pale',
         hex:'#ffdbac',
         rarity: rarity.UNCOMMON,
         type: equippableType.SKIN
     },'s6':{
         name:'Schwarz',
         description:'Aber wirklich',
+        resourceName:'black',
         hex:'#000000',
         rarity:rarity.LEGENDARY,
         type: equippableType.SKIN
     },'s7':{
         name:'Waldmeister',
         description:'Schmeckt nach Waldmeister :(',
+        resourceName:'waldmeister',
         hex:'#304529',
         rarity:rarity.EPIC,
         type: equippableType.SKIN
     },'s8':{
         name:'Minze',
         description:'Guten morgen, frisch würtzig',
+        resourceName:'mint',
         hex:'#3EB489',
         rarity:rarity.RARE,
         type: equippableType.SKIN
