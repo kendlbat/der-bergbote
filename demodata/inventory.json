@@ -1,9 +1,29 @@
 [
-    {
-        "user": "tobias.kendlbacher@edu.htl-villach.at",
-        "item": "e1"
-    },
-
+    { "item": "e1", "user": "tobias.kendlbacher@edu.htl-villach.at" },
+    { "item": "e2", "user": "tobias.kendlbacher@edu.htl-villach.at" },
+    { "item": "e3", "user": "tobias.kendlbacher@edu.htl-villach.at" },
+    { "item": "e4", "user": "tobias.kendlbacher@edu.htl-villach.at" },
+    { "item": "e5", "user": "tobias.kendlbacher@edu.htl-villach.at" },
+    { "item": "e6", "user": "tobias.kendlbacher@edu.htl-villach.at" },
+    { "item": "e7", "user": "tobias.kendlbacher@edu.htl-villach.at" },
+    { "item": "e8", "user": "tobias.kendlbacher@edu.htl-villach.at" },
+    { "item": "e9", "user": "tobias.kendlbacher@edu.htl-villach.at" },
+    { "item": "e10", "user": "tobias.kendlbacher@edu.htl-villach.at" },
+    { "item": "s1", "user": "tobias.kendlbacher@edu.htl-villach.at" },
+    { "item": "s2", "user": "tobias.kendlbacher@edu.htl-villach.at" },
+    { "item": "s3", "user": "tobias.kendlbacher@edu.htl-villach.at" },
+    { "item": "s4", "user": "tobias.kendlbacher@edu.htl-villach.at" },
+    { "item": "s5", "user": "tobias.kendlbacher@edu.htl-villach.at" },
+    { "item": "s6", "user": "tobias.kendlbacher@edu.htl-villach.at" },
+    { "item": "s7", "user": "tobias.kendlbacher@edu.htl-villach.at" },
+    { "item": "s8", "user": "tobias.kendlbacher@edu.htl-villach.at" },
+    { "item": "f1", "user": "tobias.kendlbacher@edu.htl-villach.at" },
+    { "item": "f2", "user": "tobias.kendlbacher@edu.htl-villach.at" },
+    { "item": "f3", "user": "tobias.kendlbacher@edu.htl-villach.at" },
+    { "item": "f4", "user": "tobias.kendlbacher@edu.htl-villach.at" },
+    { "item": "f5", "user": "tobias.kendlbacher@edu.htl-villach.at" },
+    { "item": "f6", "user": "tobias.kendlbacher@edu.htl-villach.at" },
+    { "item": "f7", "user": "tobias.kendlbacher@edu.htl-villach.at" },
     {
         "user": "matthias.tripolt@edu.htl-villach.at",
         "item": "e1"

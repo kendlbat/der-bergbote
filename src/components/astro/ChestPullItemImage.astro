@@ -72,7 +72,7 @@ if (source) {
 }
 
 const image = images![`${source}/${item.resourceName}.png`];
-
+console.log(item.resourceName);
 const itemImage = image ? (await image()).default : fallbackSprite;
 ---
 
