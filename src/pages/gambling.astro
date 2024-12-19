@@ -40,7 +40,7 @@ const chest = chests[chestSelection];
                     href={`/gambling?c=${prev}`}
                     class="hidden text-center sm:flex"
                     id="chest-prev"
-                    data-astro-preload="load"
+                    data-astro-prefetch="viewport"
                     ><span class="m-auto text-[3em]">&lt;</span></a
                 >
                 <a
@@ -82,7 +82,7 @@ const chest = chests[chestSelection];
                     href={`/gambling?c=${next}`}
                     class="hidden text-center sm:flex"
                     id="chest-next"
-                    data-astro-preload="load"
+                    data-astro-prefetch="viewport"
                 >
                     <span class="m-auto text-[3em]">&gt;</span>
                 </a>
@@ -114,7 +114,7 @@ const chest = chests[chestSelection];
             document.querySelector("#chest-prev").click();
     }
 
-    document.addEventListener("astro:page-load", () => {
+    const listener = () => {
         document
             .querySelector("#swipe-detector")
             .addEventListener("touchstart", (evt) => {
@@ -139,5 +139,9 @@ const chest = chests[chestSelection];
                 touchendX = evt.changedTouches[0].screenX;
                 whichDirection();
             });
-    });
+
+        document.removeEventListener("astro:page-load", listener);
+    };
+
+    document.addEventListener("astro:page-load", listener);
 </script>
