@@ -37,6 +37,8 @@ if (!chest)
         status: 404,
     });
 
+let hasAlready: boolean = false;
+
 if (isPost) {
     let bal = (
         await db
@@ -65,13 +67,15 @@ if (isPost) {
             .where(sql`${balance.user} = ${user}`)
     )[0]!!.amount;
 
-    const hasAlready = await db
-        .select()
-        .from(inventory)
-        .where(and(eq(inventory.user, user), eq(inventory.item, item)));
+    hasAlready =
+        (
+            await db
+                .select()
+                .from(inventory)
+                .where(and(eq(inventory.user, user), eq(inventory.item, item)))
+        ).length > 0;
 
-    if (hasAlready.length > 0) {
-        // Update balance
+    if (hasAlready) {
         await db
             .update(balance)
             .set({ amount: bal + chest.cost })
@@ -86,7 +90,7 @@ if (isPost) {
     {
         isPost ?
             <a href={`/gambling?c=${id}`} data-astro-reload>
-                <ChestPullItemImage itemName={item} />
+                <ChestPullItemImage itemName={item} hasAlready={hasAlready} />
             </a>
         :   <form method="post">
                 <button
