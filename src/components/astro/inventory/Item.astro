@@ -1,0 +1,31 @@
+---
+import type { ImageMetadata } from "astro";
+import { Image } from "astro:assets";
+
+interface Props {
+    i: string;
+    class?: string;
+    width?: number;
+    height?: number;
+}
+
+const { i, class: className = "", width = 640, height = 640 } = Astro.props;
+if (!i.match(/^[a-z\-_0-9]+$/)) throw new Error(`Invalid item "${i}"`);
+const path = "/src/assets/items/" + i + ".png";
+
+const icons = import.meta.glob<{ default: ImageMetadata }>(
+    "/src/assets/items/*.{gif,png}"
+);
+
+if (!icons[path]) throw new Error(`Item resource not found "${i}"`);
+---
+
+<div class={className}>
+    <Image
+        src={icons[path]()}
+        class="w-full h-full object-contain"
+        alt={i}
+        width={width}
+        height={height}
+    />
+</div>
