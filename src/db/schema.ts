@@ -45,11 +45,19 @@ export const balance = pgTable("balance", {
     amount: integer().notNull().default(0),
 });
 
-export const inventory = pgTable("inventory", {
-    item: varchar({ length: 255 }),
-    user: varchar({ length: 255 }),
-    id: uuid().defaultRandom().primaryKey(),
-});
+export const inventory = pgTable(
+    "inventory",
+    {
+        item: varchar({ length: 255 }),
+        user: varchar({ length: 255 }),
+        id: uuid().defaultRandom().primaryKey(),
+    },
+    (t) => [
+        {
+            uq: unique("uq_inventory_user_item").on(t.item, t.user),
+        },
+    ]
+);
 export const equipped = pgTable(
     "equipped",
     {

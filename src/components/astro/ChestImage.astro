@@ -18,4 +18,9 @@ const ci = chestImages[`/src/assets/chests/${i}.png`];
 const chestImage = ci ? (await ci()).default : chest;
 ---
 
-<Image src={chestImage} class="w-full h-full object-contain" alt="Chest" />
+<Image
+    src={chestImage}
+    quality="max"
+    class="w-full h-full object-contain"
+    alt="Chest"
+/>

@@ -1,14 +1,14 @@
 ---
-import { Image } from 'astro:assets';
-import { items } from '@/gambling/items';
-import type { GetImageResult } from 'astro';
-import { EquippableType, Rarity } from '@/gambling/enums';
+import { Image } from "astro:assets";
+import { items } from "@/gambling/items";
+import type { GetImageResult } from "astro";
+import { EquippableType, Rarity } from "@/gambling/enums";
 
 interface Props {
-    itemName: string
+    itemName: string;
 }
 
-const {itemName} = Astro.props;
+const { itemName } = Astro.props;
 
 const item = items[itemName];
 
@@ -16,55 +16,57 @@ let source = "/src/assets/items/";
 
 switch (item.type) {
     case EquippableType.EYES: {
-        source += "eyes"
+        source += "eyes";
         break;
-    };
+    }
     case EquippableType.FACE: {
         source += "face";
         break;
-    };
+    }
     case EquippableType.HAIR: {
         source += "hair";
         break;
-    };
+    }
     case EquippableType.SKIN: {
         source += "skin";
         break;
     }
-    default: {source = ""};
+    default: {
+        source = "";
+    }
 }
 
 let color: string;
 
 switch (item.Rarity) {
     case Rarity.COMMON: {
-        color = "gambling-item-common"
+        color = "gambling-item-common";
         break;
-    };
+    }
     case Rarity.UNCOMMON: {
-        color = "gambling-item-uncommon"
+        color = "gambling-item-uncommon";
         break;
     }
     case Rarity.RARE: {
-        color = "gambling-item-rare"
+        color = "gambling-item-rare";
         break;
     }
     case Rarity.EPIC: {
-        color = "gambling-item-epic"
+        color = "gambling-item-epic";
         break;
     }
     case Rarity.LEGENDARY: {
-        color = "gambling-item-legendary"
+        color = "gambling-item-legendary";
         break;
     }
 }
 
-let images: Record<string, () => Promise<{default: ImageMetadata}>>;
+let images: Record<string, () => Promise<{ default: ImageMetadata }>>;
 
 if (source) {
-    images = import.meta.glob<{ default: ImageMetadata}>(
+    images = import.meta.glob<{ default: ImageMetadata }>(
         "/src/assets/items/**.png"
-    )
+    );
 }
 
 const image = images![`${source}/${item.resourceName}.png`];
@@ -73,10 +75,53 @@ const itemImage = (await image()).default;
 ---
 
 <div class=`absolute w-full h-full left-0 top-0 ${color}` id="gambling-item-bg">
-    <Image src={itemImage} class="w-full h-full object-contain" alt="Item" />
+    <span id="item-reveal">
+        <Image
+            src={itemImage}
+            class="w-full h-full object-contain"
+            alt="Item"
+        />
+    </span>
+    <div id="show-after-reveal" class="w-full h-full fixed left-0 top-0">
+        <div class="absolute w-1/2 aspect-square z-[1]"></div>
+        <Image
+            src={itemImage}
+            class="w-full h-full object-contain m-auto z-[2]"
+            alt="Item"
+        />
+    </div>
 </div>
 
 <style>
+    @keyframes item-reveal {
+        0% {
+            transform: scale(0) rotate(0turn);
+            opacity: 1;
+        }
+
+        99.99% {
+            opacity: 1;
+        }
+        100% {
+            transform: scale(1) rotate(3turn);
+            opacity: 0;
+        }
+    }
+
+    @keyframes show-after-reveal {
+        0% {
+            opacity: 0;
+        }
+
+        99.99% {
+            opacity: 0;
+        }
+
+        100% {
+            opacity: 1;
+        }
+    }
+
     @keyframes gambling-bg {
         0% {
             rotate: 0turn;
@@ -107,6 +152,16 @@ const itemImage = (await image()).default;
             hsl(0, 0%, 50%) 5%,
             hsl(0, 0%, 50%) 10%
         );
+    }
+
+    #item-reveal > * {
+        animation: item-reveal 8s cubic-bezier(0.895, 0.03, 0.685, 0.22);
+        opacity: 0;
+    }
+
+    #show-after-reveal > * {
+        animation: show-after-reveal 8s cubic-bezier(0.895, 0.03, 0.685, 0.22);
+        opacity: 1;
     }
 
     .gambling-item-uncommon::before {

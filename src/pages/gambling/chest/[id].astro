@@ -57,10 +57,13 @@ if (isPost) {
         .update(balance)
         .set({ amount: bal - chest.cost })
         .where(sql`${balance.user} = ${user}`);
-    
-    /*await db
-        .insert(inventory)
-        .values({user, item});*/
+
+    try {
+        await db.insert(inventory).values({ user, item });
+    } catch (e) {
+        // Give user money instead
+        // TODO
+    }
 }
 ---
 
@@ -68,7 +71,7 @@ if (isPost) {
     {
         isPost ?
             <a href="/gambling" data-astro-reload>
-                <ItemImage itemName={item}/>
+                <ItemImage itemName={item} />
             </a>
         :   <form method="post">
                 <button

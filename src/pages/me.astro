@@ -10,6 +10,14 @@ import { getSession } from "auth-astro/server";
 import { sql } from "drizzle-orm";
 import { items } from "@/gambling/items";
 import type { GetImageResult } from "astro";
+import empty from "@/assets/items/empty.png";
+
+const images = import.meta.glob<{ default: ImageMetadata }>(
+    "/src/assets/items/**.png"
+);
+const types = import.meta.glob<{ default: ImageMetadata }>(
+    "/src/assets/itemTypes/*.png"
+);
 
 const session = await getSession(Astro.request);
 const user = session?.user?.email!!;
@@ -22,12 +30,6 @@ if (!user)
         status: 302,
     });
 
-const images = import.meta.glob<{ default: ImageMetadata }>(
-    "/src/assets/items/**.png"
-);
-const types = import.meta.glob<{ default: ImageMetadata }>(
-    "/src/assets/itemTypes/*.png"
-);
 const typeImages: Record<string, GetImageResult> = Object.fromEntries(
     await Promise.all(
         Object.entries(types).map(async ([k, v]) => [
@@ -48,7 +50,7 @@ const userItems = await Promise.all(
         const img =
             images[
                 `/src/assets/items/${items[i.item!!].type.toString()}/${items[i.item!!].resourceName}_item.png`
-            ];
+            ] || (async () => ({ default: empty }));
 
         return {
             ...i,
