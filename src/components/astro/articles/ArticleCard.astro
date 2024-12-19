@@ -30,8 +30,10 @@ const { article } = Astro.props;
             alt="Provider Image"
             class="h-[0.8em] sm:h-[1em] object-contain bg-white p-1 rounded"
         />
-        <h3 class="leading-5 text-[0.8em] sm:text-[1em]">{article.title}</h3>
-        <p class="leading-3 text-[0.7em] text-[#bbb]">
+        <h3 class="leading-5 sm:leading-normal text-[0.8em] sm:text-[1em]">
+            {article.title}
+        </h3>
+        <p class="leading-3 sm:leading-normal text-[0.7em] text-[#bbb]">
             {
                 article.createdAt?.toLocaleString("de-AT", {
                     dateStyle: "full",
