@@ -1,8 +1,6 @@
 import { InventoryHover } from "./InventoryHover";
 import { useState } from "react";
 import { InventoryItem } from "./InventoryItem";
-import { ReactBergBalance } from "@/components/react/react-balance";
-
 const slotTypes = [
     "skincolor",
     "face",
