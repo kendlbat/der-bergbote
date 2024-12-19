@@ -1,9 +1,9 @@
 export enum Rarity {
-    COMMON,
-    UNCOMMON,
-    RARE,
-    EPIC,
-    LEGENDARY,
+    COMMON = "Ramsch",
+    UNCOMMON = "Ungewöhnlich",
+    RARE = "Selten",
+    EPIC = "Episch",
+    LEGENDARY = "Legendär",
 }
 
 export enum EquippableType {

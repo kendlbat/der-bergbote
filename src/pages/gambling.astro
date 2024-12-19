@@ -68,7 +68,10 @@ const chest = chests[chestSelection];
                                     .sort((a, b) => a[1] - b[1])
                                     .map(([item, chance]) => (
                                         <div>
-                                            <span>{items[item].name}</span>
+                                            <span>
+                                                {items[item].name}{" "}
+                                                {items[item].Rarity}
+                                            </span>
                                             <span>
                                                 {Math.round(chance * 100) + "%"}
                                             </span>
