@@ -1,5 +1,6 @@
 interface Chest {
     name: string;
+    description: string;
     resourceName: string;
     cost: number;
     lootTable: Record<string, number>
@@ -8,6 +9,7 @@ interface Chest {
 export const chests: Record<number, Chest> = {
     1: {
         name:'Monokel Truhe',
+        description:'',
         resourceName:'monocle_chest',
         cost: 500,
         lootTable:{
@@ -19,5 +21,10 @@ export const chests: Record<number, Chest> = {
             'e6':0.3,
             'e7':0.38  
         },
+    },
+    /*
+    2: {
+        name:'Outfittery 1850'
     }
+        */
 };
