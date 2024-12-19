@@ -46,6 +46,19 @@ const { title } = Astro.props;
         {pwaAssetsHead.links.map((link: any) => <link {...link} />)}
         <link rel="icon" href={favicon.src} />
         <title>{title}</title>
+
+        <script is:inline>
+            globalThis.playSound = async (name) => {
+                const audio = document.createElement("audio");
+                audio.src = `/sounds/${name}`;
+                audio.addEventListener("ended", (ev) => {
+                    audio.remove();
+                });
+                document.body.appendChild(audio);
+                await audio.play();
+                return audio;
+            };
+        </script>
     </head>
 
     <body class="absolute w-full h-full left-0 top-0">
