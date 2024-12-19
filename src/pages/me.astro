@@ -41,6 +41,9 @@ const typeImages: Record<string, GetImageResult> = Object.fromEntries(
         ])
     )
 );
+
+console.log("TYPE IMAGES: "+JSON.stringify(typeImages));
+
 const userItems = await Promise.all(
     (
         await db
@@ -51,7 +54,7 @@ const userItems = await Promise.all(
         const img =
             images[
                 `/src/assets/items/${items[i.item!!].type.toString()}/${items[i.item!!].resourceName}_item.png`
-            ] || (async () => ({ default: empty }));
+            ] || images[`/src/assets/items/${items[i.item!!].type.toString()}/${items[i.item!!].resourceName}.png`]
 
         return {
             ...i,
