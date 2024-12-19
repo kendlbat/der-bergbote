@@ -40,7 +40,7 @@ const chest = chests[chestSelection];
                     href={`/gambling?c=${prev}`}
                     class="hidden text-center sm:flex"
                     id="chest-prev"
-                    data-astro-prefetch="viewport"
+                    data-astro-prefetch="load"
                     ><span class="m-auto text-[3em]">&lt;</span></a
                 >
                 <a
@@ -68,7 +68,10 @@ const chest = chests[chestSelection];
                                     .sort((a, b) => a[1] - b[1])
                                     .map(([item, chance]) => (
                                         <div>
-                                            <span>{items[item].name}</span>
+                                            <span>
+                                                {items[item].name}{" "}
+                                                {items[item].Rarity}
+                                            </span>
                                             <span>
                                                 {Math.round(chance * 100) + "%"}
                                             </span>
@@ -82,7 +85,7 @@ const chest = chests[chestSelection];
                     href={`/gambling?c=${next}`}
                     class="hidden text-center sm:flex"
                     id="chest-next"
-                    data-astro-prefetch="viewport"
+                    data-astro-prefetch="load"
                 >
                     <span class="m-auto text-[3em]">&gt;</span>
                 </a>

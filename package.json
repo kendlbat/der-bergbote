@@ -43,6 +43,7 @@
         "vite-plugin-pwa": "^0.21.1"
     },
     "devDependencies": {
+        "@tailwindcss/typography": "^0.5.15",
         "@types/etag": "^1.8.3",
         "@types/node": "^22.10.1",
         "@types/pg": "^8.11.10",
