@@ -1,9 +1,18 @@
 import { db } from "@/db";
-import { articlesTable, topicsTable } from "@/db/schema";
+import { articlesTable, balance, inventory, topicsTable } from "@/db/schema";
 import fs from "fs/promises";
 
+type TopicInsert = typeof topicsTable.$inferInsert;
+type ArticleInsert = typeof articlesTable.$inferInsert;
+
 async function fillNewsData() {
-    const input = JSON.parse(await fs.readFile("./news.json", "utf8"));
+    const input = JSON.parse(await fs.readFile("./news.json", "utf8")) as [
+        {
+            reports: Array<ArticleInsert>;
+            topic: string;
+            topicImage: string;
+        }
+    ];
 
     const topicIds = await db
         .insert(topicsTable)
@@ -23,18 +32,25 @@ async function fillNewsData() {
                     source: report.source,
                     title: report.title,
                     articleLink: report.articleLink,
-                    createdAt: new Date(report.createdAt),
+                    createdAt: new Date(report.createdAt || new Date()),
                 }))
             )
             .flat()
     );
 }
 
+async function fillInventoryData() {
+    const bals = JSON.parse(await fs.readFile("./balance.json", "utf-8"));
+    await db.insert(balance).values(bals);
+}
+
 async function fillDemoData() {
     // Drop database
     await db.delete(articlesTable);
     await db.delete(topicsTable);
-    await Promise.all([fillNewsData()]);
+    await db.delete(balance);
+    await db.delete(inventory);
+    await Promise.all([fillNewsData(), fillInventoryData()]);
 }
 
 fillDemoData()

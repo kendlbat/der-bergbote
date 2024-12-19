@@ -23,7 +23,7 @@ const articles = await db
     .where(sql`${articlesTable.topic} = ${topic.id}`);
 ---
 
-<Layout title={topic.name || "Bergbote - Topic not found"}>
+<Layout title={"Bergbote - " + topic.name || "Bergbote - Topic not found"}>
     <AppSkeleton>
         <h2 class="text-2xl">{topic.name}</h2>
         <div>

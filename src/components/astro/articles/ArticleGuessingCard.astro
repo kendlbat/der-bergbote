@@ -1,0 +1,58 @@
+---
+import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
+import { db } from "@/db";
+import { topicsTable, type articlesTable } from "@/db/schema";
+import { eq } from "drizzle-orm";
+import { Question }from "@/components/react/questions/question";
+
+type Article = typeof articlesTable.$inferSelect;
+
+interface Props {
+    article: Article
+}
+
+interface Question {
+    question: String,
+    isTrue: boolean
+}
+
+const {article} = Astro.props;
+
+const topic = await db.select().from(topicsTable).where(eq(topicsTable.id, article.topic!));
+
+const questions: Question[] = [
+    {
+        question: "Ist Martin Sorger an allem schuld?",
+        isTrue: true
+    },
+    {
+        question: 'Die Antwort auf diese Frage ist "Nein"',
+        isTrue: true
+    },
+    {
+        question: "Alle Menschen sind frei und gleich an Würde und Rechten geboren",
+        isTrue: false
+    }
+];
+---
+<div class="flex flex-row justify-center">
+    <Card className="w-[85%]">
+        <CardHeader>
+            <CardTitle>
+                <img
+                    src={"data:image/png;base64," + topic[0].topicImage!}
+                    alt="Topic image"
+                    class="w-full object-contain"
+                />
+            </CardTitle>
+        </CardHeader>
+        <CardContent>
+            <h2 class="text-3xl dark:text-white">{article.title}</h2>
+            <p class="mt-2">Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut 
+                labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo 
+                dolores et ea rebum.</p>
+            <Question questions={questions} client:only="react"/>
+        </CardContent>
+        <CardFooter/>
+    </Card>
+</div>

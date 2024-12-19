@@ -19,22 +19,33 @@ interface Props {
 const { article } = Astro.props;
 ---
 
-<a href={article.articleLink} class="top start-0 w-full object-contain" target="_blank" style={{width:"90%", margin:"10px", marginBottom:"-300px"}}>
-    <Image 
-        src={redBook} 
-        alt="Book"  />
-    <CardTitle style={{position: "relative", top:"-160px", margin:"40px", marginBottom:"-70px",marginRight:"20px", maxWidth:"460px"}}>{article.title}</CardTitle>
-    <CardDescription style={{position: "relative", top:"-120px", margin:"40px", marginBottom:"-120px"}}>
+<a
+    href={article.articleLink}
+    class="top-0 left-0 relative aspect-[4/1] w-full max-h-48 inline-block"
+    target="_blank"
+    data-astro-prefetch
+>
+    <Image
+        src={redBook}
+        alt="Book"
+        class="absolute left-0 top-0 w-full h-full object-contain object-left-top z-[-1]"
+    />
+    <div
+        class="py-[3%] pl-[5%] pr-[7%] text-2xl aspect-[4/1] max-w-full max-h-full"
+    >
         <img
             src={"data:image/png;base64," + article.source}
             alt="Provider Image"
-            class="h-[1.2em] object-contain bg-white p-1 rounded-full"
+            class="h-[1em] object-contain bg-white p-1 rounded"
         />
-        {
-            article.createdAt?.toLocaleString("de-AT", {
-                dateStyle: "full",
-                timeStyle: "short",
-            })
-        }
-    </CardDescription>
+        <h3 class="pixelify">{article.title}</h3>
+        <p class="pixelify text-[0.7em] text-[#bbb]">
+            {
+                article.createdAt?.toLocaleString("de-AT", {
+                    dateStyle: "full",
+                    timeStyle: "short",
+                })
+            }
+        </p>
+    </div>
 </a>

@@ -1,0 +1,57 @@
+[
+    {
+        "user": "tobias.kendlbacher@edu.htl-villach.at",
+        "name": "KENDLBACHER Tobias, 5BHIF",
+        "amount": 100000000
+    },
+    {
+        "user": "noah.arsic@edu.htl-villach.at",
+        "name": "ARSIĆ Noah, 5BHIF",
+        "amount": 1000
+    },
+    {
+        "user": "matthias.tripolt@edu.htl-villach.at",
+        "name": "TRIPOLT Matthias, 5BHIF",
+        "amount": 1000
+    },
+    {
+        "user": "alexander.schweda@edu.htl-villach.at",
+        "name": "SCHWEDA Alexander, 5BHIF",
+        "amount": 1000
+    },
+    {
+        "user": "mathias.gombos@edu.htl-villach.at",
+        "name": "GOMBOS Mathias, 5BHIF",
+        "amount": 1
+    },
+    {
+        "user": "julian.zankl@edu.htl-villach.at",
+        "name": "ZANKL Julian, 5BHIF",
+        "amount": 2
+    },
+    {
+        "user": "julian.reissner@edu.htl-villach.at",
+        "name": "REISSNER Julian, 5BHIF",
+        "amount": 300
+    },
+    {
+        "user": "theresa.brunner@edu.htl-villach.at",
+        "name": "BRUNNER Theresa, 5AHIF",
+        "amount": 15
+    },
+    {
+        "user": "mark.edlinger@edu.htl-villach.at",
+        "name": "EDLINGER Mark, 4BHIF",
+        "amount": 10
+    },
+    {
+        "user": "martin.sorger@edu.htl-villach.at",
+        "name": "SORGER Martin, 5BHIF",
+        "amount": 1
+    },
+    {
+        "user": "nicole.linder-strohmaier@htl-villach.at",
+        "name": "LINDER-STROHMAIER Nicole, Prof. DI DI(FH)",
+        "amount": 100000
+    }
+]

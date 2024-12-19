@@ -1,0 +1,45 @@
+---
+import { db } from "@/db";
+import { balance } from "@/db/schema";
+import { getSession } from "auth-astro/server";
+import { sql } from "drizzle-orm";
+import Coin from "./Coin.astro";
+
+const session = await getSession(Astro.request);
+const user = session!!.user!!.email!!;
+
+interface Props {
+    amount?: number | null;
+    class?: string;
+}
+
+const { amount: initialAmount, class: className = "" } = Astro.props;
+
+let bal: { amount: number | null }[];
+
+if (initialAmount) {
+    bal = [{ amount: initialAmount }];
+} else {
+    bal = await db
+        .select({
+            amount: balance.amount,
+        })
+        .from(balance)
+        .where(sql`${balance.user} = ${user}`);
+}
+
+const amount = Math.floor(bal[0]?.amount || 0)
+    .toString(10)
+    .replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+---
+
+<span class={className}>
+    <span class="flex flex-row justify-center text-[2em] h-min align-middle">
+        <span class="h-min self-center mr-[0.19em] text-[1.5em]">
+            {amount}
+        </span>
+        <Coin
+            class="inline-block h-[1.2em] self-center aspect-square -mt-[1px]"
+        /></span
+    >
+</span>

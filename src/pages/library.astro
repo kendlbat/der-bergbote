@@ -4,7 +4,12 @@ import Layout from "@/layouts/Layout.astro";
 import { db } from "@/db";
 import { topicsTable } from "@/db/schema";
 
-const topics = await db.select().from(topicsTable);
+const topics = await db
+    .select({
+        id: topicsTable.id,
+        name: topicsTable.name,
+    })
+    .from(topicsTable);
 ---
 
 <Layout title="Bergbote - Articles">
@@ -15,14 +20,11 @@ const topics = await db.select().from(topicsTable);
             {
                 topics.map((t) => (
                     <a
+                        data-astro-prefetch
                         href={`/library/topics/${t.id}`}
                         class="border rounded-lg p-3 h-full"
                     >
-                        {t.topicImage && (
-                            <img
-                                src={"data:image/png;base64," + t.topicImage}
-                            />
-                        )}
+                        <img src={"/api/topics/" + t.id + "/image"} alt="" />
                         {t.name}
                     </a>
                 ))
