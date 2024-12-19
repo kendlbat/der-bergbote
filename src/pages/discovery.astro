@@ -14,11 +14,13 @@ const article = articles[Math.floor(Math.random() * articles.length)];
 
 <Layout title="Bergbote - Home">
     <AppSkeleton>
-        <Image
-            src={bergboteNoLogo}
-            alt="Bergbote"
-            class="w-full object-contain"
-        />
-        <ArticleGuessingCard article={article}/>
+        <div>
+            <Image
+                src={bergboteNoLogo}
+                alt="Bergbote"
+                class="h-[10em] object-contain top-[1em] mx-auto -mb-[1em]"
+            />
+            <ArticleGuessingCard article={article} />
+        </div>
     </AppSkeleton>
 </Layout>
