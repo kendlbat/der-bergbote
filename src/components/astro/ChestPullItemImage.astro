@@ -89,6 +89,14 @@ const itemImage = (await image()).default;
                 class="w-full h-full object-contain m-auto z-[2]"
                 alt="Item"
             />
+            <div class="fixed bottom-0 p-2 max-h-[20%] w-full">
+                <div
+                    class="rounded-lg bg-background p-2 text-[1.4em] leading-6"
+                >
+                    <h2 class="text-[1.5em]">{item.name}</h2>
+                    <p>{item.description}</p>
+                </div>
+            </div>
         </span>
     </div>
 </div>
@@ -140,7 +148,7 @@ const itemImage = (await image()).default;
 
     #gambling-item-bg::before {
         content: "";
-        inset: -100%;
+        inset: -200%;
         z-index: -1;
         position: absolute;
         animation: 40s gambling-bg linear infinite;
