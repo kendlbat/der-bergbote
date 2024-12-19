@@ -39,11 +39,13 @@ const chest = chests[chestSelection];
                 <a
                     href={`/gambling?c=${prev}`}
                     class="hidden text-center sm:flex"
+                    id="chest-prev"
                     ><span class="m-auto text-[3em]">&lt;</span></a
                 >
                 <a
                     href={`/gambling/chest/${id}`}
-                    class="inline-block h-full col-span-6 sm:col-span-4"
+                    id="chest-curr"
+                    class="inline-block h-full col-span-6 sm:col-span-4 bg-background z-[1]"
                 >
                     <div class="border rounded-lg p-4">
                         <div class="h-[9em] aspect-square">
@@ -78,6 +80,7 @@ const chest = chests[chestSelection];
                 <a
                     href={`/gambling?c=${next}`}
                     class="hidden text-center sm:flex"
+                    id="chest-next"
                 >
                     <span class="m-auto text-[3em]">&gt;</span>
                 </a>
@@ -99,9 +102,9 @@ const chest = chests[chestSelection];
 
     function whichDirection() {
         if (touchendX < touchstartX)
-            window.location.href = "/gambling?c=" + next;
+            document.querySelector("#chest-next").click();
         if (touchendX > touchstartX)
-            window.location.href = "/gambling?c=" + prev;
+            document.querySelector("#chest-prev").click();
     }
 
     document.addEventListener("astro:page-load", () => {
@@ -109,6 +112,18 @@ const chest = chests[chestSelection];
             .querySelector("#swipe-detector")
             .addEventListener("touchstart", (evt) => {
                 touchstartX = evt.changedTouches[0].screenX;
+            });
+
+        document
+            .querySelector("#swipe-detector")
+            .addEventListener("touchmove", (evt) => {
+                const delta = evt.changedTouches[0].screenX - touchstartX;
+                document.querySelector("#chest-curr").style.marginLeft =
+                    `${delta}px`;
+                document.querySelector("#chest-curr").style.marginRight =
+                    `${delta * -1}px`;
+                document.querySelector("#chest-curr").style.rotate =
+                    `${delta / 20000}turn`;
             });
 
         document
