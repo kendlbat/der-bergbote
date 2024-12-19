@@ -1,6 +1,7 @@
 import { InventoryHover } from "./InventoryHover";
 import { useState } from "react";
 import { InventoryItem } from "./InventoryItem";
+import { ReactBergBalance } from "@/components/react/react-balance";
 
 const slotTypes = [
     "skincolor",
@@ -46,14 +47,8 @@ export const InventoryUI = (props) => {
                         return (
                             <InventoryHover
                                 key={elmn.item}
-                                coin={() => {
-                                    /*return (<BergBalance
-                                amount={elmn.value}
-                                className="text-[0.5em]"
-                            />);*/
-                                    return <div>{elmn.value}</div>;
-                                }}
                                 item={elmn}
+                                coin={props.coin}
                             >
                                 <span>
                                     <div

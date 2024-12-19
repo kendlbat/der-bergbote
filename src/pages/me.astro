@@ -11,6 +11,7 @@ import { sql } from "drizzle-orm";
 import { items } from "@/gambling/items";
 import type { GetImageResult } from "astro";
 import empty from "@/assets/items/empty.png";
+import coinImage from "@/assets/coin.gif";
 
 const images = import.meta.glob<{ default: ImageMetadata }>(
     "/src/assets/items/**.png"
@@ -73,6 +74,7 @@ const userEquipped = await db
         <div class="p-2">
             <InventoryUI
                 client:load
+                coin={coinImage}
                 items={userItems}
                 typeImages={typeImages}
                 equipped={userEquipped}
