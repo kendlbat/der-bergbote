@@ -45,6 +45,7 @@ export const InventoryUI = (props) => {
                     .map((elmn, idx) => {
                         return (
                             <InventoryHover
+                                key={elmn.item}
                                 coin={() => {
                                     /*return (<BergBalance
                                 amount={elmn.value}
@@ -86,7 +87,7 @@ export const InventoryUI = (props) => {
                         );
                     })}
             </div>
-            <h1 class="flex flex-row justify-center text-[2em] h-min align-middle">
+            <h1 className="flex flex-row justify-center text-[2em] h-min align-middle">
                 Equipped Items
             </h1>
             <div className="flex flex-wrap gap-3">
@@ -96,6 +97,7 @@ export const InventoryUI = (props) => {
                     );
                     return (
                         <div
+                            key={slotIdx}
                             style={{
                                 border: "3px solid gray",
                                 marginTop:

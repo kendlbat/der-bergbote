@@ -1,0 +1,32 @@
+---
+import noMoney from "@/assets/no-money.png";
+import AppSkeleton from "@/components/astro/AppSkeleton.astro";
+import Layout from "@/layouts/Layout.astro";
+import { Image } from "astro:assets";
+
+function getRandomNoMoneyJoke() {
+    const jokes = [
+        "Dieses Produkt steht leider (weit) über deiner Gehaltsklasse. Lies was und komm zurück, wenn du genug Geld hast.",
+        "Die Bergbauern geben keine Kredite, komm zurück wenn du etwas reicher bist.",
+        "Als Teilnehmer der Unterschicht ist es nicht möglich dieses Produkt käuflich zu erwerben. Geh erben.",
+        "Produkt kostet Geld. Du kein Geld. Du kein Produkt.",
+        "Betrifft: Kredit - Ich dir pumpen du nix wiederkommen ich böse. Ich dir nix pumpen du böse. Besser du böse.",
+        "Der Milchpreis ist zu hoch. Bitte den Bauern deines Vertrauens, ihn zu senken.",
+    ];
+
+    return jokes[Math.floor(Math.random() * jokes.length)];
+}
+
+const info = Astro.url.searchParams.get("i") || getRandomNoMoneyJoke();
+---
+
+<Layout title="Bergbote - No money?">
+    <AppSkeleton>
+        <div class="m-auto p-2 w-1/2 max-w-[600px] text-[2em] leading-7">
+            <div class="w-full">
+                <Image src={noMoney} class="w-full h-full" alt="No money?" />
+            </div>
+            <p class="pt-2">{info}</p>
+        </div>
+    </AppSkeleton>
+</Layout>

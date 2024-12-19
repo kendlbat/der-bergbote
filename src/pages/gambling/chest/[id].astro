@@ -1,14 +1,31 @@
 ---
 import { chests } from "@/gambling/chests";
 import { openChest } from "@/gambling/chestFuns";
+import ChestImage from "@/components/astro/ChestImage.astro";
+import Layout from "@/layouts/Layout.astro";
+import { balance } from "@/db/schema";
+import { db } from "@/db";
+import { sql } from "drizzle-orm";
+import { getSession } from "auth-astro/server";
 
-const { idStr } = Astro.params;
+const { id: idStr } = Astro.params;
+
+const session = await getSession(Astro.request);
+const user = session?.user?.email;
+if (!user)
+    return new Response(null, {
+        headers: {
+            location: "/",
+        },
+        status: 302,
+    });
 
 if (!idStr?.match(/^[0-9]+$/))
     return new Response(null, {
         status: 404,
     });
 
+const isPost = Astro.request.method === "POST";
 const id = parseInt(idStr || "");
 
 const chest = chests[id];
@@ -17,6 +34,97 @@ if (!chest)
     return new Response(null, {
         status: 404,
     });
+
+if (isPost) {
+    const bal = (
+        await db
+            .select()
+            .from(balance)
+            .where(sql`${balance.user} = ${user}`)
+    )[0]!!.amount;
+
+    if (bal < chest.cost)
+        return new Response(null, {
+            headers: {
+                location: "/gambling/balance_low",
+            },
+            status: 302,
+        });
+
+    await db
+        .update(balance)
+        .set({ amount: bal - chest.cost })
+        .where(sql`${balance.user} = ${user}`);
+}
 ---
 
-{JSON.stringify(chest)}
+<Layout title={`Bergbote - ${chest.name}`}>
+    {
+        isPost ?
+            <a href="/gambling" data-astro-reload>
+                Test
+            </a>
+        :   <form method="post">
+                <button
+                    type="submit"
+                    id="gambling-chest-btn"
+                    class="absolute w-full h-full left-0 top-0"
+                >
+                    <div class="w-1/2 h-1/2 m-auto gap-2 flex flex-col">
+                        <ChestImage i={chest.resourceName} />
+                        <span class="leading-6 text-[2em]">{chest.name}</span>
+                        <span>{chest.description}</span>
+                        <span class="leading-6 text-[1.6em] text-[#ffffffa8]">
+                            Tippen um die Truhe zu öffnen!
+                        </span>
+                    </div>
+                </button>
+            </form>
+    }
+    {JSON.stringify(chest)}
+</Layout>
+
+<script
+    is:inline
+    define:vars={{
+        isPost,
+    }}
+>
+    const listener = () => {
+        if (isPost) {
+            globalThis.playSound("chest-opening.mp3");
+            document.removeEventListener("astro:page-load", listener);
+        }
+    };
+    document.addEventListener("astro:page-load", listener);
+</script>
+
+<style>
+    @keyframes gambling-bg {
+        0% {
+            rotate: 0turn;
+        }
+
+        100% {
+            rotate: 1turn;
+        }
+    }
+
+    #gambling-chest-btn {
+        overflow: hidden;
+        clip-path: border-box;
+    }
+    #gambling-chest-btn::before {
+        content: "";
+        background-image: repeating-conic-gradient(
+            hsl(var(--secondary)) 0%,
+            hsl(var(--secondary)) 5%,
+            hsl(215 14% 30%) 5%,
+            hsl(215 14% 30%) 10%
+        );
+        inset: -100%;
+        z-index: -1;
+        position: absolute;
+        animation: 40s gambling-bg linear infinite;
+    }
+</style>

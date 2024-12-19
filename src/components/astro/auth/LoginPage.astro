@@ -29,7 +29,7 @@ import { Image } from "astro:assets";
         <CardFooter className="flex flex-col w-full justify-between">
             <RequireAuth>
                 <Fragment slot="fallback">
-                    <SignIn client:load />
+                    <SignIn client:visible />
                 </Fragment>
                 Login erfolgreich!
             </RequireAuth>
