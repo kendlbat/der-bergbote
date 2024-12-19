@@ -87,7 +87,7 @@ export const InventoryUI = (props) => {
                         );
                     })}
             </div>
-            <h1 class="flex flex-row justify-center text-[2em] h-min align-middle">
+            <h1 className="flex flex-row justify-center text-[2em] h-min align-middle">
                 Equipped Items
             </h1>
             <div className="flex flex-wrap gap-3">
