@@ -31,7 +31,7 @@ const questions: Question[] = [
         isTrue: true
     },
     {
-        question: "Alle Menschen sind frei und gleich an Würde und Rechten geboren",
+        question: "New York liegt nördlicher als Wien",
         isTrue: false
     }
 ];
@@ -49,9 +49,10 @@ const questions: Question[] = [
         </CardHeader>
         <CardContent>
             <h2 class="text-3xl dark:text-white">{article.title}</h2>
-            <p class="mt-2">Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut 
+            <article class="prone" set:html={article.article}/>
+            <!--<p class="mt-2">Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut 
                 labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo 
-                dolores et ea rebum.</p>
+                dolores et ea rebum.</p> -->
             <Question questions={questions} {user} client:only="react"/>
         </CardContent>
         <CardFooter/>
