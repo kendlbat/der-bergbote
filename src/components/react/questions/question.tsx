@@ -1,6 +1,5 @@
-import { Slider } from "@/components/ui/slider";
 import React from "react";
-import { PoliticsSlider } from "./PoliticsSlider";
+import { PoliticsSlider } from "./politicsSlider";
 
 interface Question {
     question: String,
