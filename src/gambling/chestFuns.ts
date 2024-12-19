@@ -9,4 +9,5 @@ function openChest(chest_id:number){
         if(randomFloat < rollingTotal)
             return i;
     }
+    return chests[chest_id].fallbackDrop;
 }
