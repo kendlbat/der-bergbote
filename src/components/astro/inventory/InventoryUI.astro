@@ -2,6 +2,9 @@
 import type { ImageMetadata } from "astro";
 import InventoryItem from "./InventoryItem.astro";
 
+/*interface Props {
+    username: Object
+}*/
 
 const items = [
     {
@@ -16,15 +19,45 @@ const items = [
         name: "platinum_monocle_thick",
         displayName: "Platinum Monocle"
     }
-]
+];
+
+const slotTypes = [
+    "skincolor",
+    "face",
+    "eyes",
+    "hair",
+    "pants",
+    "shirt",
+    "shoes",
+];
 
 ---
 <div>
-    {
-        items.map((elmn, idx) => {
-            return (
-                <InventoryItem i={elmn.name+"_item"}/>
-            )
-        })
-    }
+
+    <h1 class="flex flex-row justify-center text-[2em] h-min align-middle">Inventory</h1>
+    <div class="flex flex-wrap gap-3">
+        {
+            items.map((elmn, idx) => {
+                return (
+                    <div style={{border: "3px solid gray"}} class="border rounded-lg p-3 h-min w-min aspect-square">
+                        <InventoryItem i={elmn.name+"_item"} typeIco="eyes" class="rounded m-1 h-20 aspect-square"/>
+                    </div>
+                    
+                )
+            })
+        }
+    </div>
+    <h1 class="flex flex-row justify-center text-[2em] h-min align-middle">Equipped Items</h1>
+    <div class="flex flex-wrap gap-3">
+        {
+            slotTypes.map((slotIdx, idx) => {
+                return (
+                    <div style={{border: "3px solid gray"}} class="border rounded-lg p-3 h-min w-min aspect-square">
+                        <InventoryItem i={"empty"} typeIco={slotIdx} class="rounded m-1 h-20 aspect-square"/>
+                    </div>
+                )
+            })
+        }
+    </div>
 </div>
+
