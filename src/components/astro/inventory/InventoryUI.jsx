@@ -83,13 +83,13 @@ export const InventoryUI = (props) => {
         <h1 class="flex flex-row justify-center text-[2em] h-min align-middle">
             Equipped Items
         </h1>
-        <div class="flex flex-wrap gap-3">
+        <div className="flex flex-wrap gap-3">
             {
                 slotTypes.map((slotIdx, idx) => {
                     return (
                         <div
                             style={{ border: "3px solid gray" }}
-                            class="border rounded-lg p-3 h-min w-min aspect-square"
+                            className="border rounded-lg p-3 h-min w-min aspect-square"
                         >
                             Test
                         </div>
