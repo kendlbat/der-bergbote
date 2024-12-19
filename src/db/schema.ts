@@ -44,7 +44,7 @@ export const balance = pgTable("balance", {
 });
 
 export const inventory = pgTable("inventory", {
-    item: json(),
+    item: varchar({ length: 255 }),
     user: varchar({ length: 255 }),
     id: uuid().defaultRandom().primaryKey(),
 });
