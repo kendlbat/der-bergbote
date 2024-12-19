@@ -34,18 +34,19 @@ const chest = chests[chestSelection];
         <div class="overflow-hidden relative h-full" id="swipe-detector">
             <BergBalance />
             <div
-                class="p-2 absolute left-1/2 h-max -translate-x-1/2 grid grid-cols-4 sm:grid-cols-6 gap-2 w-full"
+                class="p-2 absolute left-1/2 -translate-x-1/2 grid grid-cols-4 sm:grid-cols-6 gap-2 w-full"
             >
                 <a
                     href={`/gambling?c=${prev}`}
                     class="hidden text-center sm:flex"
                     id="chest-prev"
+                    data-astro-preload="load"
                     ><span class="m-auto text-[3em]">&lt;</span></a
                 >
                 <a
                     href={`/gambling/chest/${id}`}
                     id="chest-curr"
-                    class="inline-block h-full col-span-6 sm:col-span-4 bg-background z-[1]"
+                    class="inline-block col-span-6 sm:col-span-4 bg-background z-[1] -mt-3"
                 >
                     <div class="border rounded-lg p-4">
                         <div class="h-[9em] aspect-square">
@@ -60,7 +61,7 @@ const chest = chests[chestSelection];
                             <BergBalance amount={chest.cost} />
                         </span>
                         <p>{chest.description}</p>
-                        <div>
+                        <div class="leading-5">
                             <h3>Kann folgendes enthalten:</h3>
                             {
                                 Object.entries(chest.lootTable)
@@ -81,10 +82,16 @@ const chest = chests[chestSelection];
                     href={`/gambling?c=${next}`}
                     class="hidden text-center sm:flex"
                     id="chest-next"
+                    data-astro-preload="load"
                 >
                     <span class="m-auto text-[3em]">&gt;</span>
                 </a>
             </div>
+            <p
+                class="absolute bottom-0 left-1/2 -translate-x-1/2 sm:hidden text-nowrap pb-1"
+            >
+                Wischen, um andere Truhen auszuwählen
+            </p>
         </div>
     </AppSkeleton>
 </Layout>
