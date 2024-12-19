@@ -1,7 +1,6 @@
 import { InventoryHover } from "./InventoryHover";
 import { useState } from "react";
 import { InventoryItem } from "./InventoryItem";
-import { items } from "@/gambling/items";
 const slotTypes = [
     "skincolor",
     "face",
@@ -31,7 +30,6 @@ export const InventoryUI = (props) => {
     const [hoveredItem, setHoveredItem] = useState(-1);
     const [hoveredEquipped, setHoveredEquipped] = useState(-1);
 
-
     return (
         <div>
             <h1 className="flex flex-row justify-center text-[2em] h-min align-middle">
@@ -44,18 +42,11 @@ export const InventoryUI = (props) => {
                             !props.equipped.find((eq) => eq.item === it.item)
                     )
                     .map((elmn, idx) => {
-                        console.log("ITEM: "+JSON.stringify(items[elmn.item]))
                         return (
                             <InventoryHover
                                 key={elmn.item}
-                                coin={() => {
-                                    /*return (<BergBalance
-                                amount={elmn.value}
-                                className="text-[0.5em]"
-                            />);*/
-                                    return <div>{elmn.value}</div>;
-                                }}
-                                item={items[elmn.item]}
+                                item={elmn}
+                                coin={props.coin}
                             >
                                 <span>
                                     <div
