@@ -85,7 +85,7 @@ if (isPost) {
 <Layout title={`Bergbote - ${chest.name}`}>
     {
         isPost ?
-            <a href="/gambling" data-astro-reload>
+            <a href={`/gambling?c=${id}`} data-astro-reload>
                 <ChestPullItemImage itemName={item} />
             </a>
         :   <form method="post">
