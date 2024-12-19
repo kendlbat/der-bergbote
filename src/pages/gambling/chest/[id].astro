@@ -3,10 +3,11 @@ import { chests } from "@/gambling/chests";
 import { openChest } from "@/gambling/chestFuns";
 import ChestImage from "@/components/astro/ChestImage.astro";
 import Layout from "@/layouts/Layout.astro";
-import { balance } from "@/db/schema";
+import { balance, inventory } from "@/db/schema";
 import { db } from "@/db";
 import { sql } from "drizzle-orm";
 import { getSession } from "auth-astro/server";
+import ItemImage from "@/components/astro/ItemImage.astro";
 
 const { id: idStr } = Astro.params;
 
@@ -29,6 +30,7 @@ const isPost = Astro.request.method === "POST";
 const id = parseInt(idStr || "");
 
 const chest = chests[id];
+let item = openChest(id);
 
 if (!chest)
     return new Response(null, {
@@ -55,6 +57,10 @@ if (isPost) {
         .update(balance)
         .set({ amount: bal - chest.cost })
         .where(sql`${balance.user} = ${user}`);
+    
+    /*await db
+        .insert(inventory)
+        .values({user, item});*/
 }
 ---
 
@@ -62,7 +68,7 @@ if (isPost) {
     {
         isPost ?
             <a href="/gambling" data-astro-reload>
-                Test
+                <ItemImage itemName={item}/>
             </a>
         :   <form method="post">
                 <button
@@ -81,7 +87,7 @@ if (isPost) {
                 </button>
             </form>
     }
-    {JSON.stringify(chest)}
+    <!--{JSON.stringify(chest)}-->
 </Layout>
 
 <script

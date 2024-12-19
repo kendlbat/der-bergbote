@@ -1,0 +1,143 @@
+---
+import { Image } from 'astro:assets';
+import { items } from '@/gambling/items';
+import type { GetImageResult } from 'astro';
+import { EquippableType, Rarity } from '@/gambling/enums';
+
+interface Props {
+    itemName: string
+}
+
+const {itemName} = Astro.props;
+
+const item = items[itemName];
+
+let source = "/src/assets/items/";
+
+switch (item.type) {
+    case EquippableType.EYES: {
+        source += "eyes"
+        break;
+    };
+    case EquippableType.FACE: {
+        source += "face";
+        break;
+    };
+    case EquippableType.HAIR: {
+        source += "hair";
+        break;
+    };
+    default: {source = ""};
+}
+
+let color: string;
+
+switch (item.Rarity) {
+    case Rarity.COMMON: {
+        color = "gambling-item-common"
+        break;
+    };
+    case Rarity.UNCOMMON: {
+        color = "gambling-item-uncommon"
+        break;
+    }
+    case Rarity.RARE: {
+        color = "gambling-item-rare"
+        break;
+    }
+    case Rarity.EPIC: {
+        color = "gambling-item-epic"
+        break;
+    }
+    case Rarity.LEGENDARY: {
+        color = "gambling-item-legendary"
+        break;
+    }
+}
+
+let images: Record<string, () => Promise<{default: ImageMetadata}>>;
+
+if (source) {
+    images = import.meta.glob<{ default: ImageMetadata}>(
+        "/src/assets/items/**.png"
+    )
+}
+
+const image = images![`${source}/${item.resourceName}.png`];
+
+const itemImage = (await image()).default;
+---
+
+<div class=`absolute w-full h-full left-0 top-0 ${color}` id="gambling-item-bg">
+    <Image src={itemImage} class="w-full h-full object-contain" alt="Item" />
+</div>
+
+<style>
+    @keyframes gambling-bg {
+        0% {
+            rotate: 0turn;
+        }
+
+        100% {
+            rotate: 1turn;
+        }
+    }
+
+    #gambling-item-bg {
+        overflow: hidden;
+        clip-path: border-box;
+    }
+
+    #gambling-item-bg::before {
+        content: "";
+        inset: -100%;
+        z-index: -1;
+        position: absolute;
+        animation: 40s gambling-bg linear infinite;
+    }
+
+    .gambling-item-common::before {
+        background-image: repeating-conic-gradient(
+            hsl(0, 0%, 25%) 0%,
+            hsl(0, 0%, 25%) 5%,
+            hsl(0, 0%, 50%) 5%,
+            hsl(0, 0%, 50%) 10%
+        );
+    }
+
+    .gambling-item-uncommon::before {
+        background-image: repeating-conic-gradient(
+            hsl(117, 63%, 25%) 0%,
+            hsl(117, 63%, 25%) 5%,
+            hsl(117, 63%, 50%) 5%,
+            hsl(117, 63%, 50%) 10%
+        );
+    }
+
+    .gambling-item-rare::before {
+        background-image: repeating-conic-gradient(
+            hsl(48, 100%, 25%) 0%,
+            hsl(48, 100%, 25%) 5%,
+            hsl(48, 100%, 50%) 5%,
+            hsl(48, 100%, 50%) 10%
+        );
+    }
+
+    .gambling-item-epic::before {
+        background-image: repeating-conic-gradient(
+            hsl(300, 50%, 23%) 0%,
+            hsl(300, 50%, 23%) 5%,
+            hsl(300, 50%, 45%) 5%,
+            hsl(300, 50%, 45%) 10%
+        );
+    }
+
+    .gambling-item-legendary::before {
+        background-image: repeating-conic-gradient(
+            hsl(48, 97%, 24%) 0%,
+            hsl(48, 97%, 24%) 5%,
+            hsl(48, 97%, 48%) 5%,
+            hsl(48, 97%, 48%) 10%
+        );
+    }
+</style>
