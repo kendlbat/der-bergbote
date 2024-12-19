@@ -1,6 +1,6 @@
 import { InventoryHover } from "./InventoryHover";
 import InventoryItem from "./InventoryItem.astro";
-
+import { useState } from "react";
 const items = [
     {
         name: "platinum_monocle_thick",
@@ -49,6 +49,9 @@ class="rounded m-1 h-20 aspect-square"
 
 export const InventoryUI = (props) => {
 
+    const [hoveredItem, setHoveredItem] = useState(-1);
+    const [hoveredEquipped, setHoveredEquipped] = useState(-1);
+
     return (
     <div>
         <h1 className="flex flex-row justify-center text-[2em] h-min align-middle">
@@ -69,8 +72,10 @@ export const InventoryUI = (props) => {
                         item={elmn}>
                             <span>
                                 <div
-                                    style={{ border: "3px solid gray" }}
+                                    style={{rotate: hoveredItem == idx ? "-5deg" : "0deg", border: "3px solid gray", marginTop: hoveredItem == idx ? "-4px" : "0px", backgroundColor: hoveredItem == idx ? "#aaaaaa22" : "#aaaaaa00" }}
                                     className="border rounded-lg p-3 h-min w-min aspect-square"
+                                    onMouseEnter={() => setHoveredItem(idx)}
+                                    onMouseLeave={() => setHoveredItem(-1)}
                                 >
                                     Test
                                 </div>
@@ -88,8 +93,10 @@ export const InventoryUI = (props) => {
                 slotTypes.map((slotIdx, idx) => {
                     return (
                         <div
-                            style={{ border: "3px solid gray" }}
+                            style={{ border: "3px solid gray", marginTop: hoveredEquipped == idx ? "-4px" : "0px", backgroundColor: hoveredEquipped == idx ? "#aaaaaa22" : "#aaaaaa00" }}
                             className="border rounded-lg p-3 h-min w-min aspect-square"
+                            onMouseEnter={() => setHoveredEquipped(idx)}
+                            onMouseLeave={() => setHoveredEquipped(-1)}
                         >
                             Test
                         </div>
