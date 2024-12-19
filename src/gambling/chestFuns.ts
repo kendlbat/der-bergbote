@@ -1,6 +1,6 @@
 import { chests } from "./chests";
 
-function openChest(chest_id:number){
+export function openChest(chest_id:number){
     const randomFloat = Math.random();
     const lootTable = chests[chest_id].lootTable;
     let rollingTotal = 0;
