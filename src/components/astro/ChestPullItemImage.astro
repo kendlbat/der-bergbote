@@ -3,6 +3,7 @@ import { Image } from "astro:assets";
 import { items } from "@/gambling/items";
 import { EquippableType, Rarity } from "@/gambling/enums";
 import BergBalance from "./BergBalance.astro";
+import fallbackSprite from "@/assets/items/empty.png";
 
 interface Props {
     itemName: string;
@@ -72,7 +73,7 @@ if (source) {
 
 const image = images![`${source}/${item.resourceName}.png`];
 
-const itemImage = (await image()).default;
+const itemImage = image ? (await image()).default : fallbackSprite;
 ---
 
 <div class=`absolute w-full h-full left-0 top-0 ${color}` id="gambling-item-bg">
