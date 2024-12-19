@@ -58,6 +58,13 @@ const { title } = Astro.props;
                 await audio.play();
                 return audio;
             };
+
+            globalThis.stopAllSounds = () => {
+                document.querySelectorAll("body > audio").forEach((audio) => {
+                    audio.pause();
+                    audio.remove();
+                });
+            };
         </script>
     </head>
 
