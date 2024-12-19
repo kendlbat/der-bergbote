@@ -1,0 +1,21 @@
+---
+import noMoney from "@/assets/no-money.png";
+import AppSkeleton from "@/components/astro/AppSkeleton.astro";
+import Layout from "@/layouts/Layout.astro";
+import { Image } from "astro:assets";
+
+const info =
+    Astro.url.searchParams.get("i") ||
+    "Dieses Produkt steht leider (weit) über deiner Gehaltsklasse. Lies was und komm zurück, wenn du genug Geld hast.";
+---
+
+<Layout title="Bergbote - No money?">
+    <AppSkeleton>
+        <div class="m-auto p-2 w-1/2 max-w-[600px] text-[2em] leading-7">
+            <div class="w-full">
+                <Image src={noMoney} class="w-full h-full" alt="No money?" />
+            </div>
+            <p class="pt-2">{info}</p>
+        </div>
+    </AppSkeleton>
+</Layout>

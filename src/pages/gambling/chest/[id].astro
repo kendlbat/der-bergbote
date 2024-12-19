@@ -3,8 +3,22 @@ import { chests } from "@/gambling/chests";
 import { openChest } from "@/gambling/chestFuns";
 import ChestImage from "@/components/astro/ChestImage.astro";
 import Layout from "@/layouts/Layout.astro";
+import { balance } from "@/db/schema";
+import { db } from "@/db";
+import { sql } from "drizzle-orm";
+import { getSession } from "auth-astro/server";
 
 const { id: idStr } = Astro.params;
+
+const session = await getSession(Astro.request);
+const user = session?.user?.email;
+if (!user)
+    return new Response(null, {
+        headers: {
+            location: "/",
+        },
+        status: 302,
+    });
 
 if (!idStr?.match(/^[0-9]+$/))
     return new Response(null, {
@@ -20,6 +34,28 @@ if (!chest)
     return new Response(null, {
         status: 404,
     });
+
+if (isPost) {
+    const bal = (
+        await db
+            .select()
+            .from(balance)
+            .where(sql`${balance.user} = ${user}`)
+    )[0]!!.amount;
+
+    if (bal < chest.cost)
+        return new Response(null, {
+            headers: {
+                location: "/gambling/balance_low",
+            },
+            status: 302,
+        });
+
+    await db
+        .update(balance)
+        .set({ amount: bal - chest.cost })
+        .where(sql`${balance.user} = ${user}`);
+}
 ---
 
 <Layout title={`Bergbote - ${chest.name}`}>

@@ -4,7 +4,11 @@ import idleMenuBackdrop from "@/assets/backdrops/idlemenu.gif";
 import bergboteText from "@/assets/bergbote_nologo.gif";
 ---
 
-<a href="/discovery" data-astro-prefetch="load" class="relative w-full h-full">
+<a
+    href="/discovery"
+    data-astro-prefetch="load"
+    class="relative w-full h-full inline-block"
+>
     <Image
         src={idleMenuBackdrop}
         format="gif"
@@ -12,11 +16,15 @@ import bergboteText from "@/assets/bergbote_nologo.gif";
         alt="Bergbote Background"
         class="w-full min-w-full h-full object-cover z-0 object-bottom"
     />
-    <Image
-        src={bergboteText}
-        alt="Bergbote"
-        class="h-[14em] object-contain absolute top-[1em] left-1/2 transform -translate-x-1/2"
-    />
+    <div
+        class="h-[14em] absolute top-[1em] left-1/2 transform -translate-x-1/2 z-[1]"
+    >
+        <Image
+            src={bergboteText}
+            alt="Bergbote"
+            class="w-full h-full object-contain"
+        />
+    </div>
     <div class="absolute bottom-[2.5em] w-full text-center text-white z-10">
         <h1 class="pixelify text-3xl">Irgendwo klicken um zu beginnen!</h1>
     </div>
