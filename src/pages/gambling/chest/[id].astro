@@ -54,9 +54,13 @@ if (!chest)
         isPost,
     }}
 >
-    document.addEventListener("astro:page-load", () => {
-        if (isPost) globalThis.playSound("chest-opening.mp3");
-    });
+    const listener = () => {
+        if (isPost) {
+            globalThis.playSound("chest-opening.mp3");
+            document.removeEventListener("astro:page-load", listener);
+        }
+    };
+    document.addEventListener("astro:page-load", listener);
 </script>
 
 <style>
