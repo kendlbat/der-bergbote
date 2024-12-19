@@ -9,7 +9,11 @@ export const PoliticsSlider: React.FC<{
     handleClick: () => void 
 }> = ({ onValChange, guess, actual, handleClick }) => {
     const sections = ["Links", "Mitte-Links", "Mitte", "Mitte-Rechts", "Rechts"];
-    const [section, setSection] = React.useState(2);
+    const [section, setSection] = React.useState(calcSection([guess]));
+
+    function calcSection (val: number[]) {
+        return Math.max(Math.ceil(val[0] / 20) - 1, 0);
+    }
 
     return (
         <div className="flex flex-col items-center space-y-4">
@@ -34,6 +38,7 @@ export const PoliticsSlider: React.FC<{
                         onValChange(val[0]);
                         setSection(Math.max(Math.ceil(val[0] / 20) - 1, 0));
                     }}
+                    disabled={actual != null}
                     step={1}
                 />
                 <div className="flex w-full justify-between mt-3">

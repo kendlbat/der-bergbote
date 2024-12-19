@@ -7,9 +7,21 @@ import { db } from "@/db";
 
 import bergboteNoLogo from "@/assets/bergbote_nologo.png";
 import ArticleGuessingCard from "@/components/astro/articles/ArticleGuessingCard.astro";
+import { getSession } from "auth-astro/server";
 
 const articles = await db.select().from(articlesTable);
 const article = articles[Math.floor(Math.random() * articles.length)];
+
+const session = await getSession(Astro.request);
+
+const user = session?.user?.email;
+if (!user)
+    return new Response(null, {
+        headers: {
+            location: "/",
+        },
+        status: 302,
+    });
 ---
 
 <Layout title="Bergbote - Home">
@@ -20,7 +32,7 @@ const article = articles[Math.floor(Math.random() * articles.length)];
                 alt="Bergbote"
                 class="h-[10em] object-contain top-[1em] mx-auto -mb-[1em]"
             />
-            <ArticleGuessingCard article={article} />
+            <ArticleGuessingCard article={article} user={user} />
         </div>
     </AppSkeleton>
 </Layout>

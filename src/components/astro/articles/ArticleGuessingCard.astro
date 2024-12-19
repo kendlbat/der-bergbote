@@ -8,7 +8,8 @@ import { Question }from "@/components/react/questions/question";
 type Article = typeof articlesTable.$inferSelect;
 
 interface Props {
-    article: Article
+    article: Article,
+    user: string
 }
 
 interface Question {
@@ -16,7 +17,7 @@ interface Question {
     isTrue: boolean
 }
 
-const {article} = Astro.props;
+const {article, user} = Astro.props;
 
 const topic = await db.select().from(topicsTable).where(eq(topicsTable.id, article.topic!));
 
@@ -51,7 +52,7 @@ const questions: Question[] = [
             <p class="mt-2">Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut 
                 labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo 
                 dolores et ea rebum.</p>
-            <Question questions={questions} client:only="react"/>
+            <Question questions={questions} {user} client:only="react"/>
         </CardContent>
         <CardFooter/>
     </Card>

@@ -1,29 +1,41 @@
 import React from "react";
 import { PoliticsSlider } from "./politicsSlider";
+import { Coin } from "../coin/coin";
 
 interface Question {
     question: String,
     isTrue: boolean
 }
 
-export const Question: React.FC<{questions: Question[]}> = ({ questions }) => {
+export const Question: React.FC<{questions: Question[], user: string}> = ({ questions, user }) => {
     const [idx, setIdx] = React.useState(0);
     const [wrongAnswer, setWrongAnswer] = React.useState(false);
     const [position, setPosition] = React.useState(0);
     const [rotation, setRotation] = React.useState(0);
     const [val, setVal] = React.useState(50);
     const [sliderKey, setSliderKey] = React.useState(0);
+    const [coins, setCoins] = React.useState(0);
     const actual = 30;
 
     const touchStartX = React.useRef<number | null>(null);
 
-    function handleGuess() {
+    async function handleGuess() {
         const diff = Math.abs(val - actual)
-        let multiplier;
-        if (diff <= 20) multiplier = 3;
-        else if (diff <= 40) multiplier = 2;
-        else multiplier = 1;
+        let coins = questions.length;
+        if (diff <= 20) coins *= 3;
+        else if (diff <= 40) coins *= 2;
+        else coins *= 1;
+        setCoins(coins);
         setSliderKey(1);
+        await fetch(`/api/users/${user}/coins`, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                amount: coins
+            })
+        });
     }
 
     function handleQuestionAnswered(answer: boolean) {
@@ -126,6 +138,16 @@ export const Question: React.FC<{questions: Question[]}> = ({ questions }) => {
                 actual={sliderKey ? actual : null}
                 handleClick={() => handleGuess()}
             />
+            {
+                coins != 0 &&
+                <p>
+                    <span>Du hast {coins}</span>
+                    <Coin
+                        className="inline-block h-[1.2em] self-center aspect-square -mt-[1px]"
+                    />
+                    <span>erhalten</span>
+                </p>
+            }
         </React.Fragment>
     )
 }
