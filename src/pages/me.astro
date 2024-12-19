@@ -60,13 +60,16 @@ const userEquipped = await db
 
 <Layout title="Bergbote - My Profile">
     <AppSkeleton>
-        <InventoryUI
-            client:load
-            items={userItems}
-            typeImages={typeImages}
-            equipped={userEquipped}
-        />
-
-        <SignOut client:visible />
+        <div class="p-2">
+            <InventoryUI
+                client:load
+                items={userItems}
+                typeImages={typeImages}
+                equipped={userEquipped}
+            />
+            <div class="pt-2">
+                <SignOut client:visible />
+            </div>
+        </div>
     </AppSkeleton>
 </Layout>

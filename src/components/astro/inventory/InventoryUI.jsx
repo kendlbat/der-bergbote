@@ -71,7 +71,7 @@ export const InventoryUI = (props) => {
                                                     ? "#aaaaaa22"
                                                     : "#aaaaaa00",
                                         }}
-                                        className="border rounded-lg p-3 h-min w-min aspect-square"
+                                        className="border rounded-lg h-min w-min aspect-square"
                                         onMouseEnter={() => setHoveredItem(idx)}
                                         onMouseLeave={() => setHoveredItem(-1)}
                                     >
@@ -105,7 +105,7 @@ export const InventoryUI = (props) => {
                                         ? "#aaaaaa22"
                                         : "#aaaaaa00",
                             }}
-                            className="border rounded-lg p-3 h-[5em] w-[5em] aspect-square relative"
+                            className="border rounded-lg aspect-square relative"
                             onMouseEnter={() => setHoveredEquipped(idx)}
                             onMouseLeave={() => setHoveredEquipped(-1)}
                         >
