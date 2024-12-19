@@ -1,6 +1,6 @@
 import { InventoryHover } from "./InventoryHover";
-import InventoryItem from "./InventoryItem.astro";
 import { useState } from "react";
+import { InventoryItem } from "./InventoryItem";
 
 const slotTypes = [
     "skincolor",
@@ -68,7 +68,7 @@ export const InventoryUI = (props) => {
                                     onMouseEnter={() => setHoveredItem(idx)}
                                     onMouseLeave={() => setHoveredItem(-1)}
                                 >
-                                    Test
+                                    <InventoryItem />
                                 </div>
                             </span>
                         </InventoryHover>
@@ -95,7 +95,7 @@ export const InventoryUI = (props) => {
                             onMouseEnter={() => setHoveredEquipped(idx)}
                             onMouseLeave={() => setHoveredEquipped(-1)}
                         >
-                            Test
+                            {JSON.stringify("Test")}
                         </div>
                     );
                 })}

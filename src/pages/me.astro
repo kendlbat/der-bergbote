@@ -13,7 +13,20 @@ import { items } from "@/gambling/items";
 const session = await getSession(Astro.request);
 const user = session!!.user!!.email!!;
 const images = import.meta.glob<{ default: ImageMetadata }>(
-    "/src/assets/items/*.{gif,png}"
+    "/src/assets/items/*.png"
+);
+const types = import.meta.glob<{ default: ImageMetadata }>(
+    "/src/assets/itemTypes/*.png"
+);
+const typeImages = Object.fromEntries(
+    await Promise.all(
+        Object.entries(types).map(async ([k, v]) => [
+            k.replace("/src/assets/itemTypes/", ""),
+            await getImage({
+                src: (await v()).default,
+            }),
+        ])
+    )
 );
 const userItems = await Promise.all(
     (
@@ -32,13 +45,14 @@ const userItems = await Promise.all(
                 ).default,
             })
         ).src,
+        typeImage: typeImages[`${items[i.item!!].}.png`]
     }))
 );
 ---
 
 <Layout title="Bergbote - My Profile">
     <AppSkeleton>
-        <InventoryUI client:load items={items} />
+        <InventoryUI client:load items={userItems} />
 
         <SignOut client:visible />
     </AppSkeleton>
