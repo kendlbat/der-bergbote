@@ -5,7 +5,7 @@ import { items } from "./items";
 
 export const vouchers: Record<string, number | string> = {
     "5BHIF": 1000,
-    TripoltSpatial: 5000,
+    TripoltSpatial: "e20",
     SorgerSenkDieMilchpreise: 1,
     KarlHeinz: 2000,
     test: "e1",
