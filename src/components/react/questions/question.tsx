@@ -3,15 +3,15 @@ import { PoliticsSlider } from "./politicsSlider";
 import { Coin } from "../coin/coin";
 
 interface Question {
-    question: String,
-    isTrue: boolean
+    question: String;
+    isTrue: boolean;
 }
 
 export const Question: React.FC<{
-    questions: Question[], 
-    user: string, 
-    actual: number,
-    source: string,
+    questions: Question[];
+    user: string;
+    actual: number;
+    source: string;
 }> = ({ questions, user, actual, source }) => {
     const [idx, setIdx] = React.useState(0);
     const [wrongAnswer, setWrongAnswer] = React.useState(false);
@@ -24,7 +24,7 @@ export const Question: React.FC<{
     const touchStartX = React.useRef<number | null>(null);
 
     async function handleGuess() {
-        const diff = Math.abs(val - actual)
+        const diff = Math.abs(val - actual);
         let coins = questions.length;
         if (diff <= 20) coins *= 3;
         else if (diff <= 40) coins *= 2;
@@ -34,11 +34,11 @@ export const Question: React.FC<{
         await fetch(`/api/users/${user}/coins`, {
             method: "POST",
             headers: {
-                "Content-Type": "application/json"
+                "Content-Type": "application/json",
             },
             body: JSON.stringify({
-                amount: coins
-            })
+                amount: coins,
+            }),
         });
     }
 
@@ -62,7 +62,6 @@ export const Question: React.FC<{
     };
 
     const handleTouchEnd = () => {
-        
         if (Math.abs(position) > 50) handleQuestionAnswered(position < 0);
         touchStartX.current = null; // Reset the starting point
         setPosition(0);
@@ -71,9 +70,15 @@ export const Question: React.FC<{
 
     const calculateBackgroundColor = () => {
         if (position < 0) {
-            return `rgba(22, 163, 74, ${Math.min(Math.abs(position) / 100, 1)})`;
+            return `rgba(22, 163, 74, ${Math.min(
+                Math.abs(position) / 100,
+                1
+            )})`;
         } else if (position > 0) {
-            return `rgba(220, 38, 38, ${Math.min(Math.abs(position) / 100, 1)})`;
+            return `rgba(220, 38, 38, ${Math.min(
+                Math.abs(position) / 100,
+                1
+            )})`;
         }
         return "transparent";
     };
@@ -81,80 +86,118 @@ export const Question: React.FC<{
     const fadeAway = (col: number = 0) => {
         if (col == 1 && position < 0) return 1;
         if (col == 2 && position > 0) return 1;
-        return 1 - Math.min(Math.abs(position) / 100, 1)
-    }
+        return 1 - Math.min(Math.abs(position) / 100, 1);
+    };
 
-    if (wrongAnswer) return (
-        <React.Fragment>
-            <h3 className="text-2xl">Falsch</h3>
-            <p>Diese Frage hast du leider falsch beantwortet. Für diese Nachricht erhälst du keine Münzen</p>
-        </React.Fragment>
-    )
+    if (wrongAnswer)
+        return (
+            <React.Fragment>
+                <h3 className="text-2xl">Falsch</h3>
+                <p>
+                    Diese Frage hast du leider falsch beantwortet. Für diese
+                    Nachricht erhälst du keine Münzen
+                </p>
+            </React.Fragment>
+        );
 
-    if (idx <= 2) return (
-        <React.Fragment>
-            <h3 className="text-2xl mt-2">Fragen:</h3>
-            <div className="flex justify-center rounded-lg" 
-                style={{
-                    transform: `translateX(${position}px) rotate(${rotation}deg)`,
-                    backgroundColor: calculateBackgroundColor(),
-                    transition: position === 0 ? "background-color 0.3s ease, transform 0.3s ease" : "none",
-                }}
-                onTouchStart={handleTouchStart}
-                onTouchMove={handleTouchMove}
-                onTouchEnd={handleTouchEnd}
-            >
-                <div 
-                    className="bg-green-600 w-10 content-center rounded-l-lg" 
-                    onClick={() => handleQuestionAnswered(true)}
-                    style={{opacity: fadeAway(1)}}
+    if (idx <= 2)
+        return (
+            <React.Fragment>
+                <h3 className="text-2xl mt-2">Fragen:</h3>
+                <div
+                    className="flex justify-center rounded-lg"
+                    style={{
+                        transform: `translateX(${position}px) rotate(${rotation}deg)`,
+                        backgroundColor: calculateBackgroundColor(),
+                        transition:
+                            position === 0
+                                ? "background-color 0.3s ease, transform 0.3s ease"
+                                : "none",
+                    }}
+                    onTouchStart={handleTouchStart}
+                    onTouchMove={handleTouchMove}
+                    onTouchEnd={handleTouchEnd}
                 >
-                    <svg className="w-6 h-6 text-white m-auto" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
-                        <path stroke="white" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 11.917 9.724 16.5 19 7.5"/>
-                    </svg>
+                    <div
+                        className="bg-green-600 w-10 content-center rounded-l-lg"
+                        onClick={() => handleQuestionAnswered(true)}
+                        style={{ opacity: fadeAway(1) }}
+                    >
+                        <svg
+                            className="w-6 h-6 text-white m-auto"
+                            aria-hidden="true"
+                            xmlns="http://www.w3.org/2000/svg"
+                            width="24"
+                            height="24"
+                            fill="none"
+                            viewBox="0 0 24 24"
+                        >
+                            <path
+                                stroke="white"
+                                strokeLinecap="round"
+                                strokeLinejoin="round"
+                                strokeWidth="2"
+                                d="M5 11.917 9.724 16.5 19 7.5"
+                            />
+                        </svg>
+                    </div>
+                    <div
+                        className="bg-white px-2 text-black w-[calc(100%-5rem)] text-center"
+                        style={{ opacity: fadeAway() }}
+                    >
+                        {questions[idx].question}
+                    </div>
+                    <div
+                        className="bg-red-600 w-10 content-center rounded-r-lg"
+                        onClick={() => handleQuestionAnswered(false)}
+                        style={{ opacity: fadeAway(2) }}
+                    >
+                        <svg
+                            className="w-6 h-6 text-white m-auto"
+                            aria-hidden="true"
+                            xmlns="http://www.w3.org/2000/svg"
+                            width="24"
+                            height="24"
+                            fill="none"
+                            viewBox="0 0 24 24"
+                        >
+                            <path
+                                stroke="white"
+                                strokeLinecap="round"
+                                strokeLinejoin="round"
+                                strokeWidth="2"
+                                d="M6 18 17.94 6M18 18 6.06 6"
+                            />
+                        </svg>
+                    </div>
                 </div>
-                <div 
-                    className="bg-white px-2 text-black w-[calc(100%-5rem)] text-center"
-                    style = {{ opacity: fadeAway()}}
-                >
-                    {questions[idx].question}
-                </div>
-                <div 
-                    className="bg-red-600 w-10 content-center rounded-r-lg" 
-                    onClick={() => handleQuestionAnswered(false)}
-                    style={{opacity: fadeAway(2)}}
-                >
-                    <svg className="w-6 h-6 text-white m-auto" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
-                        <path stroke="white" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18 17.94 6M18 18 6.06 6"/>
-                    </svg>
-                </div>
-            </div>
-        </React.Fragment>
-    )
+            </React.Fragment>
+        );
 
     return (
         <React.Fragment>
             <h2 className="text-2xl mt-2">Politische Orientierung</h2>
-            <PoliticsSlider 
-                key={sliderKey} 
+            <PoliticsSlider
+                key={sliderKey}
                 onValChange={(val) => setVal(val)}
                 guess={val}
                 actual={sliderKey ? actual : null}
                 handleClick={() => handleGuess()}
             />
-            {
-                coins != 0 &&
+            {coins != 0 && (
                 <>
-                    <img src={"data:image/png;base64," + source} alt="source" className="object-contain bg-white p-1 rounded"/>
+                    <img
+                        src={"data:image/png;base64," + source}
+                        alt="source"
+                        className="object-contain bg-white p-1 rounded"
+                    />
                     <p>
                         <span>Du hast {coins}</span>
-                        <Coin
-                            className="inline-block h-[1.2em] self-center aspect-square -mt-[1px]"
-                        />
-                        <span>erhalten</span>
+                        <Coin className="inline-block h-[1.2em] self-center aspect-square -mt-[1px] mx-1" />
+                        <span>erhalten!</span>
                     </p>
                 </>
-            }
+            )}
         </React.Fragment>
-    )
-}
+    );
+};
