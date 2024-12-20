@@ -30,10 +30,10 @@ export async function tryRedeem(voucher: string, user: string) {
             ).length > 0;
         if (!redeemed) {
             if (typeof v === "number") {
-                const bal = await db
+                const bal = (await db
                     .select({ amount: balance.amount })
                     .from(balance)
-                    .where(eq(balance.user, user));
+                    .where(eq(balance.user, user))) || [{ amount: 0 }];
                 await db
                     .update(balance)
                     .set({ amount: bal[0].amount + v })
