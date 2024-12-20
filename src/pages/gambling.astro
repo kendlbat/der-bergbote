@@ -72,9 +72,9 @@ const chest = chests[chestSelection];
                                         .map(([item, chance]) => (
                                             <div class="pl-3">
                                                 <span>
-                                                    {items[item].name}
+                                                    {items[item]?.name}
                                                     {" - "}
-                                                    {items[item].Rarity}
+                                                    {items[item]?.Rarity}
                                                     {" - "}
                                                 </span>
                                                 <span>

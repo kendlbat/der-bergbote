@@ -10,7 +10,7 @@ interface Chest {
 export const chests: Record<number, Chest> = {
     0: {
         name: "Monokel Truhe",
-        description: "Macht mich ein Monokel mich zu einem Zyklopen?",
+        description: "Macht ein Monokel mich zu einem Zyklopen?",
         resourceName: "monocle_chest",
         cost: 500,
         lootTable: {
@@ -20,6 +20,7 @@ export const chests: Record<number, Chest> = {
             e4: 0.05,
             e5: 0.08,
             e6: 0.3,
+            e11: 0.3,
             e7: 0.538,
         },
         fallbackDrop: "e7",
@@ -40,7 +41,7 @@ export const chests: Record<number, Chest> = {
             e9: 0.05,
             e10: 0.02,
         },
-        fallbackDrop: "e7",
+        fallbackDrop: "sh2",
     },
     2: {
         name: "Hautkiste",
@@ -75,5 +76,22 @@ export const chests: Record<number, Chest> = {
             f7: 0.1,
         },
         fallbackDrop: "f5",
+    },
+    4: {
+        name: "Kuriose Kiste",
+        description: "Eine spannende Kiste mit topmodernen Bemalungen",
+        resourceName: "curious_chest",
+        cost: 350,
+        lootTable: {
+            s11: 0.02,
+            s9: 0.07,
+            s10: 0.07,
+            e13: 0.07,
+            f8: 0.12,
+            f9: 0.15,
+            e11: 0.4,
+            f10: 0.4,
+        },
+        fallbackDrop: "e12",
     },
 };

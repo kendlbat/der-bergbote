@@ -31,17 +31,20 @@ export function getMainColorRarity(rarity: String) {
         case "Ramschware": return "#CBB9B8";
         case "Touristenkrempel": return "#A5D6A7";
         case "Wanderbar": return "#B2EBF2";
-        case "Bergsteiger-Zertifiziert": return "#D1C4E9";
+        case "Bergsteiger-Zertifiziert": return "#AF99D4";
         case "Gipfelware": return "#E91E63";
+        default: return "";
     }
 }
 
 export function getEdgeColorRarity(rarity: String) {
+    console.log("RARITY VAL IS: "+rarity);
     switch(rarity) {
         case "Ramschware": return "#979392";
-        case "Touristenkrempel": return "#788967";
-        case "Wanderbar": return "#4E88A2";
-        case "Bergsteiger-Zertifiziert": return "#765F7B";
-        case "Gipfelware": return "#832D26";
+        case "Touristenkrempel": return "#2E7D32";
+        case "Wanderbar": return "#01579B";
+        case "Bergsteiger-Zertifiziert": return "#512DA8";
+        case "Gipfelware": return "#880E4F";
+        default: return "gray";
     }
 }

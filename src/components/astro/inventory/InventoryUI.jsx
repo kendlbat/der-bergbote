@@ -2,7 +2,7 @@ import { InventoryHover } from "./InventoryHover";
 import { useState } from "react";
 import { InventoryItem } from "./InventoryItem";
 import { items } from "@/gambling/items";
-import { getEquippablePriority } from "@/gambling/enums";
+import { getEdgeColorRarity, getEquippablePriority, getMainColorRarity } from "@/gambling/enums";
 import { UserRenderer } from "@/components/react/user/userRenderer";
 const slotTypes = ["skin", "face", "eyes", "hair", "pants", "shirt", "shoes"];
 
@@ -111,6 +111,16 @@ export const InventoryUI = (props) => {
                             !equippedContext.find((eq) => eq.item === it.item)
                     )
                     .map((elmn, idx) => {
+
+                        let primaryCol = getMainColorRarity(items[elmn.item]?.Rarity.toString());
+                        let secondaryCol = "#aaaaaa00";
+                        if (primaryCol != "") {
+                            secondaryCol = primaryCol + "22";
+                            primaryCol = primaryCol + "66";
+                        } else {
+                            primaryCol = "#aaaaaa22";
+                        }
+
                         return (
                             <InventoryHover
                                 key={elmn.item}
@@ -124,15 +134,15 @@ export const InventoryUI = (props) => {
                                                 hoveredItem == idx
                                                     ? "-5deg"
                                                     : "0deg",
-                                            border: "3px solid gray",
+                                            border: "3px solid "+getEdgeColorRarity(items[elmn.item].Rarity.toString()),
                                             marginTop:
                                                 hoveredItem == idx
                                                     ? "-4px"
                                                     : "0px",
                                             backgroundColor:
                                                 hoveredItem == idx
-                                                    ? "#aaaaaa22"
-                                                    : "#aaaaaa00",
+                                                    ? primaryCol
+                                                    : secondaryCol,
                                         }}
                                         className="border rounded-lg h-min w-min aspect-square"
                                         onMouseEnter={() => setHoveredItem(idx)}
@@ -161,6 +171,15 @@ export const InventoryUI = (props) => {
                         return e.slot == slotIdx;
                     });
 
+                    let primaryCol = getMainColorRarity(items[equippedInSlot?.item]?.Rarity.toString());
+                    let secondaryCol = "#aaaaaa00";
+                    if (primaryCol != "") {
+                        secondaryCol = primaryCol + "22";
+                        primaryCol = primaryCol + "66";
+                    } else {
+                        primaryCol = "#aaaaaa22";
+                    }
+
                     return (
                         <InventoryHover
                             key={slotIdx}
@@ -180,15 +199,15 @@ export const InventoryUI = (props) => {
                                             hoveredEquipped == idx
                                                 ? "-5deg"
                                                 : "0deg",
-                                        border: "3px solid gray",
+                                        border: "3px solid "+getEdgeColorRarity(items[equippedInSlot?.item]?.Rarity.toString()),
                                         marginTop:
                                             hoveredEquipped == idx
                                                 ? "-4px"
                                                 : "0px",
                                         backgroundColor:
                                             hoveredEquipped == idx
-                                                ? "#aaaaaa22"
-                                                : "#aaaaaa00",
+                                                ? primaryCol
+                                                : secondaryCol,
                                     }}
                                     className="border rounded-lg h-min w-min aspect-square"
                                     onMouseEnter={() => setHoveredEquipped(idx)}
