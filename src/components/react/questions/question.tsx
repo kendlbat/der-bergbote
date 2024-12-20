@@ -25,8 +25,8 @@ export const Question: React.FC<{
 
     async function handleGuess() {
         const diff = Math.abs(val - actual);
-        let coins = questions.length;
-        if (diff <= 20) coins *= 3;
+        let coins = questions.length * 11 + Math.floor(Math.random()*4);
+        if (diff <= 20) coins *= 4;
         else if (diff <= 40) coins *= 2;
         else coins *= 1;
         setCoins(coins);
