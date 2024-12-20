@@ -5,6 +5,7 @@ import {
     equipped,
     inventory,
     topicsTable,
+    voucherRedemptions,
 } from "@/db/schema";
 import fs from "fs/promises";
 
@@ -64,6 +65,7 @@ async function fillDemoData() {
     await db.delete(balance);
     await db.delete(inventory);
     await db.delete(equipped);
+    await db.delete(voucherRedemptions);
     await Promise.all([fillNewsData(), fillInventoryData()]);
 }
 

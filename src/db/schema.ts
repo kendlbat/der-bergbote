@@ -87,5 +87,11 @@ export const userArticles = pgTable(
     ]
 );
 
+export const voucherRedemptions = pgTable("voucherRedemptions", {
+    user: varchar({ length: 255 }),
+    voucher: varchar({ length: 32 }),
+    redeemedAt: timestamp(),
+});
+
 export type Topic = typeof topicsTable.$inferSelect;
 export type Article = typeof articlesTable.$inferSelect;
