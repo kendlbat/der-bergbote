@@ -16,7 +16,7 @@ export const InventoryHover: React.FC<{
 }> = (props) => {
     const it = props.item ? items[props.item.item] : null;
     return (
-        <HoverCard>
+        <HoverCard openDelay={100} closeDelay={100}>
             <HoverCardTrigger>{props.children}</HoverCardTrigger>
             <HoverCardContent className="w-80">
                 <div className="flex justify-between w-full space-x-4">
