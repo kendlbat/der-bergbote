@@ -20,11 +20,11 @@ export function getEquippablePriority(priority: String) {
     switch (priority) {
         case "skin":
             return 1;
-        case "face":
-            return 2;
-        case "eyes":
-            return 3;
         case "shirt":
+            return 2;
+        case "face":
+            return 3;
+        case "eyes":
             return 4;
         case "hair":
             return 5;
