@@ -3,6 +3,7 @@ import AppSkeleton from "@/components/astro/AppSkeleton.astro";
 import BergBalance from "@/components/astro/BergBalance.astro";
 import ChestImage from "@/components/astro/ChestImage.astro";
 import Coin from "@/components/astro/Coin.astro";
+import { RarityTag } from "@/components/react/rarity-tag";
 import { chests } from "@/gambling/chests";
 import { items } from "@/gambling/items";
 import Layout from "@/layouts/Layout.astro";
@@ -48,14 +49,12 @@ const chest = chests[chestSelection];
                     id="chest-curr"
                     class="inline-block col-span-6 sm:col-span-4 bg-background z-[1] -mt-3"
                 >
-                    <div
-                        class="border rounded-lg p-4 flex flex-row-reverse justify-between gap-3"
-                    >
+                    <div class="border rounded-lg p-4 justify-between gap-3">
                         <div class="h-[9em] aspect-square float-right">
                             <ChestImage i={chest.resourceName} />
                         </div>
                         <div>
-                            <h2 class="text-[2em] leading-6">
+                            <h2 class="text-[2em] leading-6 mr-[4.5em]">
                                 {chest.name}
                             </h2>
                             <span
@@ -63,27 +62,46 @@ const chest = chests[chestSelection];
                             >
                                 <BergBalance amount={chest.cost} />
                             </span>
-                            <p class="leading-5 mb-2">{chest.description}</p>
-                            <div class="leading-5">
+                            <p class="leading-5 mb-2 mr-[9.5em]">
+                                {chest.description}
+                            </p>
+                            <div class="leading-5 text-[0.8em]">
                                 <h3>Kann folgendes enthalten:</h3>
-                                {
-                                    Object.entries(chest.lootTable)
-                                        .sort((a, b) => a[1] - b[1])
-                                        .map(([item, chance]) => (
-                                            <div class="pl-3">
-                                                <span>
-                                                    {items[item]?.name}
-                                                    {" - "}
-                                                    {items[item]?.Rarity}
-                                                    {" - "}
-                                                </span>
-                                                <span>
-                                                    {Math.round(chance * 100) +
-                                                        "%"}
-                                                </span>
-                                            </div>
-                                        ))
-                                }
+                                <table>
+                                    <tr>
+                                        <th></th>
+                                        <th class="text-start pl-2">Item</th>
+                                        <th class="text-start pl-2"
+                                            >Einstufung</th
+                                        >
+                                    </tr>
+                                    {
+                                        Object.entries(chest.lootTable)
+                                            .sort((a, b) => a[1] - b[1])
+                                            .map(([item, chance]) => (
+                                                <tr class="pl-3">
+                                                    <td>
+                                                        {Math.round(
+                                                            chance * 100
+                                                        ) + "%"}
+                                                    </td>
+                                                    <td class="pl-2 leading-3">
+                                                        {items[item].name}
+                                                    </td>
+                                                    <td class="pl-2">
+                                                        <div>
+                                                            <RarityTag
+                                                                rarity={
+                                                                    items[item]
+                                                                        .Rarity
+                                                                }
+                                                            />
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                            ))
+                                    }
+                                </table>
                             </div>
                         </div>
                     </div>
