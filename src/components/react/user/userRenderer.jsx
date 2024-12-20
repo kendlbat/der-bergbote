@@ -26,6 +26,5 @@ export const UserRenderer = (props) => {
                 );
             })}
         </a>
-    
-    )
-}
+    );
+};

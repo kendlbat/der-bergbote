@@ -7,6 +7,7 @@ interface Items {
         Rarity: Rarity;
         name: string;
         description: string;
+        value: number;
     } & Record<string, any>;
 }
 
@@ -62,7 +63,7 @@ export const items: Items = {
     },
     e7: {
         name: "Linsenloses Silber Monokel",
-        description: "",
+        description: "Ring aus Alufolie mit Schnur - Bastelset",
         resourceName: "silver_monocle",
         Rarity: Rarity.COMMON,
         type: EquippableType.EYES,
@@ -176,7 +177,7 @@ export const items: Items = {
     },
     f2: {
         name: "Schlangenmann",
-        description: "",
+        description: "Ninja-go",
         resourceName: "snake_guy_face",
         Rarity: Rarity.EPIC,
         type: EquippableType.FACE,
@@ -184,7 +185,7 @@ export const items: Items = {
     },
     f3: {
         name: "Warum is ans seiner Augen größer als des andre?",
-        description: "",
+        description: "Und andere Fragen, die ich mir um 3 Uhr morgens stelle",
         resourceName: "big_eye_smal_eye_face",
         Rarity: Rarity.EPIC,
         type: EquippableType.FACE,
@@ -192,7 +193,7 @@ export const items: Items = {
     },
     f4: {
         name: "Verwirrtes Gesicht",
-        description: "",
+        description: "BWM Test in einer Nussschale",
         resourceName: "clueless_face",
         Rarity: Rarity.RARE,
         type: EquippableType.FACE,
@@ -215,8 +216,8 @@ export const items: Items = {
         value: 700,
     },
     f7: {
-        name: "Müde ",
-        description: "",
+        name: "Müde",
+        description: "Akkurate Darstellung des Bergboten-Dev-Teams",
         resourceName: "sleepy_face",
         Rarity: Rarity.UNCOMMON,
         type: EquippableType.FACE,
