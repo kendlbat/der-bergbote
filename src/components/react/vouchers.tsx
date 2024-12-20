@@ -14,6 +14,7 @@ export const VoucherForm: React.FC<{ coin: ImageMetadata }> = ({ coin }) => {
                 onChange={(ev) => {
                     setVoucher(ev.target.value);
                 }}
+                spellCheck="false"
                 placeholder="Voucher"
                 className="rounded border-none p-1 px-3 bg-secondary"
             />
