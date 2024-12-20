@@ -12,13 +12,13 @@ export const UserRenderer = (props) => {
         style={{padding: "-23px",width: props.width, height: props.height, backgroundColor: urlMatch ? "#ffffff1e" : ""}}>
             <img
                 style={{objectFit:"contain"}}
-                src={props.baseIcon.src}
+                src={props?.baseIcon?.src}
                 className="left-0 top-0"
                 alt={"IMG"}/>
             {renderableEquippables.map((item) => {
                 return (
                     <img
-                    src={item.image.src}
+                    src={item?.image?.src}
                     className="left-0 top-0"
                     style={{objectFit:"contain", position:"relative", marginLeft: "-100%"}}
                     alt={"Type"}/>  

@@ -28,6 +28,7 @@ export function getEquippablePriority(priority: String) {
             return 4;
         case "hair":
             return 5;
+        
     }
 }
 
