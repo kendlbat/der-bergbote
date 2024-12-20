@@ -2,6 +2,8 @@ import { InventoryHover } from "./InventoryHover";
 import { useState } from "react";
 import { InventoryItem } from "./InventoryItem";
 import { items } from "@/gambling/items";
+import { getEquippablePriority } from "@/gambling/enums";
+import { UserRenderer } from "@/components/react/user/userRenderer";
 const slotTypes = ["skin", "face", "eyes", "hair", "pants", "shirt", "shoes"];
 
 /*

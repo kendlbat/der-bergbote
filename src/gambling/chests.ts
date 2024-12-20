@@ -31,6 +31,7 @@ export const chests: Record<number, Chest> = {
         resourceName: "tuxedo_chest",
         cost: 1000,
         lootTable: {
+            sh1: 0.5,
             e1: 0.01,
             e2: 0.01,
             e3: 0.05,

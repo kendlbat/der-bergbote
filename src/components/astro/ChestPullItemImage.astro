@@ -33,6 +33,10 @@ switch (item.type) {
         source += "skin";
         break;
     }
+    case EquippableType.SHIRT: {
+        source += "shirt";
+        break;
+    }
     default: {
         source = "";
     }
@@ -71,7 +75,7 @@ if (source) {
     );
 }
 
-const image = images![`${source}/${item.resourceName}.png`];
+const image = images![`${source}/${item.resourceName}_item.png`];
 console.log(item.resourceName);
 const itemImage = image ? (await image()).default : fallbackSprite;
 ---

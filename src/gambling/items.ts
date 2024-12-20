@@ -224,11 +224,11 @@ export const items: Items = {
         value: 700,
     },
     sh1: {
-        name: "Luxus Tuxedo",
-        description: "",
-        resourceName: "sleepy_face",
-        Rarity: Rarity.UNCOMMON,
-        type: EquippableType.FACE,
-        value: 700,
+        name: "Reicher Bergbauer Classic",
+        description: "Wenn die Alm wieder einmal ein gutes Jahr hatte...",
+        resourceName: "fancy_suit",
+        Rarity: Rarity.EPIC,
+        type: EquippableType.SHIRT,
+        value: 6000,
     },
 };
