@@ -173,12 +173,13 @@ export const InventoryUI = (props) => {
 
                     let primaryCol = getMainColorRarity(items[equippedInSlot?.item]?.Rarity.toString());
                     let secondaryCol = "#aaaaaa00";
-                    if (primaryCol != "") {
+                    if (equippedInSlot) {
                         secondaryCol = primaryCol + "22";
                         primaryCol = primaryCol + "66";
                     } else {
                         primaryCol = "#aaaaaa22";
                     }
+
 
                     return (
                         <InventoryHover
@@ -199,7 +200,7 @@ export const InventoryUI = (props) => {
                                             hoveredEquipped == idx
                                                 ? "-5deg"
                                                 : "0deg",
-                                        border: "3px solid "+getEdgeColorRarity(items[equippedInSlot?.item]?.Rarity.toString()),
+                                        border: "3px solid "+ (equippedInSlot ? getEdgeColorRarity(items[equippedInSlot?.item]?.Rarity.toString()) : "gray"),
                                         marginTop:
                                             hoveredEquipped == idx
                                                 ? "-4px"
