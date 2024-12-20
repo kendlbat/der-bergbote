@@ -20,7 +20,9 @@ export const InventoryHover: React.FC<{
                 <div className="flex justify-between space-x-4">
                     <div className="space-y-1">
                         <h3 className="text-lg">{it?.name || "Leerer Slot"}</h3>
-                        <p className="text-sm">{it?.description}</p>
+                        {it?.description && (
+                            <p className="text-sm">{it?.description}</p>
+                        )}
                         <div className="flex items-center pt-2">
                             <span className="text-xs text-muted-foreground">
                                 <ReactBergBalance
