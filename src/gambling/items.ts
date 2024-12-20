@@ -7,6 +7,7 @@ interface Items {
         Rarity: Rarity;
         name: string;
         description: string;
+        value: number;
     } & Record<string, any>;
 }
 
