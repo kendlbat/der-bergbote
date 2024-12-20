@@ -2,15 +2,7 @@ import { InventoryHover } from "./InventoryHover";
 import { useState } from "react";
 import { InventoryItem } from "./InventoryItem";
 import { items } from "@/gambling/items";
-const slotTypes = [
-    "skin",
-    "face",
-    "eyes",
-    "hair",
-    "pants",
-    "shirt",
-    "shoes",
-];
+const slotTypes = ["skin", "face", "eyes", "hair", "pants", "shirt", "shoes"];
 
 /*
 <InventoryItem
@@ -30,37 +22,39 @@ class="rounded m-1 h-20 aspect-square"
 export const InventoryUI = (props) => {
     const [hoveredItem, setHoveredItem] = useState(-1);
     const [hoveredEquipped, setHoveredEquipped] = useState(-1);
-    const [itemsContext, setItemsContext] = useState(props.items ? props.items : []);
-    const [equippedContext, setEquippedContext] = useState(props.equipped ? props.equipped : []);
+    const [itemsContext, setItemsContext] = useState(
+        props.items ? props.items : []
+    );
+    const [equippedContext, setEquippedContext] = useState(
+        props.equipped ? props.equipped : []
+    );
 
     async function unequipItem(itemID) {
-
-        if (!itemID)
-            return;
+        if (!itemID) return;
 
         const response = await fetch(`/api/items/${itemID}/unequip`, {
-            method: 'POST',
+            method: "POST",
             headers: {
-                'Content-Type': 'application/json',
+                "Content-Type": "application/json",
             },
-            });
+        });
 
         if (!response.ok) {
             throw new Error(`Failed to equip item: ${response.statusText}`);
         }
         let newContext = [...equippedContext];
-        newContext = newContext.filter((e => e.item != itemID));
-        
+        newContext = newContext.filter((e) => e.item != itemID);
+
         setEquippedContext(newContext);
     }
 
     async function equipItem(itemID) {
         const response = await fetch(`/api/items/${itemID}/equip`, {
-            method: 'POST',
+            method: "POST",
             headers: {
-                'Content-Type': 'application/json',
+                "Content-Type": "application/json",
             },
-            });
+        });
 
         if (!response.ok) {
             throw new Error(`Failed to equip item: ${response.statusText}`);
@@ -135,46 +129,62 @@ export const InventoryUI = (props) => {
             </h1>
             <div className="flex flex-wrap gap-3">
                 {slotTypes.map((slotIdx, idx) => {
-                    const equippedInSlot = equippedContext.find(
-                        (e) => {
-                            return e.slot == slotIdx
-                        }
-                    );
+                    const equippedInSlot = equippedContext.find((e) => {
+                        return e.slot == slotIdx;
+                    });
 
-                
                     return (
-                        <div
+                        <InventoryHover
                             key={slotIdx}
-                            style={{
-                                border: "3px solid gray",
-                                marginTop:
-                                    hoveredEquipped == idx ? "-4px" : "0px",
-                                backgroundColor:
-                                    hoveredEquipped == idx
-                                        ? "#aaaaaa22"
-                                        : "#aaaaaa00",
-                            }}
-                            className="border rounded-lg aspect-square relative"
-                            onMouseEnter={() => setHoveredEquipped(idx)}
-                            onMouseLeave={() => setHoveredEquipped(-1)}
-                            onClick={() => {
-                                unequipItem(
-                                    itemsContext.find(
-                                        (it) => it.item == equippedInSlot?.item
-                                    )?.item
-                                );
-                            }}
-                        >
-                            <InventoryItem
-                                imageIcon={
-                                    itemsContext.find(
-                                        (it) => it.item == equippedInSlot?.item
-                                    )?.image
+                            item={
+                                equippedInSlot || {
+                                    item: null,
+                                    slot: slotIdx,
+                                    user: null,
                                 }
-                                
-                                typeIcon={props.typeImages[slotIdx + ".png"]}
-                            ></InventoryItem>
-                        </div>
+                            }
+                            coin={props.coin}
+                        >
+                            <span>
+                                <div
+                                    style={{
+                                        rotate:
+                                            hoveredEquipped == idx
+                                                ? "-5deg"
+                                                : "0deg",
+                                        border: "3px solid gray",
+                                        marginTop:
+                                            hoveredEquipped == idx
+                                                ? "-4px"
+                                                : "0px",
+                                        backgroundColor:
+                                            hoveredEquipped == idx
+                                                ? "#aaaaaa22"
+                                                : "#aaaaaa00",
+                                    }}
+                                    className="border rounded-lg h-min w-min aspect-square"
+                                    onMouseEnter={() => setHoveredEquipped(idx)}
+                                    onMouseLeave={() => setHoveredEquipped(-1)}
+                                    onClick={() => {
+                                        unequipItem(equippedInSlot?.item);
+                                    }}
+                                >
+                                    <InventoryItem
+                                        className="h-[3em] w-[3em]"
+                                        imageIcon={
+                                            itemsContext.find(
+                                                (it) =>
+                                                    it.item ==
+                                                    equippedInSlot?.item
+                                            )?.image
+                                        }
+                                        typeIcon={
+                                            props.typeImages[slotIdx + ".png"]
+                                        }
+                                    />
+                                </div>
+                            </span>
+                        </InventoryHover>
                     );
                 })}
             </div>
