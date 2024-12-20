@@ -25,3 +25,23 @@ export function getEquippablePriority(priority: String) {
         case "hair": return 5;
     }
 }
+
+export function getMainColorRarity(rarity: String) {
+    switch(rarity) {
+        case "Ramschware": return "#CBB9B8";
+        case "Touristenkrempel": return "#A5D6A7";
+        case "Wanderbar": return "#B2EBF2";
+        case "Bergsteiger-Zertifiziert": return "#D1C4E9";
+        case "Gipfelware": return "#E91E63";
+    }
+}
+
+export function getEdgeColorRarity(rarity: String) {
+    switch(rarity) {
+        case "Ramschware": return "#979392";
+        case "Touristenkrempel": return "#788967";
+        case "Wanderbar": return "#4E88A2";
+        case "Bergsteiger-Zertifiziert": return "#765F7B";
+        case "Gipfelware": return "#832D26";
+    }
+}

@@ -14,7 +14,7 @@ export const chests: Record<number, Chest> = {
         resourceName: "monocle_chest",
         cost: 500,
         lootTable: {
-            e1: 0.002,
+            e1: 0.005,
             e2: 0.01,
             e3: 0.02,
             e4: 0.05,
@@ -31,7 +31,7 @@ export const chests: Record<number, Chest> = {
         resourceName: "tuxedo_chest",
         cost: 1000,
         lootTable: {
-            sh1: 0.5,
+            sh1: 0.02,
             e1: 0.01,
             e2: 0.01,
             e3: 0.05,
