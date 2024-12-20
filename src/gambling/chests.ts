@@ -108,7 +108,7 @@ export const chests: Record<number, Chest> = {
             e16: 0.14,
             e13: 0.07,
             e14: 0.11,
-            e15: 0.9,
+            e15: 0.09,
         },
         fallbackDrop: "e19",
     },
