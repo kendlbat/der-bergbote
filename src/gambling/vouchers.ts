@@ -11,7 +11,7 @@ export const vouchers: Record<string, number | string> = {
     test: "e1",
 };
 
-export async function tryRedeem(voucher: string, user: string) {
+export async function tryRedeem(voucher: string, user: string, name: string) {
     if (vouchers[voucher]) {
         const v = vouchers[voucher];
         let ret: number | string = 0;
@@ -41,6 +41,7 @@ export async function tryRedeem(voucher: string, user: string) {
                     await db.insert(balance).values({
                         user,
                         amount: v,
+                        name,
                     });
                 } else {
                     await db
