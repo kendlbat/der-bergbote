@@ -20,10 +20,12 @@ export const Question: React.FC<{
     const [val, setVal] = React.useState(50);
     const [sliderKey, setSliderKey] = React.useState(0);
     const [coins, setCoins] = React.useState(0);
-
+    const [chosen, setChosen] = React.useState(false);
     const touchStartX = React.useRef<number | null>(null);
 
     async function handleGuess() {
+        if (chosen)
+            return;
         const diff = Math.abs(val - actual);
         let coins = questions.length * 11 + Math.floor(Math.random()*4);
         if (diff <= 20) coins *= 4;
@@ -40,6 +42,7 @@ export const Question: React.FC<{
                 amount: coins,
             }),
         });
+        setChosen(true);
     }
 
     function handleQuestionAnswered(answer: boolean) {
