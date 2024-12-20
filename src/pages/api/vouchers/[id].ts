@@ -8,7 +8,16 @@ export const POST: APIRoute = async ({ request, params }) => {
 
     if (!user) return new Response("Unauthorized", { status: 401 });
 
-    const coins = await tryRedeem(params.id || "", user);
+    const value = await tryRedeem(params.id || "", user);
 
-    return new Response(coins.toString(), { status: 200 });
+    return new Response(
+        JSON.stringify({
+            value: value ?? 0,
+            type: typeof value === "number" ? "coins" : "item",
+        }),
+        {
+            status: 200,
+            headers: { "Content-Type": "application/json" },
+        }
+    );
 };

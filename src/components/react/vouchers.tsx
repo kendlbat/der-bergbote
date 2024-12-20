@@ -4,7 +4,9 @@ import { ReactBergBalance } from "./react-balance";
 
 export const VoucherForm: React.FC<{ coin: ImageMetadata }> = ({ coin }) => {
     const [voucher, setVoucher] = useState<string>("");
-    const [lastRedemption, setLastRedemption] = useState<number | null>(null);
+    const [lastRedemption, setLastRedemption] = useState<
+        string | number | null
+    >(null);
 
     return (
         <>
@@ -26,7 +28,10 @@ export const VoucherForm: React.FC<{ coin: ImageMetadata }> = ({ coin }) => {
                     }).then(async (res) => {
                         setVoucher("");
                         if (!res.ok) setLastRedemption(0);
-                        else setLastRedemption(parseInt(await res.text()));
+                        else {
+                            const data = await res.json();
+                            setLastRedemption(data.value);
+                        }
                     });
                 }}
             >
@@ -36,13 +41,15 @@ export const VoucherForm: React.FC<{ coin: ImageMetadata }> = ({ coin }) => {
                 <span>
                     {lastRedemption === 0 ? (
                         "Invalid voucher"
-                    ) : (
+                    ) : typeof lastRedemption === "number" ? (
                         <span className="text-[0.5em]">
                             <ReactBergBalance
                                 amount={lastRedemption}
                                 coin={coin}
                             />
                         </span>
+                    ) : (
+                        <span>{lastRedemption}</span>
                     )}
                 </span>
             )}
