@@ -19,7 +19,7 @@ export const items: Items = {
         resourceName: "platinum_monocle_thick",
         Rarity: Rarity.LEGENDARY,
         type: EquippableType.EYES,
-        value: 10000,
+        value: 5000,
     },
     e2: {
         name: "Feines Platinum Monokel",
@@ -27,7 +27,7 @@ export const items: Items = {
         resourceName: "platinum_monocle",
         Rarity: Rarity.LEGENDARY,
         type: EquippableType.EYES,
-        value: 9500,
+        value: 4500,
     },
     e3: {
         name: "Gold Monokel",
@@ -35,7 +35,7 @@ export const items: Items = {
         resourceName: "gold_monocle_thick",
         Rarity: Rarity.EPIC,
         type: EquippableType.EYES,
-        value: 5000,
+        value: 2000,
     },
     e4: {
         name: "Feines Gold Monokel",
@@ -43,7 +43,7 @@ export const items: Items = {
         resourceName: "gold_monocle",
         Rarity: Rarity.EPIC,
         type: EquippableType.EYES,
-        value: 4500,
+        value: 2200,
     },
     e5: {
         name: "Silber Monokel",
@@ -51,7 +51,7 @@ export const items: Items = {
         resourceName: "silver_monocle_thick",
         Rarity: Rarity.RARE,
         type: EquippableType.EYES,
-        value: 2000,
+        value: 1000,
     },
     e6: {
         name: "Bronze Monokel",
@@ -75,7 +75,7 @@ export const items: Items = {
         resourceName: "tophat_purple_inlay",
         Rarity: Rarity.EPIC,
         type: EquippableType.HAIR,
-        value: 7000,
+        value: 4500,
     },
     e9: {
         name: "Zylinderhut (Roter Textileinsatz)",
@@ -91,7 +91,7 @@ export const items: Items = {
         resourceName: "tophat_red_inlay_belt",
         Rarity: Rarity.LEGENDARY,
         type: EquippableType.HAIR,
-        value: 14000,
+        value: 6000,
     },
     e11: {
         name: "Brille",
@@ -115,7 +115,7 @@ export const items: Items = {
         resourceName: "cook",
         Rarity: Rarity.EPIC,
         type: EquippableType.HAIR,
-        value: 8000,
+        value: 4000,
     },
     e14: {
         name: "Karenzius",
@@ -134,7 +134,7 @@ export const items: Items = {
         value: 2000,
     },
     e16: {
-        name: "Blonder Buzz Cutt",
+        name: "Blonder Buzz Cut",
         description: "Traditionell Militärisch",
         resourceName: "buzz_cut_blond",
         Rarity: Rarity.UNCOMMON,
@@ -142,7 +142,7 @@ export const items: Items = {
         value: 250,
     },
     e17: {
-        name: "Brauner Buzz Cutt",
+        name: "Brauner Buzz Cut",
         description: "Progressiv Militärisch",
         resourceName: "buzz_cut_brown",
         Rarity: Rarity.UNCOMMON,
@@ -155,7 +155,7 @@ export const items: Items = {
         resourceName: "bald",
         Rarity: Rarity.EPIC,
         type: EquippableType.HAIR,
-        value: 8000,
+        value: 4000,
     },
     e19: {
         name: "Kopfhautinsel",
@@ -164,6 +164,14 @@ export const items: Items = {
         Rarity: Rarity.COMMON,
         type: EquippableType.HAIR,
         value: 10,
+    },
+    e20: {
+        name: "Plan B",
+        description: "Wenns mit der HTL nicht läuft...",
+        resourceName: "plan_b",
+        Rarity: Rarity.LEGENDARY,
+        type: EquippableType.HAIR,
+        value: 4000,
     },
     //Hautfarben
     s1: {
@@ -218,7 +226,7 @@ export const items: Items = {
         hex: "#000000",
         Rarity: Rarity.LEGENDARY,
         type: EquippableType.SKIN,
-        value: 8000,
+        value: 4000,
     },
     s7: {
         name: "Waldmeister",
@@ -227,7 +235,7 @@ export const items: Items = {
         hex: "#304529",
         Rarity: Rarity.EPIC,
         type: EquippableType.SKIN,
-        value: 5000,
+        value: 2000,
     },
     s8: {
         name: "Minze",
@@ -236,7 +244,7 @@ export const items: Items = {
         hex: "#3EB489",
         Rarity: Rarity.RARE,
         type: EquippableType.SKIN,
-        value: 3000,
+        value: 1500,
     },
     s9: {
         name: "Blauer Kristall",
@@ -245,7 +253,7 @@ export const items: Items = {
         hex: "#3EB489",
         Rarity: Rarity.EPIC,
         type: EquippableType.SKIN,
-        value: 5500,
+        value: 2200,
     },
     s10: {
         name: "Roter Kristall",
@@ -254,7 +262,7 @@ export const items: Items = {
         hex: "#3EB489",
         Rarity: Rarity.EPIC,
         type: EquippableType.SKIN,
-        value: 5000,
+        value: 2000,
     },
     s11: {
         name: "Gold",
@@ -263,7 +271,7 @@ export const items: Items = {
         hex: "#3EB489",
         Rarity: Rarity.LEGENDARY,
         type: EquippableType.SKIN,
-        value: 15000,
+        value: 8000,
     },
     //Gesichter
     f1: {
@@ -272,7 +280,7 @@ export const items: Items = {
         resourceName: "roblox_man_face",
         Rarity: Rarity.LEGENDARY,
         type: EquippableType.FACE,
-        value: 9000,
+        value: 4000,
     },
     f2: {
         name: "Schlangenmann",
@@ -280,7 +288,7 @@ export const items: Items = {
         resourceName: "snake_guy_face",
         Rarity: Rarity.EPIC,
         type: EquippableType.FACE,
-        value: 4000,
+        value: 2000,
     },
     f3: {
         name: "Warum is ans seiner Augen größer als des andre?",
@@ -288,7 +296,7 @@ export const items: Items = {
         resourceName: "big_eye_smal_eye_face",
         Rarity: Rarity.EPIC,
         type: EquippableType.FACE,
-        value: 4500,
+        value: 1500,
     },
     f4: {
         name: "Verwirrtes Gesicht",
@@ -296,7 +304,7 @@ export const items: Items = {
         resourceName: "clueless_face",
         Rarity: Rarity.RARE,
         type: EquippableType.FACE,
-        value: 1500,
+        value: 700,
     },
     f5: {
         name: "Testgesicht",
@@ -304,7 +312,7 @@ export const items: Items = {
         resourceName: "dummy_face",
         Rarity: Rarity.UNCOMMON,
         type: EquippableType.FACE,
-        value: 700,
+        value: 350,
     },
     f6: {
         name: "Verängstigtes Gesicht",
@@ -312,7 +320,7 @@ export const items: Items = {
         resourceName: "scared_face",
         Rarity: Rarity.UNCOMMON,
         type: EquippableType.FACE,
-        value: 700,
+        value: 350,
     },
     f7: {
         name: "Müde",
@@ -320,7 +328,7 @@ export const items: Items = {
         resourceName: "sleepy_face",
         Rarity: Rarity.UNCOMMON,
         type: EquippableType.FACE,
-        value: 700,
+        value: 350,
     },
     f8: {
         name: "YOLO Klassifikator",
@@ -328,7 +336,7 @@ export const items: Items = {
         resourceName: "yolo_classifier",
         Rarity: Rarity.RARE,
         type: EquippableType.EYES,
-        value: 4000,
+        value: 2000,
     },
     f9: {
         name: "Stone Faced",
@@ -336,7 +344,7 @@ export const items: Items = {
         resourceName: "stone_faced",
         Rarity: Rarity.RARE,
         type: EquippableType.FACE,
-        value: 4000,
+        value: 2000,
     },
     f10: {
         name: "Immense Unzufriedenheit",
@@ -344,7 +352,7 @@ export const items: Items = {
         resourceName: "dissatisfaction",
         Rarity: Rarity.UNCOMMON,
         type: EquippableType.FACE,
-        value: 500,
+        value: 250,
     },
     sh1: {
         name: "Reicher Bergbauer Classic",
@@ -352,7 +360,7 @@ export const items: Items = {
         resourceName: "fancy_suit",
         Rarity: Rarity.EPIC,
         type: EquippableType.SHIRT,
-        value: 6000,
+        value: 3000,
     },
     sh2: {
         name: "Der Harte Arbeiter",
