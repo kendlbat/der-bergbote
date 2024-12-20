@@ -54,7 +54,7 @@ const chest = chests[chestSelection];
                             <ChestImage i={chest.resourceName} />
                         </div>
                         <div>
-                            <h2 class="text-[2em] leading-6">
+                            <h2 class="text-[2em] leading-6 mr-[4.5em]">
                                 {chest.name}
                             </h2>
                             <span
@@ -62,10 +62,12 @@ const chest = chests[chestSelection];
                             >
                                 <BergBalance amount={chest.cost} />
                             </span>
-                            <p class="leading-5 mb-2">{chest.description}</p>
-                            <div class="leading-5">
+                            <p class="leading-5 mb-2 mr-[9.5em]">
+                                {chest.description}
+                            </p>
+                            <div class="leading-5 text-[0.8em]">
                                 <h3>Kann folgendes enthalten:</h3>
-                                <table class="text-[0.8em]">
+                                <table>
                                     <tr>
                                         <th></th>
                                         <th class="text-start pl-2">Item</th>
@@ -83,7 +85,7 @@ const chest = chests[chestSelection];
                                                             chance * 100
                                                         ) + "%"}
                                                     </td>
-                                                    <td class="pl-2">
+                                                    <td class="pl-2 leading-3">
                                                         {items[item].name}
                                                     </td>
                                                     <td class="pl-2">
