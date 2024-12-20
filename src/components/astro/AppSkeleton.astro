@@ -10,6 +10,7 @@ import { sql } from "drizzle-orm";
 import { items } from "@/gambling/items";
 import { getImage, imageConfig } from "astro:assets";
 import {UserRenderer} from "@/components/react/user/userRenderer"
+import { getEquippablePriority } from "@/gambling/enums"
 const activeUrl = Astro.url.pathname;
 
 const session = await getSession(Astro.request);
@@ -45,6 +46,7 @@ const userItems = await Promise.all(
 
         return {
             ...i,
+            priority: getEquippablePriority(items[i.item!!].type.toString()),
             image: await getImage({
                 src: (await img()).default,
             }),
@@ -69,7 +71,7 @@ const modifiedBaseImage = await getImage({src: (await loadedImage()).default})
         <div
             class="w-full flex justify-around justify-items-center flex-row flex-nowrap bg-secondary h-[4.5em] min-h-[4.5em]"
         >
-            <UserRenderer href="/me" loc={activeUrl} icon="portrait_base" equippedItems={userItems} baseIcon={modifiedBaseImage} />
+            <UserRenderer href="/me" loc={activeUrl} width="18%" height="100%" icon="portrait_base" equippedItems={userItems} baseIcon={modifiedBaseImage} />
             <BottomBarButton href="/gambling" icon="chest" />
             <BottomBarButton href="/home" icon="letter" main={true} />
             <BottomBarButton href="/leaderboard" icon="leaderboard" />

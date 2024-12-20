@@ -2,6 +2,8 @@ import { InventoryHover } from "./InventoryHover";
 import { useState } from "react";
 import { InventoryItem } from "./InventoryItem";
 import { items } from "@/gambling/items";
+import { UserRenderer } from "@/components/react/user/userRenderer";
+import { getEquippablePriority } from "@/gambling/enums";
 const slotTypes = [
     "skin",
     "face",
@@ -32,7 +34,7 @@ export const InventoryUI = (props) => {
     const [hoveredEquipped, setHoveredEquipped] = useState(-1);
     const [itemsContext, setItemsContext] = useState(props.items ? props.items : []);
     const [equippedContext, setEquippedContext] = useState(props.equipped ? props.equipped : []);
-
+    console.log("START");
     async function unequipItem(itemID) {
 
         if (!itemID)
@@ -55,6 +57,9 @@ export const InventoryUI = (props) => {
     }
 
     async function equipItem(itemID) {
+
+
+
         const response = await fetch(`/api/items/${itemID}/equip`, {
             method: 'POST',
             headers: {
@@ -65,18 +70,41 @@ export const InventoryUI = (props) => {
         if (!response.ok) {
             throw new Error(`Failed to equip item: ${response.statusText}`);
         }
-        let newContext = [...equippedContext];
-        let foundItem = itemsContext.find((e) => e?.item == itemID);
 
+        let foundItem = equippedContext.find((e) => items[e.item].type == items[itemID].type);
+        let newContext = [...equippedContext];
+
+        if (foundItem != null) {
+            newContext = newContext.filter((e) => {
+                return e.item != foundItem.item});
+        }
+        
         let constructedObject = {
-            item: foundItem.item,
-            slot: items[foundItem.item].type,
-            user: foundItem.user,
+            item: itemID,
+            slot: items[itemID].type,
+            user: items[itemID].user,
         };
 
         newContext.push(constructedObject);
+
+        
         setEquippedContext(newContext);
     }
+
+
+
+
+    console.log("MAP : "+JSON.stringify(equippedContext.map((e) => e.slot)))
+
+    let mappedContext = equippedContext.map((old) => {
+        return {
+            priority: getEquippablePriority(old.slot),
+            image: (itemsContext.find(
+                (it) => it.item == old?.item
+            )?.renderImage)
+        }
+    });
+
     return (
         <div>
             <h1 className="flex flex-row justify-center text-[2em] h-min align-middle">
@@ -178,6 +206,10 @@ export const InventoryUI = (props) => {
                     );
                 })}
             </div>
+
+            
+
+            <UserRenderer href="/me" width="50%" height="100%" icon="portrait_base" equippedItems={mappedContext} baseIcon={props.baseIcon}/>
         </div>
     );
 };

@@ -222,4 +222,12 @@ export const items: Items = {
         type: EquippableType.FACE,
         value: 700,
     },
+    sh1: {
+        name: "Luxus Tuxedo",
+        description: "",
+        resourceName: "sleepy_face",
+        Rarity: Rarity.UNCOMMON,
+        type: EquippableType.FACE,
+        value: 700,
+    },
 };

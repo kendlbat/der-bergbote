@@ -42,6 +42,14 @@ const typeImages: Record<string, GetImageResult> = Object.fromEntries(
     )
 );
 
+const userBaseImage = import.meta.glob<{ default: ImageMetadata }>(
+    "/src/assets/icons/portrait_base.png"
+);
+
+const loadedImage = userBaseImage["/src/assets/icons/portrait_base.png"];
+
+const modifiedBaseImage = await getImage({src: (await loadedImage()).default})
+
 const userItems = await Promise.all(
     (
         await db
@@ -58,10 +66,18 @@ const userItems = await Promise.all(
             ] ||
             (async () => ({ default: fallbackSprite }));
 
+        const fallBack = images[
+                `/src/assets/items/${items[i.item!!].type.toString()}/${items[i.item!!].resourceName}.png`
+            ] ||
+            (async () => ({ default: fallbackSprite }));
+
         return {
             ...i,
             image: await getImage({
                 src: (await img()).default,
+            }),
+            renderImage: await getImage({
+                src: (await fallBack()).default,
             }),
             typeIcon: typeImages[`${items[i.item!!].type}.png`],
         };
@@ -83,6 +99,7 @@ const userEquipped = await db
                 items={userItems}
                 typeImages={typeImages}
                 equipped={userEquipped}
+                baseIcon={modifiedBaseImage}
             />
             <div class="pt-2">
                 <SignOut client:visible />
