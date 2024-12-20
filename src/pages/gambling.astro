@@ -3,6 +3,7 @@ import AppSkeleton from "@/components/astro/AppSkeleton.astro";
 import BergBalance from "@/components/astro/BergBalance.astro";
 import ChestImage from "@/components/astro/ChestImage.astro";
 import Coin from "@/components/astro/Coin.astro";
+import { RarityTag } from "@/components/react/rarity-tag";
 import { chests } from "@/gambling/chests";
 import { items } from "@/gambling/items";
 import Layout from "@/layouts/Layout.astro";
@@ -66,24 +67,35 @@ const chest = chests[chestSelection];
                             <p class="leading-5 mb-2">{chest.description}</p>
                             <div class="leading-5">
                                 <h3>Kann folgendes enthalten:</h3>
-                                {
-                                    Object.entries(chest.lootTable)
-                                        .sort((a, b) => a[1] - b[1])
-                                        .map(([item, chance]) => (
-                                            <div class="pl-3">
-                                                <span>
-                                                    {items[item].name}
-                                                    {" - "}
-                                                    {items[item].Rarity}
-                                                    {" - "}
-                                                </span>
-                                                <span>
-                                                    {Math.round(chance * 100) +
-                                                        "%"}
-                                                </span>
-                                            </div>
-                                        ))
-                                }
+                                <table>
+                                    <tr>
+                                        <th>Chance</th>
+                                        <th>Item</th>
+                                        <th>Rarity</th>
+                                    </tr>
+                                    {
+                                        Object.entries(chest.lootTable)
+                                            .sort((a, b) => a[1] - b[1])
+                                            .map(([item, chance]) => (
+                                                <tr class="pl-3">
+                                                    <td>
+                                                        {Math.round(
+                                                            chance * 100
+                                                        ) + "%"}
+                                                    </td>
+                                                    <td>{items[item].name}</td>
+                                                    <td>
+                                                        <RarityTag
+                                                            rarity={
+                                                                items[item]
+                                                                    .Rarity
+                                                            }
+                                                        />
+                                                    </td>
+                                                </tr>
+                                            ))
+                                    }
+                                </table>
                             </div>
                         </div>
                     </div>

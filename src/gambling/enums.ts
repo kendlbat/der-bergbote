@@ -17,31 +17,46 @@ export enum EquippableType {
 }
 
 export function getEquippablePriority(priority: String) {
-    switch(priority) {
-        case "skin": return 1;
-        case "face": return 2;
-        case "eyes": return 3;
-        case "shirt": return 4;
-        case "hair": return 5;
+    switch (priority) {
+        case "skin":
+            return 1;
+        case "face":
+            return 2;
+        case "eyes":
+            return 3;
+        case "shirt":
+            return 4;
+        case "hair":
+            return 5;
     }
 }
 
 export function getMainColorRarity(rarity: String) {
-    switch(rarity) {
-        case "Ramschware": return "#CBB9B8";
-        case "Touristenkrempel": return "#A5D6A7";
-        case "Wanderbar": return "#B2EBF2";
-        case "Bergsteiger-Zertifiziert": return "#D1C4E9";
-        case "Gipfelware": return "#E91E63";
+    switch (rarity) {
+        case Rarity.COMMON:
+            return "#cbb9b8";
+        case Rarity.UNCOMMON:
+            return "#a5d6a7";
+        case Rarity.RARE:
+            return "#b2ebf2";
+        case Rarity.EPIC:
+            return "#d1c4e9";
+        case Rarity.LEGENDARY:
+            return "#e91e63";
     }
 }
 
 export function getEdgeColorRarity(rarity: String) {
-    switch(rarity) {
-        case "Ramschware": return "#979392";
-        case "Touristenkrempel": return "#788967";
-        case "Wanderbar": return "#4E88A2";
-        case "Bergsteiger-Zertifiziert": return "#765F7B";
-        case "Gipfelware": return "#832D26";
+    switch (rarity) {
+        case Rarity.COMMON:
+            return "#979392";
+        case Rarity.UNCOMMON:
+            return "#788967";
+        case Rarity.RARE:
+            return "#4e88a2";
+        case Rarity.EPIC:
+            return "#765f7b";
+        case Rarity.LEGENDARY:
+            return "#832d26";
     }
 }
