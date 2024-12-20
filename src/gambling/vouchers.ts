@@ -36,11 +36,18 @@ export async function tryRedeem(voucher: string, user: string) {
                             .select({ amount: balance.amount })
                             .from(balance)
                             .where(eq(balance.user, user))
-                    )[0]?.amount || 0;
-                await db
-                    .update(balance)
-                    .set({ amount: bal + v })
-                    .where(eq(balance.user, user));
+                    )[0]?.amount || -1;
+                if (bal === -1) {
+                    await db.insert(balance).values({
+                        user,
+                        amount: v,
+                    });
+                } else {
+                    await db
+                        .update(balance)
+                        .set({ amount: bal + v })
+                        .where(eq(balance.user, user));
+                }
                 ret = v;
             } else {
                 if (!items[v]) return 0;
