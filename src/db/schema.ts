@@ -31,6 +31,7 @@ export const articlesTable = pgTable(
         alignment: integer(),
         createdAt: timestamp(),
         id: uuid().defaultRandom().primaryKey(),
+        questions: json().$type<{ question: string; isTrue: boolean }[]>(),
     },
     (t) => [
         {
