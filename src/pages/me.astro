@@ -12,6 +12,7 @@ import { items } from "@/gambling/items";
 import type { GetImageResult } from "astro";
 import fallbackSprite from "@/assets/items/empty.png";
 import coinImage from "@/assets/coin.gif";
+import { VoucherForm } from "@/components/react/vouchers";
 
 const images = import.meta.glob<{ default: ImageMetadata }>(
     "/src/assets/items/**.png"
@@ -48,7 +49,9 @@ const userBaseImage = import.meta.glob<{ default: ImageMetadata }>(
 
 const loadedImage = userBaseImage["/src/assets/icons/portrait_base.png"];
 
-const modifiedBaseImage = await getImage({src: (await loadedImage()).default})
+const modifiedBaseImage = await getImage({
+    src: (await loadedImage()).default,
+});
 
 const userItems = await Promise.all(
     (
@@ -66,10 +69,10 @@ const userItems = await Promise.all(
             ] ||
             (async () => ({ default: fallbackSprite }));
 
-        const fallBack = images[
+        const fallBack =
+            images[
                 `/src/assets/items/${items[i.item!!].type.toString()}/${items[i.item!!].resourceName}.png`
-            ] ||
-            (async () => ({ default: fallbackSprite }));
+            ] || (async () => ({ default: fallbackSprite }));
 
         return {
             ...i,
@@ -101,8 +104,9 @@ const userEquipped = await db
                 equipped={userEquipped}
                 baseIcon={modifiedBaseImage}
             />
-            <div class="pt-2">
+            <div class="pt-2 flex gap-2">
                 <SignOut client:visible />
+                <VoucherForm client:visible coin={coinImage} />
             </div>
         </div>
     </AppSkeleton>
