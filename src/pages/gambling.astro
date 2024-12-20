@@ -49,9 +49,7 @@ const chest = chests[chestSelection];
                     id="chest-curr"
                     class="inline-block col-span-6 sm:col-span-4 bg-background z-[1] -mt-3"
                 >
-                    <div
-                        class="border rounded-lg p-4 flex flex-row-reverse justify-between gap-3"
-                    >
+                    <div class="border rounded-lg p-4 justify-between gap-3">
                         <div class="h-[9em] aspect-square float-right">
                             <ChestImage i={chest.resourceName} />
                         </div>
@@ -67,11 +65,13 @@ const chest = chests[chestSelection];
                             <p class="leading-5 mb-2">{chest.description}</p>
                             <div class="leading-5">
                                 <h3>Kann folgendes enthalten:</h3>
-                                <table>
+                                <table class="text-[0.8em]">
                                     <tr>
-                                        <th>Chance</th>
-                                        <th>Item</th>
-                                        <th>Rarity</th>
+                                        <th></th>
+                                        <th class="text-start pl-2">Item</th>
+                                        <th class="text-start pl-2"
+                                            >Seltenheit</th
+                                        >
                                     </tr>
                                     {
                                         Object.entries(chest.lootTable)
@@ -83,14 +83,18 @@ const chest = chests[chestSelection];
                                                             chance * 100
                                                         ) + "%"}
                                                     </td>
-                                                    <td>{items[item].name}</td>
-                                                    <td>
-                                                        <RarityTag
-                                                            rarity={
-                                                                items[item]
-                                                                    .Rarity
-                                                            }
-                                                        />
+                                                    <td class="pl-2">
+                                                        {items[item].name}
+                                                    </td>
+                                                    <td class="pl-2">
+                                                        <div>
+                                                            <RarityTag
+                                                                rarity={
+                                                                    items[item]
+                                                                        .Rarity
+                                                                }
+                                                            />
+                                                        </div>
                                                     </td>
                                                 </tr>
                                             ))
