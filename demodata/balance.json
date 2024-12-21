@@ -2,61 +2,31 @@
     {
         "user": "tobias.kendlbacher@edu.htl-villach.at",
         "name": "KENDLBACHER Tobias, 5BHIF",
-        "amount": 100000000
+        "amount": 9999
     },
     {
         "user": "noah.arsic@edu.htl-villach.at",
         "name": "ARSIĆ Noah, 5BHIF",
-        "amount": 100000
+        "amount": 9999
     },
     {
         "user": "matthias.tripolt@edu.htl-villach.at",
         "name": "TRIPOLT Matthias, 5BHIF",
-        "amount": 99000
+        "amount": 9999
     },
     {
         "user": "alexander.schweda@edu.htl-villach.at",
         "name": "SCHWEDA Alexander, 5BHIF",
-        "amount": 1000
-    },
-    {
-        "user": "mathias.gombos@edu.htl-villach.at",
-        "name": "GOMBOS Mathias, 5BHIF",
-        "amount": 1
-    },
-    {
-        "user": "alimzhan.assimov@edu.htl-villach.at",
-        "name": "ASSIMOV Alimzhan, 5BHIF",
-        "amount": 10000000
-    },
-    {
-        "user": "julian.reissner@edu.htl-villach.at",
-        "name": "REISSNER Julian, 5BHIF",
-        "amount": 300
-    },
-    {
-        "user": "theresa.brunner@edu.htl-villach.at",
-        "name": "BRUNNER Theresa, 5AHIF",
-        "amount": 15
-    },
-    {
-        "user": "mark.edlinger@edu.htl-villach.at",
-        "name": "EDLINGER Mark, 4BHIF",
-        "amount": 10
-    },
-    {
-        "user": "martin.sorger@edu.htl-villach.at",
-        "name": "SORGER Martin, 5BHIF",
-        "amount": 1
+        "amount": 9999
     },
     {
         "user": "nicole.linder-strohmaier@htl-villach.at",
         "name": "LINDER-STROHMAIER Nicole, Prof. DI DI(FH)",
-        "amount": 100000
+        "amount": 9999
     },
     {
         "user": "karl-heinz.eder@htl-villach.at",
         "name": "EDER Karl-Heinz",
-        "amount": 999999999
+        "amount": 9999
     }
 ]
