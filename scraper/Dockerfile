@@ -30,9 +30,6 @@ RUN echo "node /usr/src/app/index.js >> /var/log/cron.log" > /etc/cron.hourly/my
 # Give execution rights on the cron job
 RUN chmod 0644 /etc/cron.hourly/mycron
 
-# Apply cron job
-RUN crontab /etc/cron.hourly/mycron
-
 # Create the log file to be able to run tail
 RUN touch /var/log/cron.log
 

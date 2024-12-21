@@ -18,10 +18,18 @@ services:
         env_file: .env
         depends_on:
             - "postgres"
-    # scraper:
-    #     build: ./scraper
-    #     env_file: .env
-    #     environment:
-    #         ENDPOINT: http://astro:4321/api/microservices/articles
-    #     depends_on:
-    #         - "astro"
+    scraper:
+        build: ./scraper
+        env_file: .env
+        environment:
+            ENDPOINT: http://astro:4321/api/microservices/articles
+        depends_on:
+            - "astro"
+
+    tunnel:
+        image: cloudflare/cloudflared
+        restart: unless-stopped
+        command: tunnel run
+        environment:
+            - TUNNEL_URL=http://astro:4321
+            - TUNNEL_TOKEN=${TUNNEL_TOKEN}

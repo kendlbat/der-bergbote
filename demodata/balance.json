@@ -25,9 +25,9 @@
         "amount": 1
     },
     {
-        "user": "julian.zankl@edu.htl-villach.at",
-        "name": "ZANKL Julian, 5BHIF",
-        "amount": 2
+        "user": "alimzhan.assimov@edu.htl-villach.at",
+        "name": "ASSIMOV Alimzhan, 5BHIF",
+        "amount": 10000000
     },
     {
         "user": "julian.reissner@edu.htl-villach.at",
@@ -53,5 +53,10 @@
         "user": "nicole.linder-strohmaier@htl-villach.at",
         "name": "LINDER-STROHMAIER Nicole, Prof. DI DI(FH)",
         "amount": 100000
+    },
+    {
+        "user": "karl-heinz.eder@htl-villach.at",
+        "name": "EDER Karl-Heinz",
+        "amount": 999999999
     }
 ]

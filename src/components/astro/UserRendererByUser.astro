@@ -1,0 +1,56 @@
+---
+import { db } from "@/db";
+import { equipped } from "@/db/schema";
+import { getEquippablePriority } from "@/gambling/enums";
+import { items } from "@/gambling/items";
+import { getImage } from "astro:assets";
+import { sql } from "drizzle-orm";
+import { UserRenderer } from "../react/user/userRenderer";
+import loadedImage from "/src/assets/icons/portrait_base.png";
+
+const images = import.meta.glob<{ default: ImageMetadata }>(
+    "/src/assets/items/**.png"
+);
+
+interface Props {
+    user: string;
+}
+
+const { user } = Astro.props;
+
+const userItems = await Promise.all(
+    (
+        await db
+            .select()
+            .from(equipped)
+            .where(sql`${user} = ${equipped.user}`)
+    ).map(async (i) => {
+        const img =
+            images[
+                `/src/assets/items/${items[i.item!!].type.toString()}/${items[i.item!!].resourceName}.png`
+            ] || images[`/src/assets/items/empty.png`];
+
+        return {
+            ...i,
+            priority: getEquippablePriority(items[i.item!!].type.toString()),
+            image: await getImage({
+                src: (await img()).default,
+            }),
+        };
+    })
+);
+
+const modifiedBaseImage = await getImage({
+    src: loadedImage,
+});
+---
+
+<UserRenderer
+    href="/me"
+    loc={Astro.url.pathname}
+    width="18%"
+    height="100%"
+    icon="portrait_base"
+    equippedItems={userItems}
+    baseIcon={modifiedBaseImage}
+/>

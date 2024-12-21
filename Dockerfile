@@ -1,9 +1,12 @@
 FROM node:lts AS runtime
 WORKDIR /app
 
-COPY . .
+COPY package.json package-lock.json .
 
 RUN npm ci --legacy-peer-deps
+
+COPY . . 
+
 RUN npm run build
 
 ENV HOST=0.0.0.0
