@@ -2,9 +2,25 @@
 
 ## Beschreibung
 
+Es soll eine Nachrichten-App entwickelt werden, die die Standpunkte zu verschiedenen Themen von verschiedenen Nachrichtendiensten sammelt und gegenüberstellt.
+Nutzer können durch Gameification die Standpunkte der Nachrichtendienste bewerten.
+Der Nutzen des Projekts ist die unparteiische Information zu wichtigen Themen des Alltags aus verschiedenen Perspektiven, wobei angegeben wird, welcher Bias (Vorurteil) bei den Quellen herrscht.
+Zur Sammlung der Artikel sollen bestehende deutschsprachige Medien verwendet werden. (Die Presse, Der Standard, Heute.at, Bild.de, etc.)
+Um die Artikel nach Themengebieten (z.B.: Koalitionsverhandlungen, KTM Insolvenz, etc.) zu gruppieren, ist der Einsatz von KI geplant, der Ausmaß und die Art dessen jedoch noch nicht bekannt.
+
 ## Team
 
+-   Tobias Kendlbacher [kendlbat.dev](https://kendlbat.dev)
+-   Noah Arsic [GitHub - @Noahgamerrr](https://github.com/Noahgamerrr)
+-   Matthias
+-   Alexander
+
 ## Technologien
+
+-   [React](https://react.dev/)
+-   [Astro](https://astro.build/)
+-   [PostgreSQL](https://www.postgresql.org/)
+-   [drizzle ORM](https://orm.drizzle.team/)
 
 ## Entwicklung
 
@@ -29,10 +45,6 @@ ENTRA_ISSUER=https://login.microsoftonline.com/<TENANT_ID>/v2.0
 `AUTH_SECRET` must be at least 32 characters long.
 `ENTRA_`-values can be generated from an Azure App registration.
 
-```bash
-npm run dev-init
-```
-
 ### Database Development
 
 To start the database:
@@ -41,20 +53,8 @@ To start the database:
 docker compose up postgres -d
 ```
 
-To push changes to the schema:
+To initialize the schema:
 
 ```bash
 npx drizzle-kit push
 ```
-
-## Template - Todo
-
--   [ ] [Reader mode Parsing](https://github.com/mozilla/readability)
--   [ ] Authentication
--   [ ] Authorization
--   [ ] Demo-Data
--   [ ] Examples
-    -   [ ] Page
-    -   [ ] React Component
-    -   [ ] API Endpoint
-    -   [ ] Data fetch from API endpoint
