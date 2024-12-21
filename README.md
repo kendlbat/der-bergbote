@@ -1,5 +1,7 @@
 # Der Bergbote
 
+![Bergbote](./src/assets/bergbote.gif)
+
 ## Beschreibung
 
 Es soll eine Nachrichten-App entwickelt werden, die die Standpunkte zu verschiedenen Themen von verschiedenen Nachrichtendiensten sammelt und gegenüberstellt.
