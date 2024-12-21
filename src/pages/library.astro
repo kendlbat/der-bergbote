@@ -3,6 +3,13 @@ import AppSkeleton from "@/components/astro/AppSkeleton.astro";
 import Layout from "@/layouts/Layout.astro";
 import { db } from "@/db";
 import { topicsTable } from "@/db/schema";
+import { getImage, Image, Picture } from "astro:assets";
+import bookImage from "@/assets/books/red.png";
+
+const bi = await getImage({
+    src: bookImage,
+    format: "webp",
+});
 
 const topics = await db
     .select({
@@ -14,6 +21,13 @@ const topics = await db
 
 <Layout title="Bergbote - Articles">
     <AppSkeleton>
+        <script is:inline>
+            function pictureOnError() {
+                this.onerror = null;
+                this.parentNode.children[0].srcset =
+                    this.parentNode.children[1].srcset = this.src;
+            }
+        </script>
         <div
             class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-3 p-2"
         >
@@ -25,11 +39,19 @@ const topics = await db
                         class="border rounded-lg h-full flex flex-col"
                     >
                         <div class="flex-grow">
-                            <img
-                                src={"/api/topics/" + t.id + "/image"}
-                                class="rounded-t-lg w-full h-full"
-                                alt=""
-                            />
+                            <picture class="rounded-t-lg w-full h-full">
+                                <source
+                                    srcset={"/api/topics/" + t.id + "/image"}
+                                    type="image/png"
+                                />
+                                <img
+                                    src={bi.src}
+                                    srcset={bi.src}
+                                    alt={t.name}
+                                    class="w-full h-full rounded-t-lg"
+                                    onerror="pictureOnError.call(this)"
+                                />
+                            </picture>
                         </div>
                         <p class="p-3 pt-2 leading-6 sm:leading-4 text-[2em] sm:text-lg sm:h-16">
                             {(t.name?.length || 0) > 70 ?
